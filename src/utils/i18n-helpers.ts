@@ -2,6 +2,16 @@
  * Internationalization (i18n) Utility Functions
  * Follows kebab-case naming convention per Dev Notes.
  */
+import translations from '../data/translations.json';
+
+type TranslationKeys = typeof translations.en;
+type NestedKeyOf<T> = {
+    [K in keyof T & string]: T[K] extends object
+    ? `${K}.${NestedKeyOf<T[K]>}`
+    : K
+}[keyof T & string];
+
+export type TranslationKey = NestedKeyOf<TranslationKeys>;
 
 /**
  * Determines if the current path corresponds to the given language.
@@ -87,4 +97,27 @@ export function getPreferredLanguage(): string | null {
         return localStorage.getItem(LANG_STORAGE_KEY);
     }
     return null;
+}
+
+/**
+ * Translates a key based on the target language.
+ * 
+ * @param key - The translation key (e.g., 'machinery.weight')
+ * @param lang - The target language ('bg' or 'en')
+ * @returns The translated string
+ */
+export function t(key: TranslationKey, lang: 'bg' | 'en'): string {
+    const keys = key.split('.');
+    let result: any = (translations as any)[lang];
+
+    for (const k of keys) {
+        if (result && result[k]) {
+            result = result[k];
+        } else {
+            console.warn(`Translation key not found: ${key} for language: ${lang}`);
+            return key;
+        }
+    }
+
+    return result;
 }

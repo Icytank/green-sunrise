@@ -1,0 +1,357 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import GSStamp from "../../../components/GSStamp.astro";
+import { t } from "../../../utils/i18n-helpers";
+
+// Generate paths for all machinery items
+export async function getStaticPaths() {
+  const machinery = await getCollection("machinery");
+  return machinery.map((item) => {
+    const parts = item.id.split("/");
+    if (parts.length < 2) {
+        throw new Error(`Invalid machinery ID format: ${item.id}. Expected lang/slug.`);
+    }
+    const lang = parts[0];
+    const slug = parts.slice(1).join("/");
+    
+    return {
+      params: { lang, slug },
+      props: { item },
+    };
+  });
+}
+
+const { item } = Astro.props;
+const { lang } = Astro.params;
+const { title, model, weight, impactPower, heroImage, galleryImages } = item.data;
+const { Content } = await render(item);
+---
+
+<BaseLayout title={`${title || model} | Green Sunrise`} description={`Technical audit and specifications for ${model}`}>
+  <article class="audit-narrative">
+      <header class="audit-header">
+        <div class="container">
+           <h1 class="font-display">{title}</h1>
+           <p class="model-badge font-mono">{model}</p>
+        </div>
+      </header>
+      
+      <div class="audit-grid container">
+         <!-- Left: Gallery -->
+         <div class="gallery-section">
+            <div class="hero-image-wrapper">
+               <Image src={heroImage} alt={title} width={1200} class="hero-image clickable-image" data-full-src={heroImage.src} />
+               <div class="stamp-overlay"><GSStamp size={100} /></div>
+            </div>
+            
+            {galleryImages && galleryImages.length > 0 && (
+                <div class="gallery-grid">
+                {galleryImages.map((img, i) => (
+                    <Image src={img} alt={`${title} detail ${i+1}`} width={300} class="gallery-thumb clickable-image" data-full-src={img.src} />
+                ))}
+                </div>
+            )}
+         </div>
+
+         <!-- Right: Specs / Narrative -->
+         <div class="info-section">
+            <section class="the-machine margin-bottom-4">
+               <h2 class="section-title">{t('machinery.theMachine', lang as 'bg' | 'en')}</h2>
+               <div class="prose">
+                  <Content />
+               </div>
+            </section>
+
+            <section class="technical-specifications">
+               <h2 class="section-title">{t('machinery.technicalSpecifications', lang as 'bg' | 'en')}</h2>
+               <div class="specs-wrapper">
+                  <dl class="specs-list font-mono">
+                     <div class="spec-row">
+                        <dt>{t('machinery.model', lang as 'bg' | 'en')}</dt>
+                        <dd>{model}</dd>
+                     </div>
+                     <div class="spec-row">
+                        <dt>{t('machinery.weight', lang as 'bg' | 'en')}</dt>
+                        <dd>{weight}</dd>
+                     </div>
+                     {impactPower && (
+                      <div class="spec-row">
+                        <dt>{t('machinery.impactPower', lang as 'bg' | 'en')}</dt>
+                        <dd>{impactPower}</dd>
+                     </div>
+                     )}
+                  </dl>
+                  <div class="ownership-declaration">
+                     <div class="declaration-icon">
+                        <GSStamp size={40} />
+                     </div>
+                     <p>{lang === 'bg' ? 'Собственост и поддръжка от Green Sunrise Ltd.' : 'Owned & Maintained by Green Sunrise Ltd.'}</p>
+                  </div>
+               </div>
+            </section>
+         </div>
+      </div>
+  </article>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+     <span class="close">&times;</span>
+     <img class="lightbox-content" id="lightbox-img">
+  </div>
+</BaseLayout>
+
+<script>
+  function setupLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const closeBtn = document.querySelector('.close');
+    const clickableImages = document.querySelectorAll('.clickable-image');
+
+    clickableImages.forEach(img => {
+      img.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLImageElement;
+        const fullSrc = target.getAttribute('data-full-src');
+        if (fullSrc) {
+          lightbox!.style.display = 'flex';
+          lightboxImg!.src = fullSrc;
+          document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+      });
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      lightbox!.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox!.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Handle escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox!.style.display === 'flex') {
+        lightbox!.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  }
+
+  // Initialize lightbox on page load and after Astro transitions
+  setupLightbox();
+  document.addEventListener('astro:after-swap', setupLightbox);
+</script>
+
+<style>
+  /* Local styles for Audit Narrative */
+  .audit-narrative {
+    padding-bottom: var(--gs-space-10);
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gs-space-2);
+  }
+
+  .audit-header {
+    background: var(--gs-executive-white);
+    padding: var(--gs-space-8) 0;
+    margin-bottom: var(--gs-space-6);
+    border-bottom: 1px solid var(--gs-border);
+  }
+
+  .font-display {
+    font-family: var(--gs-font-primary);
+    font-size: var(--gs-text-h2);
+    color: var(--gs-institutional-green);
+    margin: 0;
+  }
+
+  .font-mono {
+    font-family: var(--gs-font-mono);
+  }
+
+  .model-badge {
+    color: var(--gs-slate-gray);
+    font-size: var(--gs-text-h4);
+    margin-top: var(--gs-space-1);
+    font-weight: 500;
+  }
+
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gs-space-6);
+  }
+
+  @media (min-width: 1024px) {
+    .audit-grid {
+      grid-template-columns: 3fr 2fr;
+      gap: var(--gs-space-8);
+    }
+  }
+
+  .hero-image-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: var(--gs-space-4);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .stamp-overlay {
+    position: absolute;
+    bottom: var(--gs-space-4);
+    right: var(--gs-space-4);
+    z-index: 10;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--gs-space-2);
+  }
+
+  .gallery-thumb {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer; /* Interaction hint */
+    transition: opacity 0.2s;
+  }
+  
+  .gallery-thumb:hover {
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-size: var(--gs-text-h3);
+    color: var(--gs-text-primary);
+    margin-bottom: var(--gs-space-4);
+    border-left: 4px solid var(--gs-institutional-green);
+    padding-left: var(--gs-space-2);
+  }
+
+  .specs-list {
+    background: var(--gs-executive-white);
+    border: 1px solid var(--gs-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--gs-space-3);
+    border-bottom: 1px solid var(--gs-border);
+  }
+
+  .spec-row:last-child {
+    border-bottom: none;
+  }
+
+  .spec-row dt {
+    color: var(--gs-text-secondary);
+    font-weight: 500;
+  }
+
+  .spec-row dd {
+    color: var(--gs-text-primary);
+    font-weight: 700;
+  }
+  
+  .margin-bottom-4 {
+    margin-bottom: var(--gs-space-4);
+  }
+  
+  .prose {
+    line-height: 1.6;
+    color: var(--gs-slate-gray);
+    font-size: var(--gs-text-base);
+  }
+
+  /* Ownership Declaration */
+  .ownership-declaration {
+    margin-top: var(--gs-space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-3);
+    padding: var(--gs-space-4);
+    background: var(--gs-executive-white);
+    border: 1px dashed var(--gs-institutional-green);
+    border-radius: 8px;
+  }
+
+  .declaration-icon {
+    flex-shrink: 0;
+    opacity: 0.8;
+  }
+
+  .ownership-declaration p {
+    margin: 0;
+    font-size: var(--gs-text-sm);
+    color: var(--gs-institutional-green);
+    font-weight: 600;
+  }
+
+  /* Lightbox Styles */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.95);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: zoom 0.3s ease-out;
+  }
+
+  @keyframes zoom {
+    from {transform: scale(0.9); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+  }
+
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: white;
+    font-size: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+  }
+
+  .close:hover {
+    color: var(--gs-success-emerald);
+  }
+
+  .clickable-image {
+    cursor: zoom-in;
+  }
+</style>

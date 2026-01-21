@@ -1,0 +1,28 @@
+{
+    "bg": {
+        "machinery": {
+            "weight": "Тегло",
+            "model": "Модел",
+            "impactPower": "Сила на удара",
+            "theMachine": "Машината",
+            "technicalSpecifications": "Технически спецификации",
+            "ourMachinery": "Нашата Техника",
+            "machinerySubtitle": "Високотехнологично оборудване за вашите проекти.",
+            "pageTitle": "Техника | Green Sunrise",
+            "pageDescription": "Нашата високотехнологична техника и оборудване."
+        }
+    },
+    "en": {
+        "machinery": {
+            "weight": "Weight",
+            "model": "Model",
+            "impactPower": "Impact Power",
+            "theMachine": "The Machine",
+            "technicalSpecifications": "Technical Specifications",
+            "ourMachinery": "Our Machinery",
+            "machinerySubtitle": "High-tech equipment for your projects.",
+            "pageTitle": "Machinery | Green Sunrise",
+            "pageDescription": "Our high-tech machinery and equipment."
+        }
+    }
+}

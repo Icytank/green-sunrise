@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MachineryCard from "../../components/MachineryCard.astro";
+import { t } from "../../utils/i18n-helpers";
+
+export async function getStaticPaths() {
+  return [
+    { params: { lang: "bg" } },
+    { params: { lang: "en" } },
+  ];
+}
+
+const { lang } = Astro.params;
+
+// Query the machinery collection and filter by language (prefix of the ID)
+const allMachinery = await getCollection("machinery", ({ id }) => {
+  return id.startsWith(`${lang}/`);
+});
+---
+
+<BaseLayout 
+  title={t('machinery.pageTitle', lang as 'bg' | 'en')}
+  description={t('machinery.pageDescription', lang as 'bg' | 'en')}
+>
+  <main class="services-page">
+    <section class="container">
+      <header class="page-header">
+        <h1 class="font-display">{t('machinery.ourMachinery', lang as 'bg' | 'en')}</h1>
+        <p class="subtitle">{t('machinery.machinerySubtitle', lang as 'bg' | 'en')}</p>
+      </header>
+
+      <div class="machinery-grid">
+        {allMachinery.map((machine) => {
+          // Extract slug from ID (e.g., "en/machinery-1" -> "machinery-1")
+          const slug = machine.id.split("/").slice(1).join("/");
+          return (
+            <MachineryCard
+              title={machine.data.title}
+              model={machine.data.model}
+              weight={machine.data.weight}
+              image={machine.data.heroImage}
+              slug={slug}
+              lang={lang as "bg" | "en"}
+            />
+          );
+        })}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .services-page {
+    padding: var(--gs-space-10) 0;
+    background-color: var(--gs-executive-white);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--gs-space-2);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--gs-space-10);
+  }
+
+  .font-display {
+    font-size: var(--gs-text-h1);
+    color: var(--gs-institutional-green);
+    margin-bottom: var(--gs-space-2);
+    font-family: var(--gs-font-primary);
+  }
+
+  .subtitle {
+    font-size: var(--gs-text-h5);
+    color: var(--gs-slate-gray);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .machinery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--gs-space-6);
+  }
+</style>

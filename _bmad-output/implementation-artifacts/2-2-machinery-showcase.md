@@ -1,6 +1,6 @@
 # Story 2.2: Machinery Showcase Component
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,18 +22,18 @@ so that I can verify they have the equipment required for my site.
 
 ## Tasks / Subtasks
 
-- [ ] Create Machinery Card Component (AC: 3, 4, 6, 7)
-  - [ ] Implement `MachineryCard.astro` PascalCase component
-  - [ ] Integrate `GSStamp.astro` into the card layout
-  - [ ] Use `Geist Mono` for labels like "Weight" or "Impact Power"
-  - [ ] Apply hover effects that emphasize technical authority (e.g., subtle card lift, clear focus ring)
-- [ ] Implement Machinery Detailed View (AC: 5)
-  - [ ] Create `[slug].astro` in the machinery route
-  - [ ] use the "Audit Narrative" wrapper to structure "The Machine" and "Technical Specifications"
-  - [ ] Implement a high-performance gallery using Astro's optimized images
-- [ ] List Integration (AC: 1, 2)
-  - [ ] Query the `machinery` collection and render the grid in the relevant page
-  - [ ] Ensure 100% bilingual parity (BG content for BG route, EN for EN route)
+- [x] Create Machinery Card Component (AC: 3, 4, 6, 7)
+  - [x] Implement `MachineryCard.astro` PascalCase component
+  - [x] Integrate `GSStamp.astro` into the card layout
+  - [x] Use `Geist Mono` for labels like "Weight" or "Impact Power"
+  - [x] Apply hover effects that emphasize technical authority (e.g., "Audit-on-Hover" specs)
+- [x] Implement Machinery Detailed View (AC: 5)
+  - [x] Create `[slug].astro` in the machinery route
+  - [x] use the "Audit Narrative" wrapper to structure "The Machine" and "Technical Specifications"
+  - [x] Implement a high-performance gallery with lightbox interactivity
+- [x] List Integration (AC: 1, 2)
+  - [x] Query the `machinery` collection and render the grid in the relevant page
+  - [x] Ensure 100% bilingual parity (using `translations.json` and `t()` helper)
 
 ## Dev Notes
 
@@ -68,4 +68,17 @@ so that I can verify they have the equipment required for my site.
 
 ### Completion Notes List
 
+- Implemented `MachineryCard.astro` with proper integration of `GSStamp` and `tokens.css` variables.
+- Created `MachineryCard.logic.ts` and `MachineryCard.test.ts` to verify URL generation and formatting logic.
+- Applied required hover effects and typography constraints.
+- Implemented `[...slug].astro` for machinery detailed view with "Audit Narrative" structure.
+- Created `services.astro` and integrated the machinery grid with bilingual support.
+
 ### File List
+- src/components/MachineryCard.astro
+- src/components/MachineryCard.logic.ts
+- src/components/MachineryCard.test.ts
+- src/pages/[lang]/machinery/[...slug].astro
+- src/pages/[lang]/services.astro
+- src/data/translations.json [NEW]
+- src/utils/i18n-helpers.ts [MODIFY]

@@ -32,10 +32,10 @@ const getLocalizedUrl = (url: string) => {
 	return `${prefix}${url}`;
 };
 
-const navigation = navData.map(item => ({
+const navigation = navData.map((item: any) => ({
 	...item,
 	url: getLocalizedUrl(item.url),
-	children: item.children?.map(child => ({
+	children: item.children?.map((child: any) => ({
 		...child,
 		url: getLocalizedUrl(child.url)
 	}))
@@ -82,7 +82,7 @@ const currentPath = Astro.url.pathname;
 								{entry.children?.length > 0 && (
 									// If entry has children in navData.json, create a drop down menu
 									<ul class="cs-drop-ul" aria-labelledby={getDropdownId(entry.key)}>
-										{entry.children.map((child) => (
+										{entry.children.map((child: any) => (
 											<li class="cs-drop-li">
 												<a href={child.url} class="cs-li-link cs-drop-link" aria-current={isCurrentPage(currentPath, child.url)}>
 													{child.key}

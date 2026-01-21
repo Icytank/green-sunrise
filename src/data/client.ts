@@ -27,6 +27,7 @@ export const BUSINESS = {
 		facebook: "https://www.facebook.com/",
 		instagram: "https://www.instagram.com/",
 	},
+	logo: "/assets/logo.png", // Recommended: 112x112px
 };
 
 // ===== SEO DEFAULTS =====

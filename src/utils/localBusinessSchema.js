@@ -1,5 +1,8 @@
 import { SITE, BUSINESS } from "@data/client";
 
+/**
+ * @param {string} origin
+ */
 export function getLocalBusinessSchema(origin) {
 	const sameAs = [];
 	if (BUSINESS.socials?.facebook) sameAs.push(BUSINESS.socials.facebook);

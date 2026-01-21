@@ -1,5 +1,9 @@
 import { SITE, BUSINESS } from "@data/client";
 
+/**
+ * @param {Record<string, any>} data
+ * @param {string} origin
+ */
 export function getBlogPostingSchema(data, origin) {
 	return {
 		"@context": "https://schema.org",

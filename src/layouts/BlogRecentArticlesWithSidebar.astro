@@ -22,7 +22,7 @@ const { posts } = Astro.props;
 		{posts.length === 0 && <h1>No Recent Posts</h1>}
 		{
 			posts.length >= 1 &&
-				posts.map((post) => (
+				posts.map((post: any) => (
 					<article class="recent-articles">
 						<Picture
 							pictureAttributes={{

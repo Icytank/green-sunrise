@@ -38,21 +38,21 @@ document.addEventListener("astro:page-load", () => {
 		// Utilities
 		const isMobile = () => window.matchMedia(`(max-width: ${CONFIG.BREAKPOINTS.MOBILE}px)`).matches;
 
-		const toggleAttribute = (element, attribute, value1 = "true", value2 = "false") => {
+		const toggleAttribute = (element: Element | null, attribute: string, value1 = "true", value2 = "false") => {
 			if (!element) return;
 			const current = element.getAttribute(attribute);
 			element.setAttribute(attribute, current === value1 ? value2 : value1);
 		};
 
-		const toggleInert = (element) => element && (element.inert = !element.inert);
+		const toggleInert = (element: Element | null) => element && ((element as any).inert = !(element as any).inert);
 
 		// Dropdown Management
 		const dropdownManager = {
-			close(dropdown, shouldFocus = false) {
+			close(dropdown: Element | null, shouldFocus = false) {
 				if (!dropdown || !dropdown.classList.contains(CONFIG.CLASSES.active)) return false;
 
 				dropdown.classList.remove(CONFIG.CLASSES.active);
-				const button = dropdown.querySelector(CONFIG.SELECTORS.dropdownToggle);
+				const button = dropdown.querySelector(CONFIG.SELECTORS.dropdownToggle) as HTMLElement | null;
 				const menu = dropdown.querySelector(CONFIG.SELECTORS.dropdownMenu);
 
 				if (button) {
@@ -61,13 +61,13 @@ document.addEventListener("astro:page-load", () => {
 				}
 
 				if (menu) {
-					menu.inert = true;
+					(menu as any).inert = true;
 				}
 
 				return true;
 			},
 
-			toggle(element) {
+			toggle(element: Element) {
 				element.classList.toggle(CONFIG.CLASSES.active);
 				const button = element.querySelector(CONFIG.SELECTORS.dropdownToggle);
 				const menu = element.querySelector(CONFIG.SELECTORS.dropdownMenu);
@@ -97,7 +97,7 @@ document.addEventListener("astro:page-load", () => {
 				const isClosing = elements.navigation.classList.contains(CONFIG.CLASSES.active);
 
 				[elements.hamburger, elements.navigation].forEach((el) => el.classList.toggle(CONFIG.CLASSES.active));
-				elements.body.classList.toggle(CONFIG.CLASSES.menuOpen);
+				elements.body?.classList.toggle(CONFIG.CLASSES.menuOpen);
 				toggleAttribute(elements.hamburger, "aria-expanded");
 
 				// Only manage inert state on mobile devices
@@ -122,17 +122,18 @@ document.addEventListener("astro:page-load", () => {
 				// Then close hamburger menu if open
 				if (elements.hamburger && elements.hamburger.classList.contains(CONFIG.CLASSES.active)) {
 					menuManager.toggle();
-					elements.hamburger.focus();
+					(elements.hamburger as HTMLElement).focus();
 				}
 			},
 		};
 
 		// Event Management
 		const eventManager = {
-			handleDropdownClick(event) {
+			handleDropdownClick(event: Event) {
 				if (!isMobile()) return;
 
-				const button = event.target.closest(CONFIG.SELECTORS.dropdownToggle);
+				const target = event.target as HTMLElement;
+				const button = target.closest(CONFIG.SELECTORS.dropdownToggle);
 				if (!button) return;
 
 				event.preventDefault();
@@ -142,10 +143,11 @@ document.addEventListener("astro:page-load", () => {
 				}
 			},
 
-			handleDropdownKeydown(event) {
+			handleDropdownKeydown(event: KeyboardEvent) {
 				if (event.key !== "Enter" && event.key !== " ") return;
 
-				const button = event.target.closest(CONFIG.SELECTORS.dropdownToggle);
+				const target = event.target as HTMLElement;
+				const button = target.closest(CONFIG.SELECTORS.dropdownToggle);
 				if (!button) return;
 
 				event.preventDefault();
@@ -155,42 +157,45 @@ document.addEventListener("astro:page-load", () => {
 				}
 			},
 
-			handleFocusOut(event) {
+			handleFocusOut(event: FocusEvent) {
 				setTimeout(() => {
 					if (!event.relatedTarget) return;
 
-					const dropdown = event.target.closest(CONFIG.SELECTORS.dropdown);
-					if (dropdown?.classList.contains(CONFIG.CLASSES.active) && !dropdown.contains(event.relatedTarget)) {
+					const target = event.target as HTMLElement;
+					const dropdown = target.closest(CONFIG.SELECTORS.dropdown);
+					if (dropdown?.classList.contains(CONFIG.CLASSES.active) && !dropdown.contains(event.relatedTarget as Node)) {
 						dropdownManager.close(dropdown);
 					}
 				}, 10);
 			},
 
-			handleMobileFocus(event) {
-				if (!isMobile() || !elements.navigation.classList.contains(CONFIG.CLASSES.active)) return;
-				if (elements.menuWrapper.contains(event.target) || elements.hamburger.contains(event.target)) return;
+			handleMobileFocus(event: FocusEvent) {
+				if (!isMobile() || !elements.navigation?.classList.contains(CONFIG.CLASSES.active)) return;
+				const target = event.target as Node;
+				if (elements.menuWrapper?.contains(target) || elements.hamburger?.contains(target)) return;
 
 				menuManager.toggle();
 			},
 
-			handleDropdownHover(event) {
+			handleDropdownHover(event: MouseEvent) {
 				if (isMobile()) return; // Only apply hover behavior on desktop
 
-				const dropdown = event.target.closest(CONFIG.SELECTORS.dropdown);
+				const target = event.target as HTMLElement;
+				const dropdown = target.closest(CONFIG.SELECTORS.dropdown);
 				if (!dropdown) return;
 
 				const menu = dropdown.querySelector(CONFIG.SELECTORS.dropdownMenu);
 				if (!menu) return;
 
 				if (event.type === "mouseenter") {
-					menu.inert = false;
+					(menu as any).inert = false;
 				} else if (event.type === "mouseleave") {
 					// Only set inert=true if mouse is leaving the entire dropdown area
 					// Use setTimeout to allow mouseleave/mouseenter events to complete
 					setTimeout(() => {
 						// Check if mouse is still over the dropdown or its menu
 						if (!dropdown.matches(":hover")) {
-							menu.inert = true;
+							(menu as any).inert = true;
 						}
 					}, 1);
 				}
@@ -204,13 +209,13 @@ document.addEventListener("astro:page-load", () => {
 
 				// On mobile, menu starts closed, so set inert=true
 				// On desktop, menu is always visible, so set inert=false
-				elements.menuWrapper.inert = isMobile();
+				(elements.menuWrapper as any).inert = isMobile();
 
 				// Initialize dropdown menus - they start closed, so inert=true on all devices
 				if (elements.navigation) {
 					const dropdownMenus = elements.navigation.querySelectorAll(CONFIG.SELECTORS.dropdownMenu);
 					dropdownMenus.forEach((dropdown) => {
-						dropdown.inert = true;
+						(dropdown as any).inert = true;
 					});
 				}
 			},
@@ -221,28 +226,28 @@ document.addEventListener("astro:page-load", () => {
 				// Hamburger menu
 				elements.hamburger.addEventListener("click", menuManager.toggle);
 				elements.navigation.addEventListener("click", (e) => {
-					if (e.target === elements.navigation && elements.navigation.classList.contains(CONFIG.CLASSES.active)) {
+					if (e.target === elements.navigation && elements.navigation!.classList.contains(CONFIG.CLASSES.active)) {
 						menuManager.toggle();
 					}
 				});
 
 				// Dropdown delegation
-				elements.navigation.addEventListener("click", eventManager.handleDropdownClick);
-				elements.navigation.addEventListener("keydown", eventManager.handleDropdownKeydown);
-				elements.navigation.addEventListener("focusout", eventManager.handleFocusOut);
+				elements.navigation.addEventListener("click", eventManager.handleDropdownClick as EventListener);
+				elements.navigation.addEventListener("keydown", eventManager.handleDropdownKeydown as EventListener);
+				elements.navigation.addEventListener("focusout", eventManager.handleFocusOut as EventListener);
 
 				// Desktop hover listeners for inert management
-				elements.navigation.addEventListener("mouseenter", eventManager.handleDropdownHover, true);
-				elements.navigation.addEventListener("mouseleave", eventManager.handleDropdownHover, true);
+				elements.navigation.addEventListener("mouseenter", eventManager.handleDropdownHover as EventListener, true);
+				elements.navigation.addEventListener("mouseleave", eventManager.handleDropdownHover as EventListener, true);
 
 				// Global events
 				document.addEventListener("keydown", (e) => e.key === "Escape" && keyboardManager.handleEscape());
-				document.addEventListener("focusin", eventManager.handleMobileFocus);
+				document.addEventListener("focusin", eventManager.handleMobileFocus as EventListener);
 
 				// Resize handling
 				window.addEventListener("resize", () => {
 					this.inertState();
-					if (!isMobile() && elements.navigation.classList.contains(CONFIG.CLASSES.active)) {
+					if (!isMobile() && elements.navigation!.classList.contains(CONFIG.CLASSES.active)) {
 						menuManager.toggle();
 					}
 				});

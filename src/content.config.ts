@@ -24,9 +24,11 @@ const machineryCollection = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
-			specs: z.record(z.string()).optional(),
-			image: image(),
-			imageAlt: z.string(),
+			model: z.string(),
+			weight: z.string(),
+			impactPower: z.string(),
+			heroImage: image(),
+			galleryImages: z.array(image()),
 		}),
 });
 

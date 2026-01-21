@@ -1,6 +1,6 @@
 # Story 2.1: Machinery Schema & Content Collection
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -26,16 +26,16 @@ so that I can ensure all technical specs (weight, impact power, model) are corre
 
 ## Tasks / Subtasks
 
-- [ ] Define Machinery Schema (AC: 1, 2, 3)
-  - [ ] Modify `src/content/config.ts` to include the `machinery` collection
-  - [ ] Implement `z.object` with required fields and appropriate types
-  - [ ] Use the `image()` helper for `heroImage` and `galleryImages`
-- [ ] Initialize Content Directory (AC: 4)
-  - [ ] Create `src/content/machinery/bg` and `src/content/machinery/en`
-  - [ ] Add a sample `machinery-1.md` in both locales to verify schema validation
-- [ ] Verify Build Safety (AC: 4, 5)
-  - [ ] Run `npx astro check` or equivalent to verify schema enforcement
-  - [ ] Attempt to build with a missing field to confirm failure
+- [x] Define Machinery Schema (AC: 1, 2, 3)
+  - [x] Modify `src/content/config.ts` to include the `machinery` collection
+  - [x] Implement `z.object` with required fields and appropriate types
+  - [x] Use the `image()` helper for `heroImage` and `galleryImages`
+- [x] Initialize Content Directory (AC: 4)
+  - [x] Create `src/content/machinery/bg` and `src/content/machinery/en`
+  - [x] Add a sample `machinery-1.md` in both locales to verify schema validation
+- [x] Verify Build Safety (AC: 4, 5)
+  - [x] Run `npx astro check` or equivalent to verify schema enforcement
+  - [x] Attempt to build with a missing field to confirm failure
 
 ## Dev Notes
 
@@ -68,4 +68,15 @@ so that I can ensure all technical specs (weight, impact power, model) are corre
 
 ### Completion Notes List
 
+- Updated `src/content.config.ts` to define type-safe `machinery` schema using Zod and Astro image helpers.
+- Initialized localized content directories at `src/content/machinery/{bg,en}`.
+- Added sample content `machinery-1.md` to verify schema validation and build safety.
+- Created `src/content/config.test.js` to enforce schema presence in CI.
+- Verified robust build pipeline integration; `astro check` correctly flags missing required fields.
+
 ### File List
+
+- src/content.config.ts [MODIFY]
+- src/content/machinery/en/machinery-1.md [NEW]
+- src/content/machinery/bg/machinery-1.md [NEW]
+- src/content/config.test.js [NEW]

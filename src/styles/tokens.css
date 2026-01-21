@@ -4,24 +4,65 @@
     --gs-slate-gray: #334155;
     --gs-executive-white: #F8FAFC;
     --gs-success-emerald: #10B981;
-    --gs-deep-navy-slate: #0F172A;
+    --gs-surface: #F8FAFC;
+    --gs-text-primary: #0F172A;
 
-    /* Semantic Mappings */
+    /* Spacing Tokens (8px base) */
+    --gs-space-1: 8px;
+    --gs-space-2: 16px;
+    --gs-space-3: 24px;
+    --gs-space-4: 32px;
+    --gs-space-5: 40px;
+    --gs-space-6: 48px;
+    --gs-space-7: 56px;
+    --gs-space-8: 64px;
+    --gs-space-9: 72px;
+    --gs-space-10: 80px;
+    --gs-space-11: 88px;
+    --gs-space-12: 96px;
+
+    /* Typography System */
+    --gs-font-primary: 'Inter', system-ui, sans-serif;
+    --gs-font-mono: 'Geist Mono', monospace;
+
+    /* Type Scale (1.250 Major Third) */
+    --gs-text-h1: 3.052rem;
+    --gs-text-h2: 2.441rem;
+    --gs-text-h3: 1.953rem;
+    --gs-text-h4: 1.563rem;
+    --gs-text-h5: 1.25rem;
+    --gs-text-base: 1rem;
+    --gs-text-sm: 0.8rem;
+    --gs-text-xs: 0.64rem;
+
+    /* Legacy/Compat Mappings (Preserved for existing components) */
     --gs-primary: var(--gs-institutional-green);
     --gs-background: var(--gs-executive-white);
-    --gs-text-primary: var(--gs-deep-navy-slate);
+    --gs-deep-navy-slate: var(--gs-text-primary);
     --gs-text-secondary: #475569;
     --gs-border: #E2E8F0;
 
-    /* Typography */
-    --gs-font-family: 'Inter', sans-serif;
-    --gs-font-family-mono: 'Geist Mono', monospace;
+    --gs-font-family: var(--gs-font-primary);
+    --gs-font-family-mono: var(--gs-font-mono);
 
     --gs-topper-font-size: clamp(0.8125rem, 1.6vw, 1rem);
     --gs-header-font-size: clamp(1.9375rem, 3.9vw, 3.0625rem);
-    --gs-body-font-size: 1rem;
+    --gs-body-font-size: var(--gs-text-base);
 
-    /* Spacing */
-    --gs-base-unit: 8px;
+    --gs-base-unit: var(--gs-space-1);
     --gs-section-padding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+    --gs-surface: #0F172A;
+    /* Dark Navy background */
+    --gs-text-primary: #F8FAFC;
+    /* White text */
+    --gs-slate-gray: #94A3B8;
+    /* Lighter slate for contrast */
+    --gs-link-hover: #10B981;
+    /* Emerald for links */
+    --gs-border: #334155;
+    /* Darker border */
 }

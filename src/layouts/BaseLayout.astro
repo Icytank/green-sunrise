@@ -3,8 +3,8 @@
 import { ClientRouter } from "astro:transitions";
 import type { GetImageResult } from "astro";
 import "@styles/tokens.css";
-import "@styles/root.less";
-import "@styles/dark.less";
+import "@styles/global.css";
+import "@styles/global.css";
 
 // Components
 import DynamicHeader from "@components/Header/DynamicHeader.astro";
@@ -36,6 +36,11 @@ const { description, title, heroImage, lang = "bg" } = Astro.props as Props;
 		<Meta title={title} description={description} heroImage={heroImage}>
 			<slot name="schema" slot="schema" />
 		</Meta>
+
+		<!-- Fonts (Performance: Preconnect + Link instead of @import) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
 		<!-- If present, preloads the image passed as a prop -->
 		{heroImage && <link rel="preload" href={heroImage.src} as="image" />}

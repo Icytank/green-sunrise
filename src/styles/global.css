@@ -1,0 +1,143 @@
+/* Google Fonts Import */
+/* Google Fonts moved to BaseLayout.astro for performance */
+
+/* Modern CSS Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+#root,
+#__next {
+    isolation: isolate;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Base Styles using Design Tokens */
+body {
+    background-color: var(--gs-surface);
+    color: var(--gs-text-primary);
+    font-family: var(--gs-font-primary);
+    font-size: var(--gs-text-base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--gs-font-primary);
+    /* color is inherited or set explicitly if needed, but text-primary covers it usually */
+}
+
+h1 {
+    font-size: var(--gs-text-h1);
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: var(--gs-text-h2);
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: var(--gs-text-h3);
+}
+
+h4 {
+    font-size: var(--gs-text-h4);
+}
+
+h5 {
+    font-size: var(--gs-text-h5);
+}
+
+code,
+kbd,
+samp,
+pre {
+    font-family: var(--gs-font-mono);
+}
+
+/* Accessibility Utilities */
+.skip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    z-index: 10001;
+    /* Above header */
+    opacity: 0;
+    overflow: hidden;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.skip:focus {
+    transform: translateY(0);
+    opacity: 1;
+    padding: 1rem 1.5rem;
+    background-color: var(--gs-success-emerald);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    outline: 2px solid var(--gs-success-emerald);
+    outline-offset: 2px;
+}

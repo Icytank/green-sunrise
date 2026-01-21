@@ -1,0 +1,71 @@
+---
+import { isActiveLanguage, getTranslatedPath } from '../utils/i18n-helpers';
+
+const { pathname } = Astro.url;
+
+const isBgActive = isActiveLanguage(pathname, 'bg');
+const isEnActive = isActiveLanguage(pathname, 'en');
+
+const toBg = getTranslatedPath(pathname, 'bg');
+const toEn = getTranslatedPath(pathname, 'en');
+---
+
+<nav class="language-switcher" aria-label="Language selection">
+  <a href={toBg} class:list={['lang-link', { active: isBgActive }]} aria-current={isBgActive ? 'page' : undefined}>BG</a>
+  <span class="separator" aria-hidden="true">/</span>
+  <a href={toEn} class:list={['lang-link', { active: isEnActive }]} aria-current={isEnActive ? 'page' : undefined}>EN</a>
+</nav>
+
+<style>
+  .language-switcher {
+    font-family: var(--gs-font-family-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1;
+  }
+
+  .lang-link {
+    text-decoration: none;
+    color: var(--gs-text-secondary);
+    transition: color 0.2s ease;
+    padding: 0.25rem;
+  }
+
+  .lang-link:hover {
+    color: var(--gs-deep-navy-slate);
+  }
+
+  .lang-link.active {
+    color: var(--gs-institutional-green);
+    font-weight: 700;
+  }
+
+  .separator {
+    color: var(--gs-border);
+    user-select: none;
+  }
+</style>
+
+<script>
+  import { saveLanguagePreference } from '../utils/i18n-helpers';
+
+  function initSwitcher() {
+    const links = document.querySelectorAll('.language-switcher .lang-link');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        // Simple heuristic: if path starts with /en, it's English. Otherwise default BG.
+        // Ensure to check for null href just in case
+        if (href) {
+           const lang = href.startsWith('/en') ? 'en' : 'bg';
+           saveLanguagePreference(lang);
+        }
+      });
+    });
+  }
+
+  initSwitcher();
+  document.addEventListener('astro:after-swap', initSwitcher);
+</script>

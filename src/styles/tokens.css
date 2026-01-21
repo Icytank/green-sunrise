@@ -1,0 +1,27 @@
+:root {
+    /* Brand Colors */
+    --gs-institutional-green: #064E3B;
+    --gs-slate-gray: #334155;
+    --gs-executive-white: #F8FAFC;
+    --gs-success-emerald: #10B981;
+    --gs-deep-navy-slate: #0F172A;
+
+    /* Semantic Mappings */
+    --gs-primary: var(--gs-institutional-green);
+    --gs-background: var(--gs-executive-white);
+    --gs-text-primary: var(--gs-deep-navy-slate);
+    --gs-text-secondary: #475569;
+    --gs-border: #E2E8F0;
+
+    /* Typography */
+    --gs-font-family: 'Inter', sans-serif;
+    --gs-font-family-mono: 'Geist Mono', monospace;
+
+    --gs-topper-font-size: clamp(0.8125rem, 1.6vw, 1rem);
+    --gs-header-font-size: clamp(1.9375rem, 3.9vw, 3.0625rem);
+    --gs-body-font-size: 1rem;
+
+    /* Spacing */
+    --gs-base-unit: 8px;
+    --gs-section-padding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
+}

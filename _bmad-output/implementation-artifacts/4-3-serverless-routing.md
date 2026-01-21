@@ -1,0 +1,68 @@
+# Story 4.3: Serverless Lead Routing (Resend API)
+
+Status: ready-for-dev
+
+<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+
+## Story
+
+As an administrator,
+I want to receive project inquiries instantly via email,
+so that I can respond to B2B leads within their "Boardroom Discovery" window.
+
+## Acceptance Criteria
+
+1. **Given** a submitted contact form with a valid Turnstile token
+2. **When** the serverless endpoint is triggered (Cloudflare Pages Functions)
+3. **Then** it validates the Turnstile response with Cloudflare's API
+4. **And** it routes the lead data to the Resend API
+5. **And** an email is sent to the Green Sunrise administrative address with the inquiry details
+6. **And** the sender receives a 200 OK response to trigger the "Success" UI (Story 4.1)
+7. **And** the email subject includes the Project Type and Company Name for rapid triage
+
+## Tasks / Subtasks
+
+- [ ] Create API Endpoint (AC: 2, 6)
+  - [ ] Implement `src/pages/api/contact.ts` (Astro endpoint) or a Cloudflare Pages Function
+  - [ ] Implement the Turnstile token verification call to Cloudflare
+- [ ] Implement Resend Integration (AC: 4, 5, 7)
+  - [ ] Initialize the Resend client using a `RESEND_API_KEY` environment variable
+  - [ ] Format the email payload with: `Name`, `Company`, `Role`, `Message`, and `Project Type`
+  - [ ] Use a professional email template or simple high-contrast layout matching the brand
+- [ ] Error Handling (AC: 6)
+  - [ ] Return appropriate status codes (400 for invalid tokens, 500 for API failure)
+  - [ ] Ensure no PII is logged in error logs
+
+## Dev Notes
+
+### Architecture Patterns & Constraints
+- **Serverless:** Use Cloudflare Pages Functions to process the form. This avoids maintaining a full backend.
+- **Reliability:** The Resend API is the approved mailer. [Source: architecture.md#L129]
+- **Naming:** **kebab-case** for the API endpoint path.
+- **Security:** The `RESEND_API_KEY` and `TURNSTILE_SECRET` must never be exposed to the client.
+
+### Source Tree Components to Touch
+- `src/pages/api/contact.ts` [NEW]
+- `.env` [MODIFY] - for API keys.
+
+### Testing Standards Summary
+- Verify that the Resend API is called only after the Turnstile challenge passes.
+- Mock the Resend response in development to verify success/error handling in the UI.
+
+## References
+
+- [Architecture - API & Communication Patterns](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/architecture.md#L127-L129)
+- [PRD - Non-Functional Requirements (NFR3)](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/prd.md#L187)
+- [Project Context - Development Workflow](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/project-context.md#L55)
+
+## Dev Agent Record
+
+### Agent Model Used
+
+{{agent_model_name_version}}
+
+### Debug Log References
+
+### Completion Notes List
+
+### File List

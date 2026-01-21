@@ -1,0 +1,292 @@
+---
+/**
+ * INSTITUTIONAL FOOTER COMPONENT
+ * ==============================
+ *
+ * Provides a persistent corporate footer with legal and contact information.
+ * Supports i18n via the [lang] route structure.
+ */
+
+// Utils
+import { Icon } from "astro-icon/components";
+import { getCurrentYear } from "@utils/utils";
+
+// Components
+import { Image } from "astro:assets";
+import GSStamp from "@components/GSStamp.astro";
+import stampLogo from "@assets/images/gs-stamp.png";
+
+// Data
+import { BUSINESS } from "@data/client";
+import navData from "@data/navData.json";
+
+interface Props {
+	lang: string;
+}
+
+const { lang } = Astro.props as Props;
+const currentYear = getCurrentYear();
+
+// Localization Helper
+const getLocalizedUrl = (url: string) => {
+	const prefix = lang === "bg" ? "" : `/${lang}`;
+	return `${prefix}${url}`;
+};
+
+const navigation = navData.map(item => ({
+	...item,
+	url: getLocalizedUrl(item.url)
+}));
+---
+
+<footer id="footer">
+	<div class="container">
+		<div class="left-section">
+			<a class="logo" href={getLocalizedUrl("/")} aria-label="Return to Green Sunrise Home page">
+				<Image src={stampLogo} alt="Green Sunrise Logo" width={210} height={28} class="footer-logo-img" />
+			</a>
+			<p>Specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.</p>
+			<GSStamp className="footer-stamp" size={100} />
+		</div>
+		<div class="right-section">
+			<div class="lists">
+				<ul>
+					<li>
+						<h2>Navigation</h2>
+					</li>
+					{
+						navigation.map((entry) => (
+							<li class="cs-li">
+								<a href={entry.url}>{entry.key}</a>
+							</li>
+						))
+					}
+				</ul>
+				<ul>
+					<li>
+						<h2>Services</h2>
+					</li>
+					<li><a href={getLocalizedUrl("/services/#machinery")}>Owned Machinery</a></li>
+					<li><a href={getLocalizedUrl("/services/#installation")}>PV Installation</a></li>
+					<li><a href={getLocalizedUrl("/services/#maintenance")}>Maintenance</a></li>
+					<li><a href={getLocalizedUrl("/services/#consulting")}>Technical Consulting</a></li>
+				</ul>
+				<ul>
+					<li>
+						<h2>Contact</h2>
+					</li>
+					<li>
+						<div class="contact-info">
+							{BUSINESS.address.addressLineOne}<br />
+							{BUSINESS.address.addressLineTwo && <>{BUSINESS.address.addressLineTwo}<br /></>}
+							{BUSINESS.address.city}, {BUSINESS.address.state}<br />
+							VAT: {BUSINESS.vatNumber}
+						</div>
+					</li>
+					<li>
+						<a href={`tel:${BUSINESS.phoneForTel}`}>
+							{BUSINESS.phoneFormatted}
+						</a>
+					</li>
+					<li>
+						<a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="credit">
+		<span>&copy; {currentYear} Green Sunrise LTD. All rights reserved.</span>
+	</div>
+</footer>
+
+<style lang="less">
+	/* Mobile */
+	@media only screen and (min-width: 0em) {
+		#footer {
+			font-family: var(--gs-font-family);
+			font-size: ~"min(4vw, 1rem)";
+			padding: (84/16rem) 1rem (20/16rem);
+			background: var(--gs-deep-navy-slate);
+			color: var(--gs-executive-white);
+
+			.left-section {
+				text-align: center;
+				margin: auto;
+				margin-bottom: (50/16rem);
+				.logo {
+					text-align: center;
+					width: auto;
+					height: auto;
+					margin: auto;
+					margin-bottom: (30/16em);
+					display: inline-block;
+
+					.footer-logo-img {
+						width: 100%;
+						max-width: (210/16rem);
+						height: auto;
+						display: block;
+						filter: grayscale(1) brightness(1000%);
+					}
+				}
+
+				p {
+					font-size: (14/16rem);
+					line-height: 1.6;
+					text-align: center;
+					width: 100%;
+					max-width: (307/16rem);
+					margin: 1.5rem auto;
+					color: var(--gs-executive-white);
+					opacity: 0.8;
+				}
+			}
+
+			.right-section {
+				width: 100%;
+				max-width: (407/16rem);
+				margin: auto;
+				.lists {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 2.5rem;
+					
+					ul {
+						margin: 0;
+						padding: 0;
+						list-style: none;
+
+						li {
+							margin-bottom: (12/16rem);
+							color: var(--gs-executive-white);
+							opacity: 0.9;
+
+							a {
+								text-decoration: none;
+								color: inherit;
+								transition: color 0.3s;
+								&:hover {
+									color: var(--gs-success-emerald);
+								}
+							}
+							
+							.contact-info {
+								line-height: 1.5;
+								margin-bottom: 0.5rem;
+							}
+						}
+
+						h2 {
+							font-size: (18/16rem);
+							font-weight: bold;
+							text-transform: uppercase;
+							margin-bottom: (1.5rem);
+							color: var(--gs-executive-white);
+							position: relative;
+
+							&:after {
+								content: "";
+								width: (64/16rem);
+								height: (2/16rem);
+								background: var(--gs-institutional-green);
+								display: block;
+								margin-top: 0.5rem;
+							}
+						}
+					}
+				}
+			}
+
+			.credit {
+				font-size: (14/16rem);
+				text-align: center;
+				margin-top: (100/16rem);
+				color: var(--gs-slate-gray);
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+				padding-top: 2rem;
+			}
+		}
+	}
+
+	/* Small Desktop */
+	@media only screen and (min-width: 64em) {
+		#footer {
+			.container {
+				width: 100%;
+				max-width: (1280/16rem);
+				margin: auto;
+				padding: 0;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: flex-start;
+			}
+
+			.left-section {
+				text-align: left;
+				width: (350/16rem);
+				margin: 0;
+
+				.logo {
+					text-align: left;
+					margin-left: 0;
+				}
+
+				p {
+					text-align: left;
+					margin-left: 0;
+				}
+			}
+
+			.right-section {
+				width: (750/16rem);
+				margin: 0;
+				.lists {
+					flex-direction: row;
+					justify-content: space-between;
+					gap: 1rem;
+
+					ul {
+						li {
+							a {
+								position: relative;
+
+								&:before {
+									content: "";
+									width: 0%;
+									height: (1/16rem);
+									background: var(--gs-institutional-green);
+									display: block;
+									position: absolute;
+									bottom: (-2/16rem);
+									left: 0;
+									transition: width 0.3s;
+								}
+
+								&:hover {
+									&:before {
+										width: 100%;
+									}
+								}
+							}
+						}
+						
+						h2:after {
+							background: var(--gs-success-emerald);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/* Dark Mode Override (if needed specifically) */
+	body.dark-mode {
+		#footer {
+			background: #05101a; // Slightly darker for clear separation
+		}
+	}
+</style>

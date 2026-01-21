@@ -1,0 +1,42 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ],
+  "compilerOptions": {
+    // necessary for Astro content collections
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    // set to true if you want strict checks on your .js files
+    "checkJs": true,
+    "baseUrl": ".",
+    // creates shortcuts for imports
+    "paths": {
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@data/*": [
+        "src/data/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
+    },
+    "incremental": true,
+    "skipLibCheck": true
+  }
+}

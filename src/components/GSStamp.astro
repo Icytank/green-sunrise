@@ -1,0 +1,47 @@
+---
+/**
+ * GS STAMP COMPONENT
+ * =================
+ * 
+ * High-authority trust badge for verified machinery and projects.
+ */
+import { Image } from "astro:assets";
+import stampImg from "@assets/images/gs-stamp.png";
+
+interface Props {
+  className?: string;
+  size?: number;
+}
+
+const { className = "", size = 120 } = Astro.props;
+---
+
+<div class={`gs-stamp ${className}`} style={`width: ${size}px; height: ${size}px;`}>
+    <Image src={stampImg} alt="GS Verified Stamp" class="gs-stamp-img" width={size} />
+</div>
+
+<style>
+    .gs-stamp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--gs-executive-white);
+        padding: 0.5rem;
+        box-shadow: 0 4px 12px rgba(6, 78, 59, 0.15);
+        border: 2px solid var(--gs-institutional-green);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gs-stamp-img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Subtle rotation effect for that "stamped" feel */
+    .gs-stamp {
+        transform: rotate(-15deg);
+    }
+</style>

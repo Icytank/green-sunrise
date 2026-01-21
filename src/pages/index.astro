@@ -1,0 +1,30 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Sunrise - Redirecting</title>
+    <!-- Default fallback to BG if JS is disabled -->
+    <meta http-equiv="refresh" content="0;url=/bg" />
+    
+    <script>
+        import { getPreferredLanguage } from '../utils/i18n-helpers';
+        
+        // Check stored preference
+        const preferred = getPreferredLanguage();
+        
+        if (preferred === 'en') {
+            window.location.replace('/en');
+        } else {
+            // Default to BG
+            window.location.replace('/bg');
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>

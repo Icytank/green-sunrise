@@ -1,0 +1,9 @@
+workflow_status:
+  product-brief: "/mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/product-brief-green-sunrise-2026-01-20.md"
+  prd: "/mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/prd.md"
+  ux-design: "/mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/ux-design-specification.md"
+  create-architecture: "/mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/architecture.md"
+  generate-project-context: "/mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/project-context.md"
+  completed_at: "2026-01-20T17:59:00Z"
+  project: "green-sunrise"
+  status: "completed"

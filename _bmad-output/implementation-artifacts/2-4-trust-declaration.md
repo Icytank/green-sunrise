@@ -1,0 +1,68 @@
+# Story 2.4: "Machinery Ownership" Trust Declaration
+
+Status: ready-for-dev
+
+<!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
+
+## Story
+
+As a visitor,
+I want a clear visual confirmation that the machinery is owned, not rented,
+so that I can mitigate the risk of subcontractor equipment failure.
+
+## Acceptance Criteria
+
+1. **Given** a machinery detail page or service highlight
+2. **When** viewing the specs
+3. **Then** a prominent "Owned & Maintained by GS" badge (the GS Stamp) is visible
+4. **And** a declaration statement confirming direct ownership is included in the technical metadata section
+5. **And** the `isOwned` boolean field is present in the `machinery` schema to toggle this declaration
+6. **And** the UI uses high-contrast typography and the `--gs-success-emerald` token for the "Owned" status indicator
+
+## Tasks / Subtasks
+
+- [ ] Update Machinery Schema (AC: 5)
+  - [ ] Add `isOwned: z.boolean().default(true)` to the `machinery` collection in `src/content/config.ts`
+- [ ] Implement Trust Declaration UI (AC: 3, 4, 6)
+  - [ ] Update `MachineryCard.astro` and machinery detail pages to check the `isOwned` field
+  - [ ] Render the `GSStamp.astro` badge with the "GS Certified Ownership" tooltip or label
+  - [ ] Add the explicit text: "This machinery is part of the Green Sunrise proprietary fleet" in the technical spec list
+- [ ] Integration with Services (AC: 1, 2)
+  - [ ] Ensure the "Machinery Ownership" declaration is visible in the global "Services" overview where machinery is mentioned
+
+## Dev Notes
+
+### Architecture Patterns & Constraints
+- **Technical Authority:** The declaration must feel like a legal/technical "Stamp" of proof, not marketing fluff.
+- **Consistency:** Use the same `GSStamp.astro` component across all stories to maintain brand recognition.
+- **Bilingual:** The "Owned & Maintained" text must be perfectly translated:
+  - English: "Owned & Maintained by Green Sunrise"
+  - Bulgarian: "Собственост и поддръжка от Green Sunrise"
+- **Naming:** **PascalCase** for the `GSStamp.astro` component usage.
+
+### Source Tree Components to Touch
+- `src/content/config.ts`: Add `isOwned` field.
+- `src/components/GSStamp.astro`: Ensure it supports different sizes or labels.
+- `src/pages/[lang]/machinery/[...slug].astro`: Content layout update.
+
+### Testing Standards Summary
+- Verify that setting `isOwned: false` hides the badge and declaration.
+- Check accessibility (aria-labels) for the trust badge.
+
+## References
+
+- [Architecture - Implementation Patterns](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/architecture.md#L146)
+- [PRD - Success Criteria (EPC Leads)](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/prd.md#L22)
+- [UX Specification - Micro-Emotions (Trust over Skepticism)](file:///mnt/fastdrive/green-sunrise/_bmad-output/planning-artifacts/ux-design-specification.md#L81)
+
+## Dev Agent Record
+
+### Agent Model Used
+
+{{agent_model_name_version}}
+
+### Debug Log References
+
+### Completion Notes List
+
+### File List

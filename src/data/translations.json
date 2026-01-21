@@ -10,6 +10,14 @@
             "machinerySubtitle": "Високотехнологично оборудване за вашите проекти.",
             "pageTitle": "Техника | Green Sunrise",
             "pageDescription": "Нашата високотехнологична техника и оборудване."
+        },
+        "team": {
+            "title": "Нашият Екип",
+            "subtitle": "Професионалисти с доказан опит и европейски сертификати.",
+            "experience": "Опит",
+            "yearsSuffix": "години опит",
+            "certifications": "Сертификации",
+            "verifiedProfile": "Сертифициран профил"
         }
     },
     "en": {
@@ -23,6 +31,14 @@
             "machinerySubtitle": "High-tech equipment for your projects.",
             "pageTitle": "Machinery | Green Sunrise",
             "pageDescription": "Our high-tech machinery and equipment."
+        },
+        "team": {
+            "title": "Our Team",
+            "subtitle": "Professionals with proven experience and European certifications.",
+            "experience": "Experience",
+            "yearsSuffix": "years of experience",
+            "certifications": "Certifications",
+            "verifiedProfile": "Verified Profile"
         }
     }
 }

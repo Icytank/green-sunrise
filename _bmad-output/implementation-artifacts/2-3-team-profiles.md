@@ -1,6 +1,6 @@
 # Story 2.3: Technical Team Profiles & Certifications
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,17 +22,23 @@ so that I can be confident in the professional standard of the labor.
 
 ## Tasks / Subtasks
 
-- [ ] Define Team Content Collection (AC: 1, 6)
-  - [ ] Modify `src/content/config.ts` to include the `teams` collection
-  - [ ] Implement `z.object` with: `name`, `role`, `certifications` (z.array(z.string())), `yearsExperience` (z.number()), `avatar` (image())
-- [ ] Implement Team Profile Component (AC: 4, 5, 7)
-  - [ ] Create `TeamMember.astro` component
-  - [ ] Integrate the `GSStamp.astro` badge if the member is "verified"
-  - [ ] Style the certification list with clear, readable typography (`Inter` bold for labels)
-- [ ] Create Teams Showcase Page (AC: 2, 3)
-  - [ ] Develop the `src/pages/[lang]/about.astro` section or a dedicated `teams.astro`
-  - [ ] Query the `teams` collection and map to `TeamMember` components
-  - [ ] Ensure 100% bilingual parity for roles and names (where applicable)
+- [x] Define Team Content Collection (AC: 1, 6)
+  - [x] Modify `src/content/config.ts` to include the `teams` collection
+  - [x] Implement `z.object` with: `name`, `role`, `certifications` (z.array(z.string())), `yearsExperience` (z.number()), `avatar` (image())
+- [x] Implement Team Profile Component (AC: 4, 5, 7)
+  - [x] Create `TeamMember.astro` component
+  - [x] Integrate the `GSStamp.astro` badge if the member is "verified"
+  - [x] Style the certification list with clear, readable typography (`Inter` bold for labels)
+- [x] Create Teams Showcase Page (AC: 2, 3)
+  - [x] Develop the `src/pages/[lang]/about.astro` section or a dedicated `teams.astro`
+  - [x] Query the `teams` collection and map to `TeamMember` components
+  - [x] Ensure 100% bilingual parity for roles and names (where applicable)
+- [x] Code Review Fixes (AI)
+  - [x] Decouple logic from hardcoded strings in `TeamMember.logic.ts`
+  - [x] Organize translations into `team` namespace in `translations.json`
+  - [x] Fix hardcoded content in `about.astro`
+  - [x] Set `verified` field default to `false` for better integrity
+  - [x] Add accessibility `aria-label` to the GS Stamp
 
 ## Dev Notes
 
@@ -61,10 +67,35 @@ so that I can be confident in the professional standard of the labor.
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Amelia (Developer Agent)
 
 ### Debug Log References
 
 ### Completion Notes List
 
+- Defined the `teams` content collection schema in `src/content.config.ts`.
+- Created bilingual sample data for 2 team members in `src/content/teams/`.
+- Implemented `TeamMember.astro` with "Executive White" styling and responsive grid.
+- Extracted and tested logic for experience formatting in `TeamMember.logic.ts`.
+- Integrated the team showcase section into `src/pages/[lang]/about.astro`.
+- Verified 100% bilingual parity and accessibility.
+- **AI Review Fixes Applied:**
+  - Standardized translations under the `team` namespace.
+  - Removed hardcoded strings from logic files.
+  - Fixed hardcoded title/subtitle in `about.astro`.
+  - Tightened schema defaults for `verified` field.
+  - Enhanced accessibility for the GS Stamp badge.
+
 ### File List
+
+- src/content.config.ts [MODIFY]
+- src/content/teams/bg/ivan-ivankov.md [NEW]
+- src/content/teams/en/ivan-ivankov.md [NEW]
+- src/content/teams/bg/maria-petrova.md [NEW]
+- src/content/teams/en/maria-petrova.md [NEW]
+- src/components/TeamMember.astro [NEW]
+- src/components/TeamMember.logic.ts [NEW]
+- src/components/TeamMember.test.ts [NEW]
+- src/data/translations.json [MODIFY]
+- src/pages/[lang]/about.astro [MODIFY]
+- package.json [MODIFY]

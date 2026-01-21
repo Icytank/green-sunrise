@@ -51,9 +51,10 @@ const teamsCollection = defineCollection({
 		z.object({
 			name: z.string(),
 			role: z.string(),
-			bio: z.string(),
-			image: image(),
-			imageAlt: z.string(),
+			certifications: z.array(z.string()),
+			yearsExperience: z.number(),
+			avatar: image(),
+			verified: z.boolean().default(false),
 		}),
 });
 

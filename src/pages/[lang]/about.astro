@@ -2,10 +2,12 @@
 export function getStaticPaths() {
 	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: "bg" | "en" };
 
 // Utils
 import { getImage } from "astro:assets";
+import { getCollection } from "astro:content";
+import { t } from "@utils/i18n-helpers";
 
 // Components
 import BaseLayout from "@layouts/BaseLayout.astro";
@@ -13,16 +15,93 @@ import Banner from "@components/Banner/Banner.astro";
 import FAQ from "@components/FAQ/FAQ.astro";
 import SideBySide from "@components/SideBySide/SideBySide.astro";
 import CTA from "@components/CTA/CTASimple.astro";
+import TeamMember from "@components/TeamMember.astro";
 
 // Images
 import landingImage from "@assets/images/landing.jpg";
 const optimizedImage = await getImage({ src: landingImage, format: "webp" });
+
+// Data
+const teamMembers = await getCollection("teams", ({ id }) => {
+    return id.startsWith(`${lang}/`);
+});
 ---
 
 
-<BaseLayout title="About" description="Meta description for the page" heroImage={optimizedImage}>
-	<Banner title="About Us" image={optimizedImage} />
+<BaseLayout title={lang === 'bg' ? 'За нас' : 'About'} description="Meta description for the page" heroImage={optimizedImage}>
+	<Banner title={lang === 'bg' ? 'За нас' : 'About Us'} image={optimizedImage} />
+	
+	<section id="team" class="team-section">
+		<div class="container">
+			<div class="section-header">
+				<h2 class="section-title">{t('team.title', lang)}</h2>
+				<p class="section-subtitle">
+					{t('team.subtitle', lang)}
+				</p>
+			</div>
+			<div class="team-grid">
+				{teamMembers.map((member) => (
+					<TeamMember 
+						name={member.data.name}
+						role={member.data.role}
+						certifications={member.data.certifications}
+						yearsExperience={member.data.yearsExperience}
+						verified={member.data.verified}
+						avatar={member.data.avatar}
+						lang={lang}
+					/>
+				))}
+			</div>
+		</div>
+	</section>
+
 	<SideBySide />
 	<FAQ />
 	<CTA />
 </BaseLayout>
+
+<style>
+	.team-section {
+		padding: var(--gs-section-padding);
+		background: var(--gs-background);
+	}
+
+	.container {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 0 var(--gs-space-2);
+	}
+
+	.section-header {
+		text-align: center;
+		margin-bottom: var(--gs-space-6);
+	}
+
+	.section-title {
+		font-size: var(--gs-text-h2);
+		color: var(--gs-institutional-green);
+		margin-bottom: var(--gs-space-2);
+		font-weight: 800;
+	}
+
+	.section-subtitle {
+		font-size: var(--gs-text-base);
+		color: var(--gs-slate-gray);
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	.team-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: var(--gs-space-4);
+	}
+
+	@media (min-width: 768px) {
+		.team-grid {
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: var(--gs-space-6);
+		}
+	}
+</style>

@@ -9,7 +9,9 @@
             "ourMachinery": "Нашата Техника",
             "machinerySubtitle": "Високотехнологично оборудване за вашите проекти.",
             "pageTitle": "Техника | Green Sunrise",
-            "pageDescription": "Нашата високотехнологична техника и оборудване."
+            "pageDescription": "Нашата високотехнологична техника и оборудване.",
+            "ownedBadge": "Собственост и поддръжка от Green Sunrise",
+            "ownershipDeclaration": "Тази техника е част от собствения флот на Green Sunrise"
         },
         "team": {
             "title": "Нашият Екип",
@@ -18,6 +20,20 @@
             "yearsSuffix": "години опит",
             "certifications": "Сертификации",
             "verifiedProfile": "Сертифициран профил"
+        },
+        "technical": {
+            "capacity": "Капацитет",
+            "capacityUnit": "МВт",
+            "terrain": "Терен",
+            "location": "Локация",
+            "verified": "Верифициран",
+            "verifiedProject": "Верифициран проект",
+            "terrainMountainous": "Планински",
+            "terrainFlat": "Равнинен",
+            "terrainIndustrial": "Промишлен",
+            "terrainRooftop": "Покривен",
+            "specsTitle": "Технически Спецификации",
+            "verifiedDesc": "Този проект е верифициран от Green Sunrise"
         }
     },
     "en": {
@@ -30,7 +46,9 @@
             "ourMachinery": "Our Machinery",
             "machinerySubtitle": "High-tech equipment for your projects.",
             "pageTitle": "Machinery | Green Sunrise",
-            "pageDescription": "Our high-tech machinery and equipment."
+            "pageDescription": "Our high-tech machinery and equipment.",
+            "ownedBadge": "Owned & Maintained by Green Sunrise",
+            "ownershipDeclaration": "This machinery is part of the Green Sunrise proprietary fleet"
         },
         "team": {
             "title": "Our Team",
@@ -39,6 +57,20 @@
             "yearsSuffix": "years of experience",
             "certifications": "Certifications",
             "verifiedProfile": "Verified Profile"
+        },
+        "technical": {
+            "capacity": "Capacity",
+            "capacityUnit": "MW",
+            "terrain": "Terrain",
+            "location": "Location",
+            "verified": "Verified",
+            "verifiedProject": "Verified Project",
+            "terrainMountainous": "Mountainous",
+            "terrainFlat": "Flat",
+            "terrainIndustrial": "Industrial",
+            "terrainRooftop": "Roof-top",
+            "specsTitle": "Technical Specifications",
+            "verifiedDesc": "This project is verified by Green Sunrise"
         }
     }
 }

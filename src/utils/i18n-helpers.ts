@@ -121,3 +121,43 @@ export function t(key: TranslationKey, lang: 'bg' | 'en'): string {
 
     return result;
 }
+
+/**
+ * Terrain type mapping for type-safe translation
+ */
+const terrainTypeMap: Record<string, string> = {
+    'Mountainous': 'terrainMountainous',
+    'Flat': 'terrainFlat',
+    'Industrial': 'terrainIndustrial',
+    'Roof-top': 'terrainRooftop'
+};
+
+/**
+ * Translates terrain type enum values to localized strings.
+ * Maintains technical precision across languages.
+ * 
+ * @param terrainType - The terrain type from schema ('Mountainous', 'Flat', 'Industrial', 'Roof-top')
+ * @param lang - The target language ('bg' or 'en')
+ * @returns The localized terrain type string
+ */
+export function translateTerrain(terrainType: string, lang: 'bg' | 'en'): string {
+    const key = terrainTypeMap[terrainType];
+    if (!key) {
+        console.warn(`Unknown terrain type: ${terrainType}`);
+        return terrainType;
+    }
+    return t(`technical.${key}` as TranslationKey, lang);
+}
+
+/**
+ * Formats capacity with localized unit (MW / МВт)
+ * 
+ * @param capacityMW - The capacity value in MW
+ * @param lang - The target language ('bg' or 'en')
+ * @returns Formatted capacity string with unit
+ */
+export function formatCapacity(capacityMW: number, lang: 'bg' | 'en'): string {
+    const unit = t('technical.capacityUnit' as TranslationKey, lang);
+    return `${capacityMW} ${unit}`;
+}
+

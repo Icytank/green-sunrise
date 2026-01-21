@@ -1,0 +1,279 @@
+---
+/**
+ * PROJECT DETAIL PAGE
+ * ==================
+ * 
+ * "Audit Trail" narrative structure for individual project pages.
+ * Features: Challenge/Scope/Outcome sections, technical sidebar, image gallery.
+ */
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import ProjectSidebar from "@components/ProjectSidebar.astro";
+import GSStamp from "@components/GSStamp.astro";
+
+// Generate paths for all project items
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((item) => {
+    const parts = item.id.split("/");
+    if (parts.length < 2) {
+      throw new Error(`Invalid project ID format: ${item.id}. Expected lang/slug.`);
+    }
+    const lang = parts[0];
+    const slug = parts.slice(1).join("/").replace(/\.md$/, '');
+    
+    return {
+      params: { lang, slug },
+      props: { item },
+    };
+  });
+}
+
+const { item } = Astro.props;
+const { lang } = Astro.params;
+const { title, capacityMW, location, terrainType, heroImage, isVerified } = item.data;
+const { Content } = await render(item);
+
+// Translations
+const t = {
+  bg: {
+    theChallenge: "Предизвикателството",
+    technicalScope: "Технически Обхват",
+    theOutcome: "Резултатът",
+    projectGallery: "Галерия",
+    backToProjects: "← Обратно към Проекти"
+  },
+  en: {
+    theChallenge: "The Challenge",
+    technicalScope: "Technical Scope",
+    theOutcome: "The Outcome",
+    projectGallery: "Gallery",
+    backToProjects: "← Back to Projects"
+  }
+};
+
+const labels = t[lang as 'bg' | 'en'];
+---
+
+<BaseLayout 
+  title={`${title} | Green Sunrise`} 
+  description={`${title} - ${capacityMW} MW ${terrainType} project in ${location}`}
+>
+  <article class="project-detail">
+    <!-- Back Link -->
+    <div class="container">
+      <a href={`/${lang}/projects`} class="back-link">{labels.backToProjects}</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="project-hero">
+      <div class="hero-image-wrapper">
+        <Image src={heroImage} alt={title} width={1920} class="hero-image" />
+        {isVerified && (
+          <div class="hero-stamp">
+            <GSStamp size={120} />
+          </div>
+        )}
+      </div>
+      <div class="container hero-content">
+        <div class="capacity-badge font-mono">
+          <span class="capacity-value">{capacityMW}</span>
+          <span class="capacity-unit">MW</span>
+        </div>
+        <h1 class="project-title">{title}</h1>
+        <p class="project-location">{location} • {terrainType}</p>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="container content-grid">
+      <!-- Main Narrative -->
+      <main class="narrative-content">
+        <div class="prose">
+          <Content />
+        </div>
+      </main>
+
+      <!-- Technical Sidebar -->
+      <ProjectSidebar 
+        capacityMW={capacityMW}
+        terrainType={terrainType}
+        location={location}
+        isVerified={isVerified}
+        lang={lang as 'bg' | 'en'}
+      />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    padding-bottom: var(--gs-space-10);
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gs-space-4);
+  }
+
+  .back-link {
+    display: inline-block;
+    padding: var(--gs-space-4) 0;
+    color: var(--gs-slate-gray);
+    text-decoration: none;
+    font-size: var(--gs-text-sm);
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--gs-institutional-green);
+  }
+
+  /* Hero Section */
+  .project-hero {
+    position: relative;
+    margin-bottom: var(--gs-space-10);
+  }
+
+  .hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    min-height: 400px;
+    max-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-stamp {
+    position: absolute;
+    bottom: var(--gs-space-6);
+    right: var(--gs-space-6);
+    z-index: 10;
+  }
+
+  .hero-content {
+    margin-top: calc(-1 * var(--gs-space-10));
+    position: relative;
+    z-index: 5;
+    background: var(--gs-executive-white);
+    padding: var(--gs-space-6);
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+  }
+
+  .capacity-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--gs-space-1);
+    background: var(--gs-institutional-green);
+    color: white;
+    padding: var(--gs-space-2) var(--gs-space-4);
+    border-radius: 6px;
+    margin-bottom: var(--gs-space-3);
+  }
+
+  .capacity-value {
+    font-size: var(--gs-text-h3);
+    font-weight: 700;
+  }
+
+  .capacity-unit {
+    font-size: var(--gs-text-base);
+    opacity: 0.9;
+  }
+
+  .font-mono {
+    font-family: var(--gs-font-mono);
+  }
+
+  .project-title {
+    font-size: var(--gs-text-h1);
+    font-weight: 700;
+    color: var(--gs-text-primary);
+    margin: 0 0 var(--gs-space-2) 0;
+    font-family: var(--gs-font-primary);
+    line-height: 1.2;
+  }
+
+  .project-location {
+    font-size: var(--gs-text-h5);
+    color: var(--gs-slate-gray);
+    margin: 0;
+  }
+
+  /* Content Grid (AC7: 12-column asymmetric) */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gs-space-8);
+  }
+
+  @media (min-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  /* Narrative Content */
+  .narrative-content {
+    background: var(--gs-executive-white);
+    border: 1px solid var(--gs-border);
+    border-radius: 12px;
+    padding: var(--gs-space-8);
+  }
+
+  .prose {
+    line-height: 1.8;
+    color: var(--gs-text-primary);
+    font-size: var(--gs-text-base);
+  }
+
+  .prose :global(h2) {
+    font-size: var(--gs-text-h3);
+    font-weight: 700;
+    color: var(--gs-institutional-green);
+    margin: var(--gs-space-8) 0 var(--gs-space-4) 0;
+    padding-left: var(--gs-space-4);
+    border-left: 4px solid var(--gs-institutional-green);
+    font-family: var(--gs-font-primary);
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .prose :global(h3) {
+    font-size: var(--gs-text-h4);
+    font-weight: 700;
+    color: var(--gs-text-primary);
+    margin: var(--gs-space-6) 0 var(--gs-space-3) 0;
+  }
+
+  .prose :global(p) {
+    margin: 0 0 var(--gs-space-4) 0;
+  }
+
+  .prose :global(ul), .prose :global(ol) {
+    margin: 0 0 var(--gs-space-4) 0;
+    padding-left: var(--gs-space-6);
+  }
+
+  .prose :global(li) {
+    margin: var(--gs-space-2) 0;
+  }
+
+  .prose :global(strong) {
+    font-weight: 700;
+    color: var(--gs-institutional-green);
+  }
+</style>

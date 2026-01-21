@@ -11,19 +11,24 @@ interface Props {
   image: ImageMetadata;
   slug: string;
   lang: "bg" | "en";
+  isOwned?: boolean;
 }
 
-const { title, model, weight, image, slug, lang } = Astro.props;
+const { title, model, weight, image, slug, lang, isOwned = true } = Astro.props;
 const url = getMachineryUrl(slug, lang);
 const formattedWeight = formatSpecValue(weight, "");
+const ownedBadgeLabel = t('machinery.ownedBadge', lang);
+const ownershipDeclaration = t('machinery.ownershipDeclaration', lang);
 ---
 
 <a href={url} class="machinery-card group" aria-label={`${title} - ${model}`}>
   <div class="image-wrapper">
     <Image src={image} alt={title} width={600} class="card-image" />
-    <div class="stamp-wrapper">
-      <GSStamp size={60} />
-    </div>
+    {isOwned && (
+      <div class="stamp-wrapper" title={ownedBadgeLabel} aria-label={ownedBadgeLabel}>
+        <GSStamp size={60} />
+      </div>
+    )}
     <!-- Audit-on-Hover Overlay -->
     <div class="audit-overlay">
        <div class="overlay-content">
@@ -37,6 +42,12 @@ const formattedWeight = formatSpecValue(weight, "");
   </div>
   <div class="content">
     <h3 class="title">{title}</h3>
+    {isOwned && (
+      <div class="ownership-declaration" aria-label={ownedBadgeLabel}>
+        <span class="ownership-indicator"></span>
+        <span class="ownership-text">{ownershipDeclaration}</span>
+      </div>
+    )}
     <div class="card-footer">
        <p class="model-text">{model}</p>
        <div class="specs">
@@ -208,5 +219,35 @@ const formattedWeight = formatSpecValue(weight, "");
     font-size: var(--gs-text-base);
     font-weight: 700;
     color: var(--gs-text-primary);
+  }
+
+  /* Ownership Declaration (AC6: high-contrast, emerald indicator) */
+  .ownership-declaration {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-2);
+    margin-bottom: var(--gs-space-3);
+    padding: var(--gs-space-2) var(--gs-space-3);
+    background: rgba(16, 185, 129, 0.08); /* Subtle emerald tint */
+    border-radius: 6px;
+    border-left: 3px solid var(--gs-success-emerald);
+  }
+
+  .ownership-indicator {
+    width: 8px;
+    height: 8px;
+    background: var(--gs-success-emerald);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--gs-success-emerald);
+  }
+
+  .ownership-text {
+    font-size: var(--gs-text-xs);
+    font-weight: 600;
+    color: var(--gs-institutional-green);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
   }
 </style>

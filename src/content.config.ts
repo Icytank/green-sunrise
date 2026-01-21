@@ -29,19 +29,24 @@ const machineryCollection = defineCollection({
 			impactPower: z.string(),
 			heroImage: image(),
 			galleryImages: z.array(image()),
+			isOwned: z.boolean().default(true),
 		}),
 });
+
+// TerrainType enum for project classification
+const TerrainType = z.enum(['Mountainous', 'Flat', 'Industrial', 'Roof-top']);
 
 const projectsCollection = defineCollection({
 	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/projects" }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
-			client: z.string(),
+			capacityMW: z.number(), // MW capacity for numerical sorting/filtering
+			location: z.string(),
+			terrainType: TerrainType,
 			date: z.date(),
-			category: z.string(),
-			image: image(),
-			imageAlt: z.string(),
+			heroImage: image(),
+			isVerified: z.boolean().default(false), // Toggles GS Stamp visibility
 		}),
 });
 

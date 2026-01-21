@@ -1,26 +1,137 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import ProjectFilters from "@components/ProjectFilters.astro";
+
 export function getStaticPaths() {
 	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
+
 const { lang } = Astro.params;
 
-// Utils
-import { getImage } from "astro:assets";
+// Query the projects collection filtered by language
+const allProjects = await getCollection("projects", ({ id }) => {
+  return id.startsWith(`${lang}/`);
+});
 
-// Components
-import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/Banner/Banner.astro";
-import Gallery from "@components/Gallery/Gallery.astro";
-import CTA from "@components/CTA/CTASimple.astro";
+// Sort by capacity (highest first) for impact
+const sortedProjects = allProjects.sort((a, b) => b.data.capacityMW - a.data.capacityMW);
 
-// Images
-import landingImage from "@assets/images/landing.jpg";
-const optimizedImage = await getImage({ src: landingImage, format: "webp" });
+// Extract unique terrain types for filter dropdown
+const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
+
+
+// Translations
+const t = {
+  bg: {
+    title: "Нашите Проекти",
+    subtitle: "Верифицирано портфолио от реализирани проекти с точни технически спецификации.",
+    pageTitle: "Проекти | Green Sunrise",
+    pageDescription: "Разгледайте нашето портфолио от соларни и енергийни проекти."
+  },
+  en: {
+    title: "Our Projects",
+    subtitle: "Verified portfolio of completed projects with precise technical specifications.",
+    pageTitle: "Projects | Green Sunrise",
+    pageDescription: "Explore our portfolio of solar and energy projects."
+  }
+};
 ---
 
+<BaseLayout 
+  title={t[lang as 'bg' | 'en'].pageTitle}
+  description={t[lang as 'bg' | 'en'].pageDescription}
+>
+  <main class="projects-page">
+    <section class="container">
+      <header class="page-header">
+        <h1 class="font-display">{t[lang as 'bg' | 'en'].title}</h1>
+        <p class="subtitle">{t[lang as 'bg' | 'en'].subtitle}</p>
+      </header>
+      <!-- Project Filters -->
+      <ProjectFilters lang={lang as 'bg' | 'en'} terrainTypes={terrainTypes} />
 
-<BaseLayout title="Projects" description="Meta description for the page" heroImage={optimizedImage}>
-	<Banner title="All projects" image={optimizedImage} />
-	<Gallery />
-	<CTA />
+      <div class="projects-grid">
+        {sortedProjects.map((project) => {
+          const slug = project.id.split("/").slice(1).join("/").replace(/\.md$/, '');
+          return (
+            <ProjectCard
+              title={project.data.title}
+              capacityMW={project.data.capacityMW}
+              location={project.data.location}
+              terrainType={project.data.terrainType}
+              heroImage={project.data.heroImage}
+              slug={slug}
+              lang={lang as "bg" | "en"}
+              isVerified={project.data.isVerified}
+            />
+          );
+        })}
+      </div>
+    </section>
+  </main>
 </BaseLayout>
+
+<style>
+  .projects-page {
+    padding: var(--gs-space-10) 0;
+    background-color: var(--gs-executive-white);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gs-space-4);
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: var(--gs-space-10);
+  }
+
+  .font-display {
+    font-size: var(--gs-text-h1);
+    color: var(--gs-institutional-green);
+    margin-bottom: var(--gs-space-3);
+    font-family: var(--gs-font-primary);
+  }
+
+  .subtitle {
+    font-size: var(--gs-text-h5);
+    color: var(--gs-slate-gray);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* CSS Grid: 12-column responsive layout (AC2) */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gs-space-6);
+  }
+
+  /* Tablet: 2 columns */
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Desktop: 3 columns */
+  @media (min-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* 4K: 4 columns */
+  @media (min-width: 1920px) {
+    .projects-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+

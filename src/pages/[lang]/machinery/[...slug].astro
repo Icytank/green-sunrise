@@ -25,8 +25,10 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { lang } = Astro.params;
-const { title, model, weight, impactPower, heroImage, galleryImages } = item.data;
+const { title, model, weight, impactPower, heroImage, galleryImages, isOwned = true } = item.data;
 const { Content } = await render(item);
+const ownedBadgeLabel = t('machinery.ownedBadge', lang as 'bg' | 'en');
+const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 'en');
 ---
 
 <BaseLayout title={`${title || model} | Green Sunrise`} description={`Technical audit and specifications for ${model}`}>
@@ -43,7 +45,11 @@ const { Content } = await render(item);
          <div class="gallery-section">
             <div class="hero-image-wrapper">
                <Image src={heroImage} alt={title} width={1200} class="hero-image clickable-image" data-full-src={heroImage.src} />
-               <div class="stamp-overlay"><GSStamp size={100} /></div>
+               {isOwned && (
+                 <div class="stamp-overlay" title={ownedBadgeLabel} aria-label={ownedBadgeLabel}>
+                   <GSStamp size={100} />
+                 </div>
+               )}
             </div>
             
             {galleryImages && galleryImages.length > 0 && (
@@ -83,12 +89,17 @@ const { Content } = await render(item);
                      </div>
                      )}
                   </dl>
-                  <div class="ownership-declaration">
-                     <div class="declaration-icon">
-                        <GSStamp size={40} />
-                     </div>
-                     <p>{lang === 'bg' ? 'Собственост и поддръжка от Green Sunrise Ltd.' : 'Owned & Maintained by Green Sunrise Ltd.'}</p>
-                  </div>
+                  {isOwned && (
+                    <div class="ownership-declaration">
+                       <span class="ownership-indicator"></span>
+                       <div class="declaration-content">
+                         <div class="declaration-icon">
+                           <GSStamp size={40} />
+                         </div>
+                         <p>{ownershipDeclaration}</p>
+                       </div>
+                    </div>
+                  )}
                </div>
             </section>
          </div>
@@ -283,28 +294,46 @@ const { Content } = await render(item);
     font-size: var(--gs-text-base);
   }
 
-  /* Ownership Declaration */
+  /* Ownership Declaration (AC6: high-contrast, emerald indicator) */
   .ownership-declaration {
     margin-top: var(--gs-space-4);
     display: flex;
     align-items: center;
     gap: var(--gs-space-3);
     padding: var(--gs-space-4);
-    background: var(--gs-executive-white);
-    border: 1px dashed var(--gs-institutional-green);
+    background: rgba(16, 185, 129, 0.08); /* Subtle emerald tint */
+    border: 1px solid var(--gs-success-emerald);
+    border-left: 4px solid var(--gs-success-emerald);
     border-radius: 8px;
+  }
+
+  .ownership-indicator {
+    width: 12px;
+    height: 12px;
+    background: var(--gs-success-emerald);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px var(--gs-success-emerald);
+  }
+
+  .declaration-content {
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-3);
   }
 
   .declaration-icon {
     flex-shrink: 0;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   .ownership-declaration p {
     margin: 0;
     font-size: var(--gs-text-sm);
     color: var(--gs-institutional-green);
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   /* Lightbox Styles */

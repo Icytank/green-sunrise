@@ -42,6 +42,7 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
               image={machine.data.heroImage}
               slug={slug}
               lang={lang as "bg" | "en"}
+              isOwned={machine.data.isOwned}
             />
           );
         })}

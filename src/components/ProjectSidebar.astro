@@ -1,0 +1,168 @@
+---
+/**
+ * PROJECT SIDEBAR COMPONENT
+ * ========================
+ * 
+ * Technical specifications sidebar for project detail page.
+ * Features: MW capacity, terrain, location, verification status with GSStamp.
+ */
+import GSStamp from "./GSStamp.astro";
+import { t, translateTerrain } from "../utils/i18n-helpers";
+
+interface Props {
+  capacityMW: number;
+  terrainType: string;
+  location: string;
+  isVerified: boolean;
+  lang: "bg" | "en";
+}
+
+const { capacityMW, terrainType, location, isVerified, lang } = Astro.props;
+
+// Use centralized translations
+const capacityLabel = t('technical.capacity', lang);
+const terrainLabel = t('technical.terrain', lang);
+const locationLabel = t('technical.location', lang);
+const capacityUnit = t('technical.capacityUnit', lang);
+const terrainValue = translateTerrain(terrainType, lang);
+const verifiedTitle = t('technical.verifiedProject', lang);
+const verifiedDesc = t('technical.verifiedDesc', lang);
+const technicalSpecsTitle = t('technical.specsTitle', lang);
+---
+
+<aside class="project-sidebar">
+  <h2 class="sidebar-title">{technicalSpecsTitle}</h2>
+  
+  <dl class="specs-list">
+    <!-- Capacity (Primary Data Point) -->
+    <div class="spec-item capacity-highlight">
+      <dt class="spec-label">{capacityLabel}</dt>
+      <dd class="spec-value capacity-value font-mono">{capacityMW} <span class="unit">{capacityUnit}</span></dd>
+    </div>
+    
+    <!-- Terrain -->
+    <div class="spec-item">
+      <dt class="spec-label">{terrainLabel}</dt>
+      <dd class="spec-value">{terrainValue}</dd>
+    </div>
+    
+    <!-- Location -->
+    <div class="spec-item">
+      <dt class="spec-label">{locationLabel}</dt>
+      <dd class="spec-value">{location}</dd>
+    </div>
+  </dl>
+
+  <!-- Verification Status -->
+  {isVerified && (
+    <div class="verification-badge">
+      <GSStamp size={80} />
+      <div class="verification-text">
+        <span class="verification-title">{verifiedTitle}</span>
+        <span class="verification-desc">{verifiedDesc}</span>
+      </div>
+    </div>
+  )}
+</aside>
+
+<style>
+  .project-sidebar {
+    background: var(--gs-executive-white);
+    border: 1px solid var(--gs-border);
+    border-radius: 12px;
+    padding: var(--gs-space-6);
+    position: sticky;
+    top: var(--gs-space-6);
+  }
+
+  .sidebar-title {
+    font-size: var(--gs-text-h5);
+    font-weight: 700;
+    color: var(--gs-institutional-green);
+    margin: 0 0 var(--gs-space-5) 0;
+    padding-bottom: var(--gs-space-3);
+    border-bottom: 2px solid var(--gs-institutional-green);
+    font-family: var(--gs-font-primary);
+  }
+
+  .specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gs-space-4);
+    margin: 0;
+  }
+
+  .spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gs-space-1);
+  }
+
+  .spec-label {
+    font-size: var(--gs-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gs-slate-gray);
+    font-weight: 600;
+  }
+
+  .spec-value {
+    font-size: var(--gs-text-base);
+    color: var(--gs-text-primary);
+    font-weight: 600;
+  }
+
+  /* Capacity Highlight */
+  .capacity-highlight {
+    background: rgba(6, 78, 59, 0.05);
+    padding: var(--gs-space-4);
+    border-radius: 8px;
+    border-left: 4px solid var(--gs-institutional-green);
+  }
+
+  .capacity-value {
+    font-size: var(--gs-text-h3);
+    color: var(--gs-institutional-green);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .font-mono {
+    font-family: var(--gs-font-mono);
+  }
+
+  .unit {
+    font-size: var(--gs-text-h5);
+    color: var(--gs-slate-gray);
+  }
+
+  /* Verification Badge */
+  .verification-badge {
+    margin-top: var(--gs-space-6);
+    padding-top: var(--gs-space-5);
+    border-top: 1px solid var(--gs-border);
+    display: flex;
+    align-items: center;
+    gap: var(--gs-space-3);
+  }
+
+  .verification-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gs-space-1);
+  }
+
+  .verification-title {
+    font-size: var(--gs-text-sm);
+    font-weight: 700;
+    color: var(--gs-success-emerald);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .verification-desc {
+    font-size: var(--gs-text-xs);
+    color: var(--gs-slate-gray);
+    line-height: 1.4;
+  }
+</style>

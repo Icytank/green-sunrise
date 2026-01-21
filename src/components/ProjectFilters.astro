@@ -1,0 +1,239 @@
+---
+/**
+ * PROJECT FILTERS COMPONENT
+ * ========================
+ * 
+ * Client-side filtering for project gallery.
+ * Zero-lag instant filtering without page reloads.
+ */
+
+interface Props {
+  lang: "bg" | "en";
+  terrainTypes: string[];
+}
+
+const { lang, terrainTypes } = Astro.props;
+
+// Translations
+const t = {
+  bg: {
+    allTerrain: "Всички терени",
+    terrain: "Терен",
+    capacity: "Капацитет",
+    allCapacity: "Всички",
+    smallScale: "< 5 MW",
+    mediumScale: "5-15 MW",
+    largeScale: "> 15 MW",
+    clearFilters: "Изчисти филтрите"
+  },
+  en: {
+    allTerrain: "All Terrain",
+    terrain: "Terrain",
+    capacity: "Capacity",
+    allCapacity: "All",
+    smallScale: "< 5 MW",
+    mediumScale: "5-15 MW",
+    largeScale: "> 15 MW",
+    clearFilters: "Clear Filters"
+  }
+};
+
+const labels = t[lang];
+---
+
+<div class="project-filters" id="project-filters">
+  <!-- Terrain Filter -->
+  <div class="filter-group">
+    <label class="filter-label" for="terrain-filter">{labels.terrain}</label>
+    <select id="terrain-filter" class="filter-select" aria-label={labels.terrain}>
+      <option value="">{labels.allTerrain}</option>
+      {terrainTypes.map((type) => (
+        <option value={type}>{type}</option>
+      ))}
+    </select>
+  </div>
+
+  <!-- Capacity Filter -->
+  <div class="filter-group">
+    <label class="filter-label" for="capacity-filter">{labels.capacity}</label>
+    <select id="capacity-filter" class="filter-select font-mono" aria-label={labels.capacity}>
+      <option value="">{labels.allCapacity}</option>
+      <option value="small">{labels.smallScale}</option>
+      <option value="medium">{labels.mediumScale}</option>
+      <option value="large">{labels.largeScale}</option>
+    </select>
+  </div>
+
+  <!-- Clear Filters -->
+  <button id="clear-filters" class="clear-btn" type="button" aria-label={labels.clearFilters}>
+    {labels.clearFilters}
+  </button>
+</div>
+
+<script>
+  function initFilters() {
+    const terrainFilter = document.getElementById('terrain-filter') as HTMLSelectElement;
+    const capacityFilter = document.getElementById('capacity-filter') as HTMLSelectElement;
+    const clearBtn = document.getElementById('clear-filters');
+    const projectCards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
+
+    if (!terrainFilter || !capacityFilter || !clearBtn) return;
+
+    function filterProjects() {
+      const terrain = terrainFilter.value;
+      const capacity = capacityFilter.value;
+
+      projectCards.forEach((card) => {
+        const cardTerrain = card.dataset.terrain || '';
+        const cardCapacity = parseFloat(card.dataset.capacity || '0');
+
+        let terrainMatch = !terrain || cardTerrain === terrain;
+        let capacityMatch = true;
+
+        if (capacity === 'small') {
+          capacityMatch = cardCapacity < 5;
+        } else if (capacity === 'medium') {
+          capacityMatch = cardCapacity >= 5 && cardCapacity <= 15;
+        } else if (capacity === 'large') {
+          capacityMatch = cardCapacity > 15;
+        }
+
+        if (terrainMatch && capacityMatch) {
+          card.style.display = '';
+          card.style.opacity = '1';
+          card.style.transform = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Update active filter states
+      updateActiveStates();
+    }
+
+    function updateActiveStates() {
+      const hasActiveFilter = terrainFilter.value || capacityFilter.value;
+      clearBtn!.classList.toggle('active', hasActiveFilter as unknown as boolean);
+      
+      terrainFilter.classList.toggle('filter-active', !!terrainFilter.value);
+      capacityFilter.classList.toggle('filter-active', !!capacityFilter.value);
+    }
+
+    function clearFilters() {
+      terrainFilter.value = '';
+      capacityFilter.value = '';
+      filterProjects();
+    }
+
+    // Event listeners
+    terrainFilter.addEventListener('change', filterProjects);
+    capacityFilter.addEventListener('change', filterProjects);
+    clearBtn.addEventListener('click', clearFilters);
+  }
+
+  // Initialize on load and after Astro transitions
+  initFilters();
+  document.addEventListener('astro:after-swap', initFilters);
+</script>
+
+<style>
+  .project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gs-space-4);
+    align-items: flex-end;
+    margin-bottom: var(--gs-space-8);
+    padding: var(--gs-space-4);
+    background: var(--gs-executive-white);
+    border: 1px solid var(--gs-border);
+    border-radius: 8px;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gs-space-1);
+    min-width: 160px;
+  }
+
+  .filter-label {
+    font-size: var(--gs-text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gs-slate-gray);
+    font-weight: 600;
+  }
+
+  .filter-select {
+    padding: var(--gs-space-2) var(--gs-space-3);
+    border: 1px solid var(--gs-border);
+    border-radius: 6px;
+    background: white;
+    font-size: var(--gs-text-sm);
+    color: var(--gs-text-primary);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .filter-select:hover {
+    border-color: var(--gs-institutional-green);
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: var(--gs-institutional-green);
+    box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.15);
+  }
+
+  /* Active filter state (AC6) */
+  .filter-select.filter-active {
+    border-color: var(--gs-institutional-green);
+    background: rgba(6, 78, 59, 0.05);
+    color: var(--gs-institutional-green);
+    font-weight: 600;
+  }
+
+  .font-mono {
+    font-family: var(--gs-font-mono);
+  }
+
+  .clear-btn {
+    padding: var(--gs-space-2) var(--gs-space-4);
+    border: 1px solid var(--gs-border);
+    border-radius: 6px;
+    background: transparent;
+    font-size: var(--gs-text-sm);
+    color: var(--gs-slate-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: auto;
+  }
+
+  .clear-btn:hover {
+    border-color: var(--gs-institutional-green);
+    color: var(--gs-institutional-green);
+  }
+
+  .clear-btn.active {
+    background: var(--gs-institutional-green);
+    color: white;
+    border-color: var(--gs-institutional-green);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .project-filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .filter-group {
+      width: 100%;
+    }
+
+    .clear-btn {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>

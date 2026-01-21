@@ -1,6 +1,6 @@
 # Story 2.4: "Machinery Ownership" Trust Declaration
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -21,14 +21,14 @@ so that I can mitigate the risk of subcontractor equipment failure.
 
 ## Tasks / Subtasks
 
-- [ ] Update Machinery Schema (AC: 5)
-  - [ ] Add `isOwned: z.boolean().default(true)` to the `machinery` collection in `src/content/config.ts`
-- [ ] Implement Trust Declaration UI (AC: 3, 4, 6)
-  - [ ] Update `MachineryCard.astro` and machinery detail pages to check the `isOwned` field
-  - [ ] Render the `GSStamp.astro` badge with the "GS Certified Ownership" tooltip or label
-  - [ ] Add the explicit text: "This machinery is part of the Green Sunrise proprietary fleet" in the technical spec list
-- [ ] Integration with Services (AC: 1, 2)
-  - [ ] Ensure the "Machinery Ownership" declaration is visible in the global "Services" overview where machinery is mentioned
+- [x] Update Machinery Schema (AC: 5)
+  - [x] Add `isOwned: z.boolean().default(true)` to the `machinery` collection in `src/content/config.ts`
+- [x] Implement Trust Declaration UI (AC: 3, 4, 6)
+  - [x] Update `MachineryCard.astro` and machinery detail pages to check the `isOwned` field
+  - [x] Render the `GSStamp.astro` badge with the "GS Certified Ownership" tooltip or label
+  - [x] Add the explicit text: "This machinery is part of the Green Sunrise proprietary fleet" in the technical spec list
+- [x] Integration with Services (AC: 1, 2)
+  - [x] Ensure the "Machinery Ownership" declaration is visible in the global "Services" overview where machinery is mentioned
 
 ## Dev Notes
 
@@ -59,10 +59,32 @@ so that I can mitigate the risk of subcontractor equipment failure.
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude (Anthropic)
 
 ### Debug Log References
 
+- Type check: 0 errors
+- Tests: 18 passed (4 new ownership translation tests added)
+
 ### Completion Notes List
 
+- Added `isOwned: z.boolean().default(true)` field to machinery collection schema
+- Added bilingual translations for `ownedBadge` and `ownershipDeclaration` keys
+- Updated `MachineryCard.astro` with conditional GSStamp badge (title/aria-label) and ownership declaration with emerald indicator styling
+- Updated `[...slug].astro` detail page with conditional rendering based on `isOwned`, proper i18n translations, and `--gs-success-emerald` styling
+- Updated `services.astro` to pass `isOwned` prop to MachineryCard
+- Added 4 unit tests for ownership translations (bilingual parity verified)
+- Accessibility: aria-label attributes added to stamp wrappers
+
 ### File List
+
+- src/content.config.ts (modified)
+- src/data/translations.json (modified)
+- src/components/MachineryCard.astro (modified)
+- src/pages/[lang]/machinery/[...slug].astro (modified)
+- src/pages/[lang]/services.astro (modified)
+- src/utils/i18n-helpers.test.ts (modified)
+
+## Change Log
+
+- 2026-01-21: Implemented trust declaration feature with isOwned schema field, bilingual translations, conditional GSStamp badge, and emerald indicator styling

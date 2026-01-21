@@ -42,14 +42,16 @@ const t = {
     technicalScope: "Технически Обхват",
     theOutcome: "Резултатът",
     projectGallery: "Галерия",
-    backToProjects: "← Обратно към Проекти"
+    backToProjects: "← Обратно към Проекти",
+    requestPartnership: "Заяви Партньорство"
   },
   en: {
     theChallenge: "The Challenge",
     technicalScope: "Technical Scope",
     theOutcome: "The Outcome",
     projectGallery: "Gallery",
-    backToProjects: "← Back to Projects"
+    backToProjects: "← Back to Projects",
+    requestPartnership: "Request Partnership"
   }
 };
 
@@ -95,14 +97,20 @@ const labels = t[lang as 'bg' | 'en'];
         </div>
       </main>
 
-      <!-- Technical Sidebar -->
-      <ProjectSidebar 
-        capacityMW={capacityMW}
-        terrainType={terrainType}
-        location={location}
-        isVerified={isVerified}
-        lang={lang as 'bg' | 'en'}
-      />
+      <!-- Sidebar Column -->
+      <aside class="sidebar-wrapper">
+        <ProjectSidebar 
+          capacityMW={capacityMW}
+          terrainType={terrainType}
+          location={location}
+          isVerified={isVerified}
+          lang={lang as 'bg' | 'en'}
+        />
+        
+        <a href={`/${lang}/contact`} class="cta-button">
+          {labels.requestPartnership} →
+        </a>
+      </aside>
     </div>
   </article>
 </BaseLayout>
@@ -275,5 +283,28 @@ const labels = t[lang as 'bg' | 'en'];
   .prose :global(strong) {
     font-weight: 700;
     color: var(--gs-institutional-green);
+  }
+
+  .sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gs-space-6);
+  }
+
+  .cta-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--gs-institutional-green);
+    color: white;
+    padding: var(--gs-space-4);
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--gs-institutional-green-dark, #27ae60);
   }
 </style>

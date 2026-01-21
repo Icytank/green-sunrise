@@ -1,6 +1,6 @@
 # Story 4.1: Specialized B2B Contact Form
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,19 +22,19 @@ so that my inquiry is qualified and ready for a technical discussion.
 
 ## Tasks / Subtasks
 
-- [ ] Implement B2B Contact Form Component (AC: 1, 3, 5, 7)
-  - [ ] Create `ContactForm.astro` PascalCase component
-  - [ ] Use semantic `<form>`, `<label>`, and `<input>` elements
-  - [ ] Implement a dropdown or radio group for `Project Type` (Utility-scale / Industrial Roof-top)
-- [ ] Form Validation & Constraints (AC: 4, 6)
-  - [ ] Add HTML5 validation for all required fields
-  - [ ] Implement custom styling for `:invalid` states using `--gs-institutional-green` or a neutral error token
-- [ ] Success/Error Feedback UI (AC: 6)
-  - [ ] Create placeholders for transition states (Sending, Success, Error)
-  - [ ] Ensure the "Success" toast message reflects the "Professional Authority" of the brand
-- [ ] Integration (AC: 1)
-  - [ ] Place the `ContactForm` on the specialized `Contact` page
-  - [ ] Add the "Request Partnership" CTA to project detail pages that links to this form
+- [x] Implement B2B Contact Form Component (AC: 1, 3, 5, 7)
+  - [x] Create `ContactForm.astro` PascalCase component
+  - [x] Use semantic `<form>`, `<label>`, and `<input>` elements
+  - [x] Implement a dropdown or radio group for `Project Type` (Utility-scale / Industrial Roof-top)
+- [x] Form Validation & Constraints (AC: 4, 6)
+  - [x] Add HTML5 validation for all required fields
+  - [x] Implement custom styling for `:invalid` states using `--gs-institutional-green` or a neutral error token
+- [x] Success/Error Feedback UI (AC: 6)
+  - [x] Create placeholders for transition states (Sending, Success, Error)
+  - [x] Ensure the "Success" toast message reflects the "Professional Authority" of the brand
+- [x] Integration (AC: 1)
+  - [x] Place the `ContactForm` on the specialized `Contact` page
+  - [x] Add the "Request Partnership" CTA to project detail pages that links to this form
 
 ## Dev Notes
 
@@ -66,6 +66,26 @@ so that my inquiry is qualified and ready for a technical discussion.
 
 ### Debug Log References
 
+- Created strict mock tests for contact info logic in `src/components/ContactFormLogic.test.ts`.
+- Verified logic handles network errors and success states gracefully.
+- Integrated `ContactForm` into `contact.astro` and added CTA to `[...slug].astro`.
+
 ### Completion Notes List
 
+- ✅ Implemented `ContactForm.astro` with full bilingual support (EN/BG).
+- ✅ Created isolated logic in `ContactFormLogic.ts` handling client-side `fetch` submission.
+- ✅ Added `required` attributes for HTML5 validation.
+- ✅ Added visual feedback for Sending/Success/Error states.
+- ✅ Integrated CTA "Request Partnership" on Project Detail pages.
+- ✅ Verified with automated logic tests and component integration.
+
+### Code Review Fixes (AI)
+- Fixed radio button values to match `Utility` / `Roof-top` AC requirement.
+- Fixed CSS Grid gap to 1rem (16px) to align with design system.
+
 ### File List
+src/components/ContactForm.astro
+src/components/ContactFormLogic.ts
+src/components/ContactFormLogic.test.ts
+src/pages/[lang]/contact.astro
+src/pages/[lang]/projects/[...slug].astro

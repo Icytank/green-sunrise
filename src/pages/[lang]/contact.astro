@@ -13,6 +13,7 @@ import Banner from "@components/Banner/Banner.astro";
 
 // Data
 import { BUSINESS } from "@data/client";
+import ContactForm from "@components/ContactForm.astro";
 
 // Images
 import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -26,34 +27,14 @@ const optimizedImage = await getImage({ src: landingImage, format: "webp" });
 
 	<section id="cs-contact">
 		<div class="cs-container">
-			<form id="cs-form" name="Contact Form" method="post">
+			<div class="cs-form-wrapper">
 				<div class="cs-content">
 					<span class="cs-topper">Contact</span>
 					<h2 class="cs-title">Get in Touch</h2>
 					<p class="cs-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ridiculus elementum ullamcorper ipsum porttitor aliquam. Id magna urna ultrices odio pulvinar. Sed ut.</p>
 				</div>
-				<label>
-					Name
-					<input required type="text" id="name" name="name" placeholder="Name" />
-				</label>
-				<label>
-					Email
-					<input required type="text" id="email" name="email" placeholder="Email" />
-				</label>
-				<label>
-					Phone
-					<input required type="text" id="phone" name="phone" placeholder="Phone" />
-				</label>
-				<label>
-					How Did You Find Us
-					<input type="text" id="find" name="find-us" placeholder="How did you find us?" />
-				</label>
-				<label class="cs-label-message">
-					Message
-					<textarea required name="Message" id="message" placeholder="Write message..."></textarea>
-				</label>
-				<button class="cs-button-solid" type="submit">Submit Message</button>
-			</form>
+				<ContactForm lang={lang} />
+			</div>
 			<div class="cs-right-section">
 				<!--Email-->
 				<span class="cs-header">Email</span>
@@ -140,54 +121,8 @@ const { lang } = Astro.params;
 				margin-bottom: clamp(2.5rem, 6.3vw, 3rem);
 			}
 
-			#cs-form {
+			.cs-form-wrapper {
 				margin-bottom: (40/16rem);
-				label {
-					font-size: (16/16rem);
-					font-weight: 700;
-					line-height: 1.5em;
-					/* 12px - 20px */
-					margin-bottom: clamp(0.75rem, 1.3em, 1.25rem);
-					color: var(--headerColor);
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: flex-start;
-				}
-
-				.cs-label-message {
-					/* 32px - 48px */
-					margin-bottom: clamp(2rem, 6.3vw, 3rem);
-				}
-
-				input,
-				textarea {
-					font-size: (16/16rem);
-					width: 100%;
-					height: (64/16rem);
-					margin-top: (4/16rem);
-					/* prevents border & padding from affecting height */
-					box-sizing: border-box;
-					padding-left: (20/16rem);
-					border: 1px solid #b4b2c7;
-					border-radius: (8/16rem);
-					transition: border 0.3s;
-
-					&:hover {
-						border: 1px solid var(--primary);
-					}
-				}
-
-				textarea {
-					font-family: inherit;
-					min-height: (120/16rem);
-					padding-top: (20/16rem);
-				}
-
-				.cs-button-solid {
-					width: 100%;
-					border: none;
-				}
 			}
 
 			.cs-right-section {
@@ -295,19 +230,10 @@ const { lang } = Astro.params;
 	/* Tablet - 700px */
 	@media only screen and (min-width: 43.75em) {
 		#cs-contact {
-			#cs-form {
-				display: flex;
-				justify-content: space-between;
-				align-items: flex-start;
-				flex-wrap: wrap;
-
-				label {
-					width: 48%;
-				}
-
-				.cs-label-message {
-					width: 100%;
-				}
+			.cs-form-wrapper {
+				/* display: flex; REMOVED because wrapper is now block containing stacked content */
+				/* Actually previously #cs-form was flex container for labels. Now ContactForm has its own flex. */
+				/* Just keep wrapper block */
 			}
 		}
 	}
@@ -323,11 +249,8 @@ const { lang } = Astro.params;
 				gap: (80/16rem);
 			}
 
-			#cs-form {
+			.cs-form-wrapper {
 				max-width: (630/16rem);
-				label {
-					width: 100%;
-				}
 			}
 
 			.cs-right-section {
@@ -355,16 +278,8 @@ const { lang } = Astro.params;
 	/* Small Desktop - 1300px */
 	@media only screen and (min-width: 81.25em) {
 		#cs-contact {
-			#cs-form {
+			.cs-form-wrapper {
 				column-gap: (0/16rem);
-				label {
-					width: 48%;
-					max-width: (305/16rem);
-				}
-
-				.cs-label-message {
-					max-width: 100%;
-				}
 			}
 
 			.cs-right-section {
@@ -386,19 +301,7 @@ const { lang } = Astro.params;
 					color: var(--primaryLight);
 				}
 
-				#cs-form {
-					label,
-					input,
-					textarea {
-						color: var(--bodyTextColorWhite);
-						background-color: transparent;
 
-						&::placeholder {
-							/* lighten up the color of the text by 40%*/
-							filter: brightness(1.4);
-						}
-					}
-				}
 
 				.cs-bg-picture {
 					background-color: #000;

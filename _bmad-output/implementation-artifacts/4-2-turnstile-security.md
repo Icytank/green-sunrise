@@ -1,6 +1,6 @@
 # Story 4.2: Anti-Spam Security - Cloudflare Turnstile
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,14 +22,14 @@ so that I only receive legitimate business inquiries.
 
 ## Tasks / Subtasks
 
-- [ ] Integrate Turnstile Client-Side Widget (AC: 2, 3, 6)
-  - [ ] Add the Turnstile script tag to the `<head>` or specifically in the `ContactForm` component
-  - [ ] Implement the `cf-turnstile` div with the appropriate site key (use placeholders for now)
-- [ ] Form Submission Interaction (AC: 4, 5)
-  - [ ] Modify the submit handler in `ContactForm.astro` to retrieve the `cf-turnstile-response` token
-  - [ ] Ensure the "Send Inquiry" button is disabled or submission is prevented if the token is missing
-- [ ] Security Configuration (AC: 7)
-  - [ ] Define environment variable placeholders for `TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`
+- [x] Integrate Turnstile Client-Side Widget (AC: 2, 3, 6)
+  - [x] Add the Turnstile script tag to the `<head>` or specifically in the `ContactForm` component
+  - [x] Implement the `cf-turnstile` div with the appropriate site key (use placeholders for now)
+- [x] Form Submission Interaction (AC: 4, 5)
+  - [x] Modify the submit handler in `ContactForm.astro` to retrieve the `cf-turnstile-response` token
+  - [x] Ensure the "Send Inquiry" button is disabled or submission is prevented if the token is missing
+- [x] Security Configuration (AC: 7)
+  - [x] Define environment variable placeholders for `TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`
 
 ## Dev Notes
 
@@ -60,6 +60,23 @@ so that I only receive legitimate business inquiries.
 
 ### Debug Log References
 
+- Added negative test case in `ContactFormLogic.test.ts` to fail when token is missing.
+- Updated `ContactFormLogic.ts` to enforce token presence.
+- Added Turnstile widget and script to `ContactForm.astro`.
+
 ### Completion Notes List
 
+- ✅ Integrated Cloudflare Turnstile into `ContactForm.astro`.
+- ✅ Configured environment variables (placeholders) in `.env`.
+- ✅ Enforced Turnstile validation in client-side logic (`ContactFormLogic.ts`).
+- ✅ Verified validation via unit tests (passed strict check for token presence).
+- ✅ Verified build process confirms environment configuration.
+
+### Code Review Fixes (AI)
+- Added `data-error-callback` to Turnstile widget for graceful error handling.
+
 ### File List
+.env
+src/components/ContactForm.astro
+src/components/ContactFormLogic.ts
+src/components/ContactFormLogic.test.ts

@@ -1,6 +1,6 @@
 # Story 4.3: Serverless Lead Routing (Resend API)
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,16 +22,16 @@ so that I can respond to B2B leads within their "Boardroom Discovery" window.
 
 ## Tasks / Subtasks
 
-- [ ] Create API Endpoint (AC: 2, 6)
-  - [ ] Implement `src/pages/api/contact.ts` (Astro endpoint) or a Cloudflare Pages Function
-  - [ ] Implement the Turnstile token verification call to Cloudflare
-- [ ] Implement Resend Integration (AC: 4, 5, 7)
-  - [ ] Initialize the Resend client using a `RESEND_API_KEY` environment variable
-  - [ ] Format the email payload with: `Name`, `Company`, `Role`, `Message`, and `Project Type`
-  - [ ] Use a professional email template or simple high-contrast layout matching the brand
-- [ ] Error Handling (AC: 6)
-  - [ ] Return appropriate status codes (400 for invalid tokens, 500 for API failure)
-  - [ ] Ensure no PII is logged in error logs
+- [x] Create API Endpoint (AC: 2, 6)
+  - [x] Implement `src/pages/api/contact.ts` (Astro endpoint) or a Cloudflare Pages Function
+  - [x] Implement the Turnstile token verification call to Cloudflare
+- [x] Implement Resend Integration (AC: 4, 5, 7)
+  - [x] Initialize the Resend client using a `RESEND_API_KEY` environment variable
+  - [x] Format the email payload with: `Name`, `Company`, `Role`, `Message`, and `Project Type`
+  - [x] Use a professional email template or simple high-contrast layout matching the brand
+- [x] Error Handling (AC: 6)
+  - [x] Return appropriate status codes (400 for invalid tokens, 500 for API failure)
+  - [x] Ensure no PII is logged in error logs
 
 ## Dev Notes
 
@@ -63,6 +63,25 @@ so that I can respond to B2B leads within their "Boardroom Discovery" window.
 
 ### Debug Log References
 
+- Configured Astro for Cloudflare/Hybrid output.
+- Implemented `src/pages/api/contact.ts` with strict error handling.
+- Verified build generates server functions.
+
 ### Completion Notes List
 
+- ✅ Configured Astro with `@astrojs/cloudflare` adapter.
+- ✅ Created serverless endpoint `src/pages/api/contact.ts`.
+- ✅ Implemented Turnstile verification (Backend).
+- ✅ Implemented Resend email dispatch.
+- ✅ Updated `.env` with placeholder keys.
+- ✅ Validated build success.
+
+### Code Review Fixes (AI)
+- Updated `astro.config.mjs` to `output: 'server'` to support dynamic API endpoint.
+- Refactored `src/pages/api/contact.ts` to include Timestamp and stronger typing.
+
 ### File List
+astro.config.mjs
+package.json
+.env
+src/pages/api/contact.ts

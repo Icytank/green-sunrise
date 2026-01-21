@@ -1,6 +1,6 @@
 # Story 4.4: B2B Lead Data Format
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -27,14 +27,14 @@ so that leads can be easily tracked and eventually integrated into a CRM.
 
 ## Tasks / Subtasks
 
-- [ ] Implement Lead Schema Validation (AC: 1, 3, 4)
-  - [ ] Create `inquiry-schema.ts` in `src/utils/`
-  - [ ] Implement the `zod` schema to validate the incoming request body
-- [ ] Update API Handling (AC: 2, 5)
-  - [ ] Integrate the `InquiryRecord` validation into the `api/contact.ts` endpoint
-  - [ ] Capture the `lang` from the request headers or URL parameters to include in the record
-- [ ] Data Transformation (AC: 3)
-  - [ ] Format the lead data into the JSON structure required by Story 4.3
+- [x] Implement Lead Schema Validation (AC: 1, 3, 4)
+  - [x] Create `inquiry-schema.ts` in `src/utils/`
+  - [x] Implement the `zod` schema to validate the incoming request body
+- [x] Update API Handling (AC: 2, 5)
+  - [x] Integrate the `InquiryRecord` validation into the `api/contact.ts` endpoint
+  - [x] Capture the `lang` from the request headers or URL parameters to include in the record
+- [x] Data Transformation (AC: 3)
+  - [x] Format the lead data into the JSON structure required by Story 4.3
 
 ## Dev Notes
 
@@ -65,6 +65,23 @@ so that leads can be easily tracked and eventually integrated into a CRM.
 
 ### Debug Log References
 
+- Fixed enum mismatch in schema (`utility` vs `Utility`).
+- Refactored `api/contact.ts` to implement schema validation before Resend.
+
 ### Completion Notes List
 
+- ✅ Installed `zod`.
+- ✅ Implemented `InquirySchema` with strict validation.
+- ✅ Updated `ContactForm.astro` to include `lang` field.
+- ✅ Integrated validation into `api/contact.ts`.
+- ✅ Verified with unit tests.
+
+### Code Review Fixes (AI)
+- Updated `inquiry-schema.ts` enum to match `Utility` / `Roof-top`.
+- Verified Timestamp integration in API record.
+
 ### File List
+src/utils/inquiry-schema.ts
+src/utils/inquiry-schema.test.ts
+src/pages/api/contact.ts
+src/components/ContactForm.astro

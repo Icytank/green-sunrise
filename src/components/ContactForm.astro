@@ -1,0 +1,305 @@
+---
+interface Props {
+  lang?: "en" | "bg";
+}
+
+const { lang = "en" } = Astro.props;
+
+const translations = {
+  en: {
+    legend: "Project Details",
+    name: "Name",
+    company: "Company",
+    email: "Email",
+    phone: "Phone",
+    projectType: "Project Type",
+    typeUtility: "Utility-scale",
+    typeCommercial: "Commercial & Industrial (C&I)",
+    message: "Message",
+    submit: "Submit Inquiry",
+    sending: "Sending...",
+    success: "Thank you! We will contact you shortly.",
+    error: "Something went wrong. Please try again or email us.",
+  },
+  bg: {
+    legend: "Детайли за проекта",
+    name: "Име",
+    company: "Компания",
+    email: "Имейл",
+    phone: "Телефон",
+    projectType: "Тип проект",
+    typeUtility: "Ютилити (Utility-scale)",
+    typeCommercial: "Търговски и Индустриален (C&I)",
+    message: "Съобщение",
+    submit: "Изпрати запитване",
+    sending: "Изпращане...",
+    success: "Благодарим Ви! Ще се свържем с вас скоро.",
+    error: "Възникна грешка. Моля, опитайте отново или ни пишете.",
+  },
+};
+
+const t = translations[lang];
+---
+
+<!-- Turnstile Script -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<form id="cs-form" name="contact" method="POST" class="cs-form" 
+  data-sending={t.sending}
+  data-success={t.success}
+  data-error={t.error}
+>
+  <!-- Honeypot -->
+  <input type="hidden" name="form-name" value="contact" />
+  <input type="hidden" name="lang" value={lang} />
+  <p class="hidden">
+    <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+  </p>
+
+  <label class="cs-label">
+    {t.name}
+    <input required type="text" name="name" placeholder={t.name} />
+  </label>
+
+  <label class="cs-label">
+    {t.email}
+    <input required type="email" name="email" placeholder={t.email} />
+  </label>
+
+  <label class="cs-label">
+    {t.phone}
+    <input type="tel" name="phone" placeholder={t.phone} />
+  </label>
+
+  <label class="cs-label">
+    {t.company}
+    <input required type="text" name="company" placeholder={t.company} />
+  </label>
+
+  <fieldset class="cs-fieldset">
+    <legend class="cs-legend">{t.projectType}</legend>
+    <div class="cs-radio-group">
+      <label class="cs-radio-label">
+        <input required type="radio" name="projectType" value="Utility" />
+        <span class="cs-radio-text">{t.typeUtility}</span>
+      </label>
+      <label class="cs-radio-label">
+        <input required type="radio" name="projectType" value="Roof-top" />
+        <span class="cs-radio-text">{t.typeCommercial}</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <label class="cs-label cs-label-message">
+    {t.message}
+    <textarea required name="message" placeholder={t.message}></textarea>
+  </label>
+
+  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-error-callback="onTurnstileError"></div>
+
+  <button class="cs-button-solid" type="submit">{t.submit}</button>
+
+  <div class="cs-status-message" aria-live="polite"></div>
+</form>
+
+<script>
+  import { handleSubmit } from "./ContactFormLogic";
+
+  const form = document.getElementById("cs-form") as HTMLFormElement;
+  const statusMessage = form?.querySelector(".cs-status-message") as HTMLElement;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = form.getAttribute('data-sending') || "...";
+      
+        const formData = new FormData(form);
+        const result = await handleSubmit(formData);
+
+        if (result.success) {
+          form.reset();
+          if (statusMessage) {
+              statusMessage.innerText = form.getAttribute('data-success') || "Success";
+              statusMessage.classList.add("success");
+              statusMessage.classList.remove("error");
+          }
+           submitBtn.innerText = originalText;
+           submitBtn.disabled = false;
+        } else {
+           if (statusMessage) {
+              statusMessage.innerText = form.getAttribute('data-error') || "Error";
+              statusMessage.classList.add("error");
+              statusMessage.classList.remove("success");
+          }
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+        }
+      }
+    });
+
+    // Turnstile Error Callback (must be global or attached to window as widget looks for it)
+    (window as any).onTurnstileError = function() {
+        if (statusMessage) {
+            statusMessage.innerText = form.getAttribute('data-error') || "Security check failed. Please refresh.";
+            statusMessage.classList.add("error");
+            statusMessage.classList.remove("success");
+            if (submitBtn) submitBtn.disabled = true;
+        }
+    };
+    });
+  }
+</script>
+
+<style>
+  /* Local Component Styles */
+  .hidden {
+      display: none;
+  }
+
+  .cs-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    column-gap: 1rem; /* 16px */
+    row-gap: 1rem;
+  }
+
+  .cs-label {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5em;
+    color: var(--gs-text-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  /* Desktop: 2 columns */
+  @media only screen and (min-width: 43.75em) {
+      .cs-label {
+          width: 48%; /* Fallback */
+          width: calc(50% - 0.625rem);
+      }
+      .cs-fieldset {
+          width: 100%;
+      }
+  }
+
+  .cs-label-message {
+    width: 100% !important;
+  }
+
+  input,
+  textarea {
+    font-size: 1rem;
+    width: 100%;
+    height: 4rem; /* 64px */
+    margin-top: 0.25rem;
+    box-sizing: border-box;
+    padding-left: 1.25rem;
+    border: 1px solid #b4b2c7;
+    border-radius: 0.5rem;
+    transition: border 0.3s;
+    background: #fff;
+  }
+
+  input:hover,
+  textarea:hover {
+    border: 1px solid var(--gs-institutional-green);
+  }
+
+  textarea {
+    font-family: inherit;
+    min-height: 7.5rem; /* 120px */
+    padding-top: 1.25rem;
+  }
+
+  .cs-button-solid {
+    width: 100%;
+    border: none;
+    background-color: var(--gs-institutional-green);
+    color: #fff;
+    padding: 0 2rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .cs-button-solid:hover {
+      background-color: var(--gs-success-emerald);
+  }
+  
+  .cs-button-solid:disabled {
+      opacity: 0.7;
+      cursor: wait;
+  }
+
+  /* Fieldset for Radio Buttons */
+  .cs-fieldset {
+      border: 1px solid #b4b2c7;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+  }
+
+  .cs-legend {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gs-text-primary);
+      padding: 0 0.5rem;
+  }
+
+  .cs-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+  }
+  
+  @media only screen and (min-width: 43.75em) {
+      .cs-radio-group {
+          flex-direction: row;
+          gap: 2rem;
+      }
+  }
+
+  .cs-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 400;
+      cursor: pointer;
+  }
+  
+  .cs-radio-text {
+      font-size: 1rem;
+      color: var(--gs-text-primary);
+  }
+
+  .cs-status-message {
+      width: 100%;
+      margin-top: 1rem;
+      font-weight: 700;
+      text-align: center;
+  }
+  
+  .cs-status-message.success {
+      color: var(--gs-institutional-green, #2ecc71);
+  }
+  
+  .cs-status-message.error {
+      color: var(--secondary, #e74c3c);
+  }
+</style>

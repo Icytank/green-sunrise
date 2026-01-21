@@ -1,8 +1,11 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
+import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
+	output: "server",
+	adapter: cloudflare(),
 	site: "https://www.yourwebsite.com", // update me!
 	integrations: [
 		icon(),

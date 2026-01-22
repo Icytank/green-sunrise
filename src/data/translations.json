@@ -212,6 +212,19 @@
             "contact": "Контакти",
             "requestPartnership": "Заяви Партньорство"
         },
+        "contact": {
+            "pageTitle": "Контакт | Green Sunrise",
+            "pageDescription": "Свържете се с нас за Вашия следващ соларен проект.",
+            "title": "Свържете се с нас",
+            "subtitle": "Готови сме да обсъдим Вашия проект.",
+            "companyInfo": "Информация за компанията",
+            "email": "Имейл",
+            "phone": "Телефон",
+            "address": "Адрес",
+            "businessHours": "Работно време",
+            "workingDays": "Понеделник - Петък",
+            "country": "България"
+        },
         "footer": {
             "description": "Специализиран европейски партньор за инсталация на индустриални фотоволтаици, разполагащ със собствена техника за набиване на пилони и експертни екипи.",
             "navigation": "Навигация",
@@ -435,6 +448,19 @@
             "projects": "Projects",
             "contact": "Contact",
             "requestPartnership": "Request Partnership"
+        },
+        "contact": {
+            "pageTitle": "Contact | Green Sunrise",
+            "pageDescription": "Get in touch with us for your next solar project.",
+            "title": "Get in Touch",
+            "subtitle": "We're ready to discuss your project.",
+            "companyInfo": "Company Information",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "businessHours": "Business Hours",
+            "workingDays": "Monday - Friday",
+            "country": "Bulgaria"
         },
         "footer": {
             "description": "Specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.",

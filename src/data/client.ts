@@ -16,12 +16,16 @@ export const BUSINESS = {
 	phoneFormatted: "+359 888 000 000",
 	vatNumber: "BG206123456",
 	address: {
-		lineOne: "123 Industrial Zone",
-		lineTwo: "Suite 400",
-		city: "Plovdiv",
+		lineOne: "Industrial Zone",
+		lineTwo: "",
+		city: "Opaka",
 		state: "Bulgaria",
-		zip: "4000",
+		zip: "7840",
 		mapLink: "https://goo.gl/maps/example",
+	},
+	businessHours: {
+		days: "Monday - Friday",
+		hours: "09:00 - 18:00",
 	},
 	socials: {
 		facebook: "https://www.facebook.com/",

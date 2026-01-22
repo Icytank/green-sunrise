@@ -6,312 +6,349 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 
 // Utils
-import { Picture, getImage } from "astro:assets";
+import { getImage } from "astro:assets";
 
 // Components
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner/Banner.astro";
+import ContactForm from "@components/ContactForm.astro";
 
 // Data
 import { BUSINESS } from "@data/client";
-import ContactForm from "@components/ContactForm.astro";
+import translations from "@data/translations.json";
 
 // Images
-import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import skyscraperImage from "@assets/images/gallery/skyscraper.jpg";
+import landingImage from "@assets/images/landing.jpg";
 const optimizedImage = await getImage({ src: landingImage, format: "webp" });
+
+// Get translations
+const t = translations[lang as keyof typeof translations];
+const contactT = t.contact;
 ---
 
-
-<BaseLayout lang={lang} title="Contact" description="Meta description for the page" heroImage={optimizedImage}>
-	<Banner title="Contact" image={optimizedImage} />
+<BaseLayout 
+	lang={lang} 
+	title={contactT.pageTitle} 
+	description={contactT.pageDescription} 
+	heroImage={optimizedImage}
+>
+	<Banner title={contactT.title} image={optimizedImage} />
 
 	<section id="cs-contact">
 		<div class="cs-container">
-			<div class="cs-form-wrapper">
-				<div class="cs-content">
-					<span class="cs-topper">Contact</span>
-					<h2 class="cs-title">Get in Touch</h2>
-					<p class="cs-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ridiculus elementum ullamcorper ipsum porttitor aliquam. Id magna urna ultrices odio pulvinar. Sed ut.</p>
-				</div>
-				<ContactForm lang={lang} />
-			</div>
-			<div class="cs-right-section">
-				<!--Email-->
-				<span class="cs-header">Email</span>
-				<a class="cs-link" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
-				<!--Phone-->
-				<span class="cs-header">Phone</span>
-				<a class="cs-link" href={`tel:${BUSINESS.phoneForTel}`}>{BUSINESS.phoneFormatted}</a>
-				<!--Address-->
-				<span class="cs-header">Address</span>
-				<a class="cs-link" href={BUSINESS.address.mapLink}>
-					{BUSINESS.address.lineOne},
-					<br />
-					{BUSINESS.address.lineTwo},
-					<br />
-					<span class="cs-block">
-						{BUSINESS.address.city}
-						{BUSINESS.address.state}
-						{BUSINESS.address.zip}
-					</span>
-				</a>
+			<!-- Left Column: Company Info -->
+			<div class="cs-info-column">
+        <div class="cs-info-card">
+          <span class="cs-topper">{contactT.companyInfo}</span>
+          <h2 class="cs-title">{BUSINESS.name}</h2>
+          <p class="cs-text">{contactT.subtitle}</p>
 
-				<!-- Background Image-->
-				<Picture src={skyscraperImage} alt="building" width={2500} height={1667} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-bg-picture" }} />
+          <div class="cs-divider"></div>
+
+          <div class="cs-info-list">
+            <!-- Address -->
+            <div class="cs-info-item">
+              <div class="cs-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
+                  <path d="M12 13.43a3.12 3.12 0 1 0 0-6.24 3.12 3.12 0 0 0 0 6.24Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/>
+                  <path d="M22 12c0 7-9 11-10 11S2 19 2 12a10 10 0 0 1 20 0Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="cs-info-content">
+                <span class="cs-info-label">{contactT.address}</span>
+                <a class="cs-info-link" href={BUSINESS.address.mapLink} target="_blank" rel="noopener noreferrer">
+                  {BUSINESS.address.lineOne && <span>{BUSINESS.address.lineOne}, </span>}
+                  {BUSINESS.address.city}, {contactT.country} {BUSINESS.address.zip}
+                </a>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="cs-info-item">
+              <div class="cs-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
+                  <path d="M21.97 18.33a2.18 2.18 0 0 1-2.18 2.18 8.44 8.44 0 0 1-5-1.63 8.35 8.35 0 0 1-3.18-3.18 8.44 8.44 0 0 1-1.63-5 2.18 2.18 0 0 1 2.18-2.18c.56 0 1.01-.28 1.25-.79l1-2a2.3 2.3 0 0 0-.27-2.73 4.25 4.25 0 0 0-3-.76A4.55 4.55 0 0 0 2 6.56a16.66 16.66 0 0 0 15.44 15.44 4.55 4.55 0 0 0 4.39-4.57 4.25 4.25 0 0 0-.76-3 2.3 2.3 0 0 0-2.73-.27l-2 1c-.51.24-.79.69-.79 1.25Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="cs-info-content">
+                <span class="cs-info-label">{contactT.phone}</span>
+                <a class="cs-info-link" href={`tel:${BUSINESS.phoneForTel}`}>
+                  {BUSINESS.phoneFormatted}
+                </a>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="cs-info-item">
+               <div class="cs-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
+                  <path d="M17 20.5H7A5.5 5.5 0 0 1 1.5 15V9A5.5 5.5 0 0 1 7 3.5h10A5.5 5.5 0 0 1 22.5 9v6a5.5 5.5 0 0 1-5.5 5.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="m6 9 5.2 3.9a1.5 1.5 0 0 0 1.6 0L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+               </div>
+               <div class="cs-info-content">
+                <span class="cs-info-label">{contactT.email}</span>
+                <a class="cs-info-link" href={`mailto:${BUSINESS.email}`}>
+                  {BUSINESS.email}
+                </a>
+               </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="cs-info-item">
+              <div class="cs-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
+                   <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                   <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="cs-info-content">
+                <span class="cs-info-label">{contactT.businessHours}</span>
+                <span class="cs-info-value">
+                  {contactT.workingDays}<br />
+                  <span class="cs-highlight">{BUSINESS.businessHours.hours}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+
+			<!-- Right Column: Contact Form -->
+			<div class="cs-form-column">
+				<ContactForm lang={lang} />
 			</div>
 		</div>
 	</section>
 </BaseLayout>
 
 <style lang="less">
-	/* PAGE-SPECIFIC STYLES FOR THE CONTACT PAGE */
-
-	/*-- ---
-export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
-}
-const { lang } = Astro.params;
------------------------ -->
-<---
-export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
-}
-const { lang } = Astro.params;
-          Contact           -->
-<---
-export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
-}
-const { lang } = Astro.params;
- -------------------------- -*/
+	/* Contact Page - Styled Layout */
 
 	/* Mobile - 360px */
 	@media only screen and (min-width: 0em) {
 		#cs-contact {
 			padding: var(--sectionPadding);
+      background-color: var(--gs-executive-white);
 
 			.cs-container {
 				width: 100%;
-				/* changes to 1280px at desktop */
-				max-width: (800/16rem);
+				max-width: (1280/16rem);
 				margin: auto;
+				display: flex;
+				flex-direction: column;
+				gap: (32/16rem);
 			}
 
-			.cs-content {
+			.cs-info-column {
 				width: 100%;
 			}
 
+      /* Card Styling matching MachineryCard */
+      .cs-info-card {
+        background-color: #fff;
+        border: 1px solid var(--gs-border);
+        border-radius: 12px;
+        padding: clamp(1.5rem, 5vw, 2.5rem);
+        /* Subtle shadow */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
+        height: 100%;
+      }
+
 			.cs-topper {
-				text-align: left;
-				/* 8px - 12px */
-				margin-bottom: clamp(0.5rem, 1.4vw, 0.75rem);
+				font-size: var(--gs-text-sm);
+				font-weight: 700;
+				line-height: 1.2em;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--primary);
+				margin-bottom: (8/16rem);
+				display: block;
 			}
 
 			.cs-title {
-				text-align: left;
-				max-width: (800/16rem);
+				font-size: var(--gs-text-h3);
+				font-weight: 900;
+				line-height: 1.2;
+				color: var(--headerColor);
+				margin: 0 0 (12/16rem) 0;
+        font-family: var(--gs-font-primary);
 			}
 
 			.cs-text {
-				text-align: left;
-				/* 404px - 522px */
-				max-width: clamp(25.25rem, 30vw, 32.625rem);
-				margin: 0 auto 0 0;
-				/* 40px - 48px */
-				margin-bottom: clamp(2.5rem, 6.3vw, 3rem);
+				font-size: var(--bodyFontSize);
+				line-height: 1.5em;
+				color: var(--bodyTextColor);
+				margin: 0 0 (24/16rem) 0;
 			}
 
-			.cs-form-wrapper {
-				margin-bottom: (40/16rem);
-			}
+      .cs-divider {
+        height: 1px;
+        width: 100%;
+        background-color: var(--gs-border);
+        margin-bottom: (32/16rem);
+      }
 
-			.cs-right-section {
-				height: (320/16rem);
-				/* 24px - 40px top & bottom */
-				/* 20px - 40px left & right */
-				padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem);
-				border-radius: (8/16rem);
+			.cs-info-list {
 				display: flex;
 				flex-direction: column;
-				justify-content: flex-end;
+				gap: (28/16rem);
+			}
+
+			.cs-info-item {
+				display: flex;
 				align-items: flex-start;
-				position: relative;
-				/* cuts off corners on img tag */
-				overflow: hidden;
+				gap: (16/16rem);
 			}
 
-			.cs-header {
-				/* 16px - 20px */
-				font-size: clamp(1rem, 3vw, 1.25rem);
+      .cs-icon-wrapper {
+        width: (48/16rem);
+        height: (48/16rem);
+        background-color: rgba(6, 78, 59, 0.05); /* Institutional green tint */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        color: var(--gs-institutional-green);
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .cs-info-item:hover .cs-icon-wrapper {
+        background-color: var(--gs-institutional-green);
+        color: #fff;
+      }
+
+      .cs-icon {
+        width: (24/16rem);
+        height: (24/16rem);
+      }
+
+      .cs-info-content {
+        display: flex;
+        flex-direction: column;
+        gap: (4/16rem);
+      }
+
+			.cs-info-label {
+				font-size: (12/16rem);
 				font-weight: 700;
-				line-height: 1.2em;
-				margin-bottom: (8/16rem);
-				color: var(--bodyTextColorWhite);
-				display: block;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				color: var(--gs-text-secondary);
 			}
 
-			.cs-link {
-				/* 16px - 20px */
-				font-size: clamp(1rem, 3vw, 1.25rem);
-				line-height: 1.2em;
+			.cs-info-link,
+			.cs-info-value {
+				font-size: (16/16rem);
+				line-height: 1.5;
+				color: var(--headerColor);
 				text-decoration: none;
-				margin-bottom: (20/16rem);
-				color: var(--bodyTextColorWhite);
-				display: block;
-				position: relative;
-
-				&:before {
-					/* Animated underline */
-					content: "";
-					width: 0%;
-					height: 2px;
-					/* current color of the parent */
-					background: currentColor;
-					opacity: 1;
-					display: block;
-					position: absolute;
-					bottom: (-2/16rem);
-					left: 0;
-					transition: width 0.3s;
-				}
-
-				&:hover {
-					&:before {
-						width: 100%;
-					}
-				}
-
-				&:last-of-type {
-					margin-bottom: 0;
-				}
+				transition: color 0.3s;
+        font-weight: 600;
 			}
 
-			.cs-block {
-				/* sends second address line to the bottom on its own line */
-				display: block;
+			.cs-info-link:hover {
+				color: var(--primary);
 			}
 
-			.cs-bg-picture {
+      .cs-highlight {
+        color: var(--gs-institutional-green);
+        font-family: var(--gs-font-mono);
+      }
+
+			.cs-form-column {
 				width: 100%;
-				height: 100%;
-				display: block;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: -1;
-				transition: transform 0.6s;
-
-				&:before {
-					/* background color overlay */
-					content: "";
-					width: 100%;
-					height: 100%;
-					background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
-					display: block;
-					position: absolute;
-					top: 0;
-					left: 0;
-					z-index: 1;
-				}
-
-				img {
-					width: 100%;
-					height: 100%;
-					/* Makes img tag act as a background image */
-					object-fit: cover;
-					position: absolute;
-					top: 0;
-					left: 0;
-				}
+        /* Form background matching card */
+         background-color: #fff;
+        border: 1px solid var(--gs-border);
+        border-radius: 12px;
+        padding: clamp(1.5rem, 5vw, 3rem);
+        box-shadow: 0 20px 40px rgba(0, 78, 59, 0.05); /* Softer matching shadow */
 			}
 		}
 	}
 
-	/* Tablet - 700px */
-	@media only screen and (min-width: 43.75em) {
-		#cs-contact {
-			.cs-form-wrapper {
-				/* display: flex; REMOVED because wrapper is now block containing stacked content */
-				/* Actually previously #cs-form was flex container for labels. Now ContactForm has its own flex. */
-				/* Just keep wrapper block */
-			}
-		}
-	}
-
-	/* Small Desktop - 1024px */
+	/* Tablet/Desktop - 1024px */
 	@media only screen and (min-width: 64em) {
 		#cs-contact {
 			.cs-container {
-				max-width: (1280/16rem);
-				display: flex;
-				justify-content: flex-end;
-				align-items: flex-start;
-				gap: (80/16rem);
+				flex-direction: row;
+				align-items: stretch; /* Match heights */
+				gap: (30/16rem);
 			}
 
-			.cs-form-wrapper {
-				max-width: (630/16rem);
-			}
-
-			.cs-right-section {
-				width: 40%;
-				max-width: (542/16rem);
-				/* changes to 578px at 1300px wide */
-				height: (686/16rem);
-				/* prevents flexbox from squishing it */
+			.cs-info-column {
+				width: 35%;
+				max-width: (400/16rem);
 				flex: none;
-
-				&:hover {
-					.cs-bg-picture {
-						transform: scale(1.1);
-					}
-				}
 			}
+      
+      .cs-info-card {
+        height: 100%;
+        position: sticky;
+        top: (100/16rem);
+      }
 
-			.cs-block {
-				/* goes back to inline so it stays "in line" with the rest of the text */
-				display: inline-block;
-			}
-		}
-	}
-
-	/* Small Desktop - 1300px */
-	@media only screen and (min-width: 81.25em) {
-		#cs-contact {
-			.cs-form-wrapper {
-				column-gap: (0/16rem);
-			}
-
-			.cs-right-section {
-				height: (578/16rem);
+			.cs-form-column {
+				flex: 1;
 			}
 		}
 	}
+  
+  /* Larger Desktop */
+  @media only screen and (min-width: 81.25em) {
+    #cs-contact .cs-info-column {
+       width: 30%;
+       max-width: (450/16rem);
+    }
+  }
 
 	/* Dark Mode */
 	@media only screen and (min-width: 0em) {
 		body.dark-mode {
 			#cs-contact {
-				.cs-text,
-				.cs-title {
+        background-color: var(--dark);
+
+        .cs-info-card,
+        .cs-form-column {
+          background-color: var(--medium);
+          border-color: rgba(255,255,255,0.1);
+        }
+
+				.cs-title,
+				.cs-info-value,
+        .cs-info-link {
 					color: var(--bodyTextColorWhite);
 				}
+        
+        .cs-divider {
+          background-color: rgba(255,255,255,0.1);
+        }
 
-				.cs-topper {
+				.cs-topper,
+				.cs-info-label {
 					color: var(--primaryLight);
 				}
 
+        .cs-text {
+          color: var(--bodyTextColorWhite);
+          opacity: 0.8;
+        }
 
-
-				.cs-bg-picture {
-					background-color: #000;
-
-					img {
-						/* lets parent background-color bleed through and darken it */
-						opacity: 0.5;
-					}
+				.cs-info-link:hover {
+					color: var(--primaryLight);
 				}
+        
+        .cs-icon-wrapper {
+          background-color: rgba(255,255,255,0.05);
+          color: var(--primaryLight);
+        }
+        
+        .cs-info-item:hover .cs-icon-wrapper {
+           background-color: var(--primaryLight);
+           color: var(--dark);
+        }
 			}
 		}
 	}

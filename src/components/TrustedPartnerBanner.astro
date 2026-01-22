@@ -1,0 +1,46 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+const text = t("home.trustedPartner.text" as TranslationKey, lang);
+---
+
+<section id="trusted-partner">
+  <div class="cs-container">
+    <p class="cs-text">{text}</p>
+  </div>
+</section>
+
+<style lang="less">
+  #trusted-partner {
+    padding: var(--gs-space-4) 0;
+    /* Use a neutral but distinct background, maybe slight off-white or light gray to separate from footer */
+    background-color: var(--gs-executive-white); 
+    border-top: 1px solid var(--gs-border);
+  }
+
+  .cs-container {
+    width: 100%;
+    max-width: (1280/16rem);
+    margin: auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cs-text {
+    font-size: var(--gs-text-h4); /* Large enough to be readable but not a shouting headline */
+    font-weight: 600;
+    color: var(--gs-text-secondary); /* Elegant gray */
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+  }
+</style>

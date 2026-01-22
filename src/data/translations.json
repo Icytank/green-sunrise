@@ -36,8 +36,8 @@
             "verifiedDesc": "Този проект е верифициран от Green Sunrise"
         },
         "hero": {
-            "title": "Основи за индустриални фотоволтаици",
-            "subtitle": "Собствена техника. Сертифицирани екипи. Надеждно изпълнение за мащабни фотоволтаични проекти.",
+            "title": "Специализирани услуги за изграждане и монтаж на индустриални фотоволтаични паркове",
+            "subtitle": "Green Sunrise Ltd е утвърдена компания с дългогодишен опит в изграждането на мащабни соларни проекти.",
             "viewProjects": "Виж проектите",
             "requestSpecs": "Заяви спецификации"
         },
@@ -51,7 +51,158 @@
             "teamLabel": "Експертиза",
             "teamTitle": "Сертифицирани Екипи",
             "teamDesc": "Нашите специалисти притежават всички необходими квалификации за работа на терен.",
-            "viewAll": "Виж всички"
+            "viewAll": "Виж всички",
+            "advantages": {
+                "title": "Защо да изберете нас",
+                "expertise": {
+                    "title": "Експертиза",
+                    "desc": "Доказан опит в изграждането на сложни индустриални проекти."
+                },
+                "machinery": {
+                    "title": "Собствена Техника",
+                    "desc": "Разполагаме със специализирана техника за всякакъв тип терени."
+                },
+                "precision": {
+                    "title": "Прецизност",
+                    "desc": "Високо качество на изпълнение и внимание към детайла."
+                },
+                "workflow": {
+                    "title": "Работен Процес",
+                    "desc": "Оптимизирани процеси за спазване на кратки срокове."
+                },
+                "partnership": {
+                    "title": "Партньорство",
+                    "desc": "Дългосрочни отношения и коректност към нашите клиенти."
+                }
+            },
+            "trustedPartner": {
+                "text": "Партньорство с доверие"
+            }
+        },
+        "services": {
+            "pageTitle": "Услуги | Green Sunrise",
+            "pageDescription": "Пълен обхват от услуги за изграждане на фотоволтаични централи.",
+            "title": "Нашите Услуги",
+            "list": {
+                "pileDriving": {
+                    "title": "Набиване на пилони",
+                    "desc": "Високопроизводително набиване на пилони с GPS точност."
+                },
+                "structureInstallation": {
+                    "title": "Монтаж на конструкции",
+                    "desc": "Цялостен монтаж на фиксирани конструкции и тракери."
+                },
+                "moduleInstallation": {
+                    "title": "Монтаж на модули",
+                    "desc": "Безопасен и ефективен монтаж на фотоволтаични панели."
+                },
+                "epcSupport": {
+                    "title": "Подкрепа за EPC",
+                    "desc": "Гъвкави решения за подпомагане на главни изпълнители."
+                },
+                "labourTeams": {
+                    "title": "Работни екипи",
+                    "desc": "Опитни екипи за механичен монтаж под наем."
+                }
+            },
+            "whyUs": {
+                "title": "Защо да работите с нас",
+                "list": {
+                    "specialized": {
+                        "title": "Специализиран фокус",
+                        "desc": "Изцяло фокусирани върху механичния монтаж."
+                    },
+                    "machinery": {
+                        "title": "Собствена техника",
+                        "desc": "Модерен машинен парк без зависимост от наеми."
+                    },
+                    "agility": {
+                        "title": "Гъвкавост",
+                        "desc": "Бърза мобилизация в цяла Европа."
+                    },
+                    "quality": {
+                        "title": "Качество",
+                        "desc": "Безкомпромисен контрол на всеки етап."
+                    },
+                    "partnership": {
+                        "title": "Партньорство",
+                        "desc": "Лоялен подизпълнител, който пази вашата репутация."
+                    }
+                }
+            }
+        },
+        "projects": {
+            "pageTitle": "Проекти | Green Sunrise",
+            "pageDescription": "Разгледайте нашето портфолио от соларни и енергийни проекти.",
+            "title": "Нашите Проекти",
+            "subtitle": "Верифицирано портфолио от реализирани проекти с точни технически спецификации.",
+            "methodology": {
+                "intro": "Участници в строителството на енергийната инфраструктура на бъдещето.",
+                "steps": {
+                    "adherence": {
+                        "title": "Стриктно спазване",
+                        "desc": "Работа по утвърден график и технически проект."
+                    },
+                    "precision": {
+                        "title": "Прецизност",
+                        "desc": "Лазерна точност при монтажните дейности."
+                    },
+                    "coordination": {
+                        "title": "Координация",
+                        "desc": "Синхронизация с всички страни в строителния процес."
+                    },
+                    "efficiency": {
+                        "title": "Ефективност",
+                        "desc": "Оптимизация на ресурсите и времето."
+                    },
+                    "safety": {
+                        "title": "Безопасност",
+                        "desc": "Нулев компромис със здравето и безопасността."
+                    }
+                }
+            },
+            "detail": {
+                "scope": "Обхват на дейността"
+            }
+        },
+        "about": {
+            "intro": {
+                "title": "Корпоративен Профил",
+                "text": "Green Sunrise Ltd е специализирана компания, фокусирана върху висококачественото изпълнение на инфраструктурни и енергийни проекти."
+            },
+            "mission": {
+                "title": "Нашата Мисия",
+                "text": "Да изграждаме устойчиво бъдеще чрез иновативни инженерни решения и безкомпромисно качество във всеки детайл."
+            },
+            "vision": {
+                "title": "Нашата Визия",
+                "text": "Да бъдем предпочитан европейски партньор за реализацията на мащабни ВЕИ проекти, задавайки стандартите за ефективност и надеждност."
+            },
+            "values": {
+                "title": "Нашите Ценности",
+                "list": {
+                    "quality": {
+                        "title": "Качество",
+                        "desc": "Стриктен контрол и прецизност във всяка стъпка."
+                    },
+                    "team": {
+                        "title": "Екип",
+                        "desc": "Квалифицирани специалисти с доказан международен опит."
+                    },
+                    "capability": {
+                        "title": "Капацитет",
+                        "desc": "Собствен машинен парк и ресурси за мащабни задачи."
+                    },
+                    "integrity": {
+                        "title": "Почтеност",
+                        "desc": "Прозрачни и етични отношения с партньори и клиенти."
+                    },
+                    "responsibility": {
+                        "title": "Отговорност",
+                        "desc": "Ангажираност към безопасността и околната среда."
+                    }
+                }
+            }
         },
         "nav": {
             "home": "Начало",
@@ -109,8 +260,8 @@
             "verifiedDesc": "This project is verified by Green Sunrise"
         },
         "hero": {
-            "title": "Foundations for Utility-Scale Solar",
-            "subtitle": "Owned Machinery. Certified Teams. Reliable execution for large-scale photovoltaic projects.",
+            "title": "Specialized Construction and Installation Services for Utility-Scale PV Parks",
+            "subtitle": "Green Sunrise Ltd is an established company with years of experience in building large-scale solar projects.",
             "viewProjects": "View Projects",
             "requestSpecs": "Request Specs"
         },
@@ -124,7 +275,158 @@
             "teamLabel": "The Expertise",
             "teamTitle": "Certified Teams",
             "teamDesc": "Our specialists hold all necessary qualifications for on-site operations.",
-            "viewAll": "View All"
+            "viewAll": "View All",
+            "advantages": {
+                "title": "Why Choose Us",
+                "expertise": {
+                    "title": "Expertise",
+                    "desc": "Proven track record in complex utility-scale projects."
+                },
+                "machinery": {
+                    "title": "Own Machinery",
+                    "desc": "We own specialized equipment for all terrain types."
+                },
+                "precision": {
+                    "title": "Precision",
+                    "desc": "High quality execution with attention to detail."
+                },
+                "workflow": {
+                    "title": "Workflow",
+                    "desc": "Optimized processes to meet tight deadlines."
+                },
+                "partnership": {
+                    "title": "Partnership",
+                    "desc": "Long-term relationships and integrity with our clients."
+                }
+            },
+            "trustedPartner": {
+                "text": "Trusted Partner"
+            }
+        },
+        "services": {
+            "pageTitle": "Services | Green Sunrise",
+            "pageDescription": "Comprehensive mechanical installation services for PV plants.",
+            "title": "Our Services",
+            "list": {
+                "pileDriving": {
+                    "title": "Pile Driving",
+                    "desc": "High-performance pile driving with GPS precision."
+                },
+                "structureInstallation": {
+                    "title": "Structure Installation",
+                    "desc": "Complete mechanical installation of fixed and tracker systems."
+                },
+                "moduleInstallation": {
+                    "title": "Module Installation",
+                    "desc": "Safe and efficient mounting of PV modules."
+                },
+                "epcSupport": {
+                    "title": "Support for EPCs",
+                    "desc": "Flexible solutions to support main contractors."
+                },
+                "labourTeams": {
+                    "title": "Labour Teams",
+                    "desc": "Experienced mechanical installation teams for hire."
+                }
+            },
+            "whyUs": {
+                "title": "Why Work With Us",
+                "list": {
+                    "specialized": {
+                        "title": "Specialized Focus",
+                        "desc": "100% focused on mechanical installation quality."
+                    },
+                    "machinery": {
+                        "title": "Own Machinery",
+                        "desc": "Modern fleet, no rental dependencies."
+                    },
+                    "agility": {
+                        "title": "Agility",
+                        "desc": "Rapid mobilization across Europe."
+                    },
+                    "quality": {
+                        "title": "Quality First",
+                        "desc": "Uncompromising control at every stage."
+                    },
+                    "partnership": {
+                        "title": "Partnership",
+                        "desc": "A loyal subcontractor protecting your reputation."
+                    }
+                }
+            }
+        },
+        "projects": {
+            "pageTitle": "Projects | Green Sunrise",
+            "pageDescription": "Explore our portfolio of solar and energy projects.",
+            "title": "Our Projects",
+            "subtitle": "Verified portfolio of completed projects with precise technical specifications.",
+            "methodology": {
+                "intro": "Participants in construction of the energy infrastructure of the future.",
+                "steps": {
+                    "adherence": {
+                        "title": "Strict Adherence",
+                        "desc": "Working according to approved schedule and technical design."
+                    },
+                    "precision": {
+                        "title": "Precision",
+                        "desc": "Laser accuracy in installation activities."
+                    },
+                    "coordination": {
+                        "title": "Coordination",
+                        "desc": "Synchronization with all parties in the construction process."
+                    },
+                    "efficiency": {
+                        "title": "Efficiency",
+                        "desc": "Optimization of resources and time."
+                    },
+                    "safety": {
+                        "title": "Safety",
+                        "desc": "Zero compromise on health and safety."
+                    }
+                }
+            },
+            "detail": {
+                "scope": "Scope of Work"
+            }
+        },
+        "about": {
+            "intro": {
+                "title": "Corporate Profile",
+                "text": "Green Sunrise Ltd is a specialized company focused on high-quality execution of infrastructure and renewable energy projects."
+            },
+            "mission": {
+                "title": "Our Mission",
+                "text": "To build a sustainable future through innovative engineering solutions and uncompromising quality in every detail."
+            },
+            "vision": {
+                "title": "Our Vision",
+                "text": "To be the preferred European partner for large-scale RES projects, setting standards for efficiency and reliability."
+            },
+            "values": {
+                "title": "Our Values",
+                "list": {
+                    "quality": {
+                        "title": "Quality",
+                        "desc": "Strict control and precision at every step."
+                    },
+                    "team": {
+                        "title": "Team",
+                        "desc": "Qualified specialists with proven international experience."
+                    },
+                    "capability": {
+                        "title": "Capability",
+                        "desc": "Proprietary machinery fleet and resources for large-scale tasks."
+                    },
+                    "integrity": {
+                        "title": "Integrity",
+                        "desc": "Transparent and ethical relationships with partners and clients."
+                    },
+                    "responsibility": {
+                        "title": "Responsibility",
+                        "desc": "Commitment to safety and the environment."
+                    }
+                }
+            }
         },
         "nav": {
             "home": "Home",

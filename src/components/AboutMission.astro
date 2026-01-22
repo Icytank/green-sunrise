@@ -1,0 +1,70 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+// Helpers to simplify template
+const tr = (key: string) => t(`about.${key}` as TranslationKey, lang);
+---
+
+<section id="mission-vision">
+    <div class="cs-container">
+        <!-- Mission -->
+        <div class="cs-card">
+            <h3 class="cs-h3">{tr("mission.title")}</h3>
+            <p class="cs-text">{tr("mission.text")}</p>
+        </div>
+
+        <!-- Vision -->
+        <div class="cs-card">
+            <h3 class="cs-h3">{tr("vision.title")}</h3>
+            <p class="cs-text">{tr("vision.text")}</p>
+        </div>
+    </div>
+</section>
+
+<style lang="less">
+    #mission-vision {
+        padding: 0 var(--gs-space-2) var(--gs-section-padding) var(--gs-space-2);
+    }
+
+    .cs-container {
+        width: 100%;
+        max-width: (1024/16rem);
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--gs-space-6);
+
+        @media only screen and (min-width: 48rem) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .cs-card {
+        background-color: var(--gs-executive-white);
+        padding: var(--gs-space-6);
+        border-radius: 8px;
+        border-left: 4px solid var(--gs-institutional-green);
+        /* Subtle shadow */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .cs-h3 {
+        font-size: var(--gs-text-h4);
+        font-weight: 700;
+        color: var(--gs-institutional-green);
+        margin-bottom: var(--gs-space-2);
+    }
+
+    .cs-text {
+        font-size: var(--gs-text-base);
+        color: var(--gs-text-secondary);
+        line-height: var(--gs-leading-relaxed);
+        margin: 0;
+    }
+</style>

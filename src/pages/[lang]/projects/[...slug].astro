@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { lang } = Astro.params;
-const { title, capacityMW, location, terrainType, heroImage, isVerified } = item.data;
+const { title, capacityMW, location, terrainType, heroImage, isVerified, scope } = item.data;
 const { Content } = await render(item);
 
 // Translations
@@ -107,6 +107,7 @@ const labels = t[lang as 'bg' | 'en'];
           location={location}
           isVerified={isVerified}
           lang={lang as 'bg' | 'en'}
+          scope={scope}
         />
         
         <a href={`/${lang}/contact`} class="cta-button">

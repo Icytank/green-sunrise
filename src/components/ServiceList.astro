@@ -1,0 +1,129 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+const tr = (key: string) => t(`services.list.${key}` as TranslationKey, lang);
+
+const services = [
+  { key: 'pileDriving', icon: '🔩' },
+  { key: 'structureInstallation', icon: '🏗️' },
+  { key: 'moduleInstallation', icon: '☀️' },
+  { key: 'epcSupport', icon: '🤝' },
+  { key: 'labourTeams', icon: '👷' },
+];
+---
+
+<section id="services-list">
+    <div class="cs-container">
+        <SectionHeader
+            label={t("nav.services" as TranslationKey, lang)} 
+            title={t("services.title" as TranslationKey, lang)}
+            description=""
+            align="left"
+        />
+
+        <div class="cs-grid">
+            {services.map((s) => (
+                <div class="cs-card">
+                    <span class="cs-icon">{s.icon}</span>
+                    <h3 class="cs-h3">{tr(`${s.key}.title`)}</h3>
+                    <p class="cs-text">{tr(`${s.key}.desc`)}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style lang="less">
+    #services-list {
+        padding: var(--gs-section-padding);
+        background-color: var(--gs-surface-secondary);
+    }
+
+    .cs-container {
+        width: 100%;
+        max-width: (1280/16rem);
+        margin: auto;
+    }
+
+    .cs-grid {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--gs-space-4);
+    }
+    
+    /* Desktop Flex Override for Center Alignment */
+    @media only screen and (min-width: 64rem) {
+        .cs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+
+    .cs-card {
+        background-color: #fff;
+        padding: var(--gs-space-6);
+        border-radius: 8px;
+        border: 1px solid var(--gs-border);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        
+        grid-column: span 12;
+
+        /* Tablet - 2 cols */
+        @media only screen and (min-width: 48rem) {
+            grid-column: span 6;
+        }
+
+        /* Desktop Flex Sizing */
+        @media only screen and (min-width: 64rem) {
+            width: calc(33.33% - var(--gs-space-4));
+            max-width: (400/16rem);
+        }
+        
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--gs-space-4);
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--gs-institutional-green);
+        }
+    }
+
+    .cs-icon {
+        font-size: 2.5rem;
+        background: var(--gs-executive-white);
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cs-h3 {
+        font-size: var(--gs-text-h4);
+        font-weight: 700;
+        color: var(--gs-text-primary);
+        margin: 0;
+    }
+
+    .cs-text {
+        font-size: var(--gs-text-base);
+        color: var(--gs-text-secondary);
+        line-height: var(--gs-leading-relaxed);
+        margin: 0;
+    }
+</style>

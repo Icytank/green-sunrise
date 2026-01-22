@@ -1,0 +1,157 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+const tr = (key: string) => t(`projects.methodology.steps.${key}` as TranslationKey, lang);
+
+const steps = [
+  { key: 'adherence', icon: '📋' },
+  { key: 'precision', icon: '🎯' },
+  { key: 'coordination', icon: '🔄' },
+  { key: 'efficiency', icon: '⚡' },
+  { key: 'safety', icon: '🛡️' }
+];
+---
+
+<section id="methodology">
+    <div class="cs-container">
+
+
+        <div class="cs-steps">
+            {steps.map((step, index) => (
+                <div class="cs-step">
+                    <div class="cs-icon-wrapper">
+                        <span class="cs-icon">{step.icon}</span>
+                        <span class="cs-number">{index + 1}</span>
+                    </div>
+                    <div class="cs-content">
+                        <h3 class="cs-h3">{tr(`${step.key}.title`)}</h3>
+                        <p class="cs-text">{tr(`${step.key}.desc`)}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style lang="less">
+    #methodology {
+        padding: 0 0 var(--gs-section-padding) 0;
+        background-color: #fff;
+    }
+
+    .cs-container {
+        width: 100%;
+        max-width: (1280/16rem);
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gs-space-10);
+    }
+
+
+
+    .cs-steps {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--gs-space-4);
+    }
+    
+    /* Desktop Flex Override */
+    @media only screen and (min-width: 64rem) {
+        .cs-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+
+    .cs-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--gs-space-4);
+        padding: var(--gs-space-6) var(--gs-space-4);
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid var(--gs-border);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+        grid-column: span 12;
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--gs-institutional-green);
+        }
+
+        /* Tablet */
+        @media only screen and (min-width: 48rem) {
+            grid-column: span 6;
+        }
+
+        /* Desktop Flex Sizing */
+        @media only screen and (min-width: 64rem) {
+            width: calc(33.33% - var(--gs-space-4));
+            max-width: (400/16rem);
+        }
+    }
+
+    .cs-icon-wrapper {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--gs-surface-secondary);
+        border-radius: 50%;
+    }
+
+    .cs-icon {
+        font-size: 2.5rem;
+    }
+
+    .cs-number {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: var(--gs-institutional-green);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: bold;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+    }
+
+    .cs-h3 {
+        font-size: var(--gs-text-h5);
+        font-weight: 700;
+        color: var(--gs-text-primary);
+        margin: 0;
+    }
+
+    .cs-text {
+        font-size: var(--gs-text-base);
+        color: var(--gs-text-secondary);
+        line-height: var(--gs-leading-relaxed);
+        margin: 0;
+    }
+</style>

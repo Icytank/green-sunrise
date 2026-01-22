@@ -1,47 +1,59 @@
-# Sprint Change Proposal: Localization & UI Fixes
+# Sprint Change Proposal: Content Integration & Refinement
+
 **Date:** 2026-01-22
-**Trigger:** Manual testing by user
-**Status:** Approved for Implementation
+**Trigger:** User provided specific content/copy for all 5 core pages via spreadsheets.
+**Scope:** Minor / Content-Heavy
 
 ## 1. Issue Summary
-User identified 5 distinct bugs related to localization (wrong language in header/footer), broken links in footer, and UI z-index issues on project pages. These issues affect the core bilingual functionality and user experience.
+The initial implementation used placeholder content derived from the PRD. The client/user has now provided the exact text, lists, and structural preferences for the Homepage, About Us, Services, Projects, and Contact pages. These updates need to be integrated "smartly" to blend with the existing high-quality Astro architecture without overwriting the functional logic.
 
 ## 2. Impact Analysis
-- **Epic Impact:** Epic 5 (polishing) is affected. These are critical polish items.
-- **Artifacts:** 
-  - `Header` (Dynamic & Static)
-  - `Footer`
-  - `ProjectSidebar`
-  - `Project Detail Page`
-  - `Translations` dictionary
-- **Scope:** Minor (localized code fixes, no architectural changes).
+- **Epic Impact:**
+    - **Epic 1 (Foundation):** Homepage intro text and Contact page layout update.
+    - **Epic 2 (Machinery/Teams):** Services page structure change (List vs Gallery) and About Us intro addition.
+    - **Epic 3 (Projects):** Project schema update (`scope` field) and Intro text.
+    - **Epic 4 (B2B):** Contact page text and "Company Details" sidebar addition.
+- **Technical Impact:**
+    - **Schema:** `src/content/config.ts` needs a new `scope` field for Projects.
+    - **Layouts:** `services.astro` and `contact.astro` need minor layout refactoring to accommodate new text blocks.
+    - **Localization:** `translations.json` will be significantly expanded.
 
-## 3. Recommended Approach
-**Direct Adjustment:** Create a new story **5.5 - Localization & UI Bug Fixes** to track and implement these specific fixes. This keeps the work isolated and trackable.
+## 3. Recommended Approach: Direct Adjustment
+We will treat this as a "Content Injection" pass. We will not revert any functional work (like the map logic or machinery gallery) but will wrap them in the new narrative structures provided by the text.
 
-## 4. Detailed Fix Proposals
+**Execution Strategy:**
+1.  **Schema & Data First:** Update `content/config.ts` and `translations.json`.
+2.  **Page-by-Page Integration:** Update the `.astro` files to render the new text blocks and lists.
 
-### Bug 1: Header Navigation Labels
-- **Issue:** Static English keys used.
-- **Fix:** Update `DynamicHeader.astro` to use `t()` helper for keys (Home, About, etc.). Add keys to `translations.json` under `nav`.
+## 4. Detailed Change Proposals
 
-### Bug 2: Request Partnership Button
-- **Issue:** Hardcoded text.
-- **Fix:** Replace with `t('nav.requestPartnership', lang)`.
+### 4.1 Homepage (Story 5.1 / 5.2)
+- **Hero:** Update Headline/Subhead to match "Green Sunrise Ltd..." provided text.
+- **Why Choose Us:** Insert new icon grid/list after Hero.
+- **Mission:** Add "Trusted Partner" text band before footer.
 
-### Bug 3: Footer Content
-- **Issue:** Hardcoded English text for section headers and links.
-- **Fix:** Map all footer text to `translations.json` and use `t()`.
+### 4.2 About Us (Story 2.3)
+- **Intro:** Add specific company overview text.
+- **Mission/Vision:** Add 2-column text block.
+- **Values:** Add 5-item values list.
+- **Team:** Keep existing Team Profiles at the bottom.
 
-### Bug 4: Footer Links
-- **Issue:** `getLocalizedUrl` logic incorrect for BG (`prefix = ""` should be `prefix = "/bg"`).
-- **Fix:** Standardize `getLocalizedUrl` to match Header logic.
+### 4.3 Services (Story 2.2)
+- **List Structure:** Refactor main content into a 5-item list (Pile Driving, Installation, etc.).
+- **Machinery Integration:** Embed the existing Machinery Showcase inside "Item 1: Pile Driving".
+- **Why Work With Us:** Add feature list at bottom.
 
-### Bug 5: Sidebar Overlay
-- **Issue:** Sticky sidebar overlaps CTA button due to stacking context.
-- **Fix:** Add `z-index: 2` to `.cta-button` in `[...slug].astro` sidebar style.
+### 4.4 Projects (Story 3.1)
+- **Intro:** Add specific gallery intro text.
+- **Schema:** Add `scope` (string) field to Project collection.
+- **Our Approach:** Add methodology list at bottom.
+
+### 4.5 Contact (Story 4.1)
+- **Intro:** Add welcoming text.
+- **Layout:** Switch to 2-column layout (Left: Stats/Hours, Right: Form).
+- **Details:** Add Company Address/Phone block and Business Hours block.
 
 ## 5. Implementation Handoff
-- **Role:** Development Team
-- **Deliverable:** Story 5.5
-- **Success Criteria:** All 5 bugs verified fixed in both EN and BG.
+- **Role:** Development Team (Dev Agent).
+- **Complexity:** Low (mostly copy/paste and minor JSX layout).
+- **Deliverables:** Updated `translations.json`, `content.config.ts`, and 5 `.astro` pages.

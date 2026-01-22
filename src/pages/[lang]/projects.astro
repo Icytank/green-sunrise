@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import ProjectFilters from "@components/ProjectFilters.astro";
+import ProjectMethodology from "@components/ProjectMethodology.astro";
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
 export function getStaticPaths() {
 	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
@@ -20,36 +22,22 @@ const sortedProjects = allProjects.sort((a, b) => b.data.capacityMW - a.data.cap
 
 // Extract unique terrain types for filter dropdown
 const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
-
-
-// Translations
-const t = {
-  bg: {
-    title: "Нашите Проекти",
-    subtitle: "Верифицирано портфолио от реализирани проекти с точни технически спецификации.",
-    pageTitle: "Проекти | Green Sunrise",
-    pageDescription: "Разгледайте нашето портфолио от соларни и енергийни проекти."
-  },
-  en: {
-    title: "Our Projects",
-    subtitle: "Verified portfolio of completed projects with precise technical specifications.",
-    pageTitle: "Projects | Green Sunrise",
-    pageDescription: "Explore our portfolio of solar and energy projects."
-  }
-};
 ---
 
 <BaseLayout 
   lang={lang}
-  title={t[lang as 'bg' | 'en'].pageTitle}
-  description={t[lang as 'bg' | 'en'].pageDescription}
+  title={t("projects.pageTitle" as TranslationKey, lang as 'bg' | 'en')}
+  description={t("projects.pageDescription" as TranslationKey, lang as 'bg' | 'en')}
 >
   <main class="projects-page">
     <section class="container">
       <header class="page-header">
-        <h1 class="font-display">{t[lang as 'bg' | 'en'].title}</h1>
-        <p class="subtitle">{t[lang as 'bg' | 'en'].subtitle}</p>
+        <h1 class="font-display">{t("projects.title" as TranslationKey, lang as 'bg' | 'en')}</h1>
+        <p class="subtitle">{t("projects.methodology.intro" as TranslationKey, lang as 'bg' | 'en')}</p>
       </header>
+
+      <ProjectMethodology lang={lang as 'bg' | 'en'} />
+
       <!-- Project Filters -->
       <ProjectFilters lang={lang as 'bg' | 'en'} terrainTypes={terrainTypes} />
 
@@ -71,6 +59,8 @@ const t = {
         })}
       </div>
     </section>
+
+
   </main>
 </BaseLayout>
 

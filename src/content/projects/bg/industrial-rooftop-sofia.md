@@ -5,6 +5,7 @@ location: "София, България"
 terrainType: "Roof-top"
 date: 2025-11-20
 heroImage: "../../../assets/images/projects/port2.jpg"
+scope: "Баластирана система, монтаж на модули, електрическо свързване"
 isVerified: true
 ---
 

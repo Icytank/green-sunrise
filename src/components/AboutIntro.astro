@@ -1,0 +1,38 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+const title = t("about.intro.title" as TranslationKey, lang);
+const text = t("about.intro.text" as TranslationKey, lang);
+---
+
+<section id="about-intro">
+    <div class="cs-container">
+        <SectionHeader
+            label={t("nav.about" as TranslationKey, lang)}
+            title={title}
+            description={text}
+            align="center"
+        />
+    </div>
+</section>
+
+<style lang="less">
+    #about-intro {
+        padding: var(--gs-section-padding);
+        /* 100px - 200px bottom padding to separate from next section */
+        padding-bottom: clamp(3rem, 6vw, 6rem);
+    }
+
+    .cs-container {
+        width: 100%;
+        max-width: (1280/16rem);
+        margin: auto;
+    }
+</style>

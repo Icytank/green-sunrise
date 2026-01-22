@@ -2,6 +2,9 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MachineryCard from "../../components/MachineryCard.astro";
+import ServiceList from "../../components/ServiceList.astro";
+import WhyWorkWithUs from "../../components/WhyWorkWithUs.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
 import { t } from "../../utils/i18n-helpers";
 
 export async function getStaticPaths() {
@@ -25,38 +28,54 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
   description={t('machinery.pageDescription', lang as 'bg' | 'en')}
 >
   <main class="services-page">
-    <section class="container">
-      <header class="page-header">
-        <h1 class="font-display">{t('machinery.ourMachinery', lang as 'bg' | 'en')}</h1>
-        <p class="subtitle">{t('machinery.machinerySubtitle', lang as 'bg' | 'en')}</p>
-      </header>
+    <!-- 1. Services List -->
+    <ServiceList lang={lang as "bg" | "en"} />
 
-      <div class="machinery-grid">
-        {allMachinery.map((machine) => {
-          // Extract slug from ID (e.g., "en/machinery-1" -> "machinery-1")
-          const slug = machine.id.split("/").slice(1).join("/");
-          return (
-            <MachineryCard
-              title={machine.data.title}
-              model={machine.data.model}
-              weight={machine.data.weight}
-              image={machine.data.heroImage}
-              slug={slug}
-              lang={lang as "bg" | "en"}
-              isOwned={machine.data.isOwned}
-            />
-          );
-        })}
+    <!-- 2. Machinery Section -->
+    <section class="machinery-section">
+      <div class="container">
+        <SectionHeader
+            label={t("machinery.machineryTitle", lang as 'bg' | 'en')}
+            title={t("machinery.ourMachinery", lang as 'bg' | 'en')}
+            description={t("machinery.machinerySubtitle", lang as 'bg' | 'en')}
+            align="center"
+        />
+
+        <div class="machinery-grid">
+          {allMachinery.map((machine) => {
+            // Extract slug from ID (e.g., "en/machinery-1" -> "machinery-1")
+            const slug = machine.id.split("/").slice(1).join("/");
+            return (
+              <MachineryCard
+                title={machine.data.title}
+                model={machine.data.model}
+                weight={machine.data.weight}
+                image={machine.data.heroImage}
+                slug={slug}
+                lang={lang as "bg" | "en"}
+                isOwned={machine.data.isOwned}
+              />
+            );
+          })}
+        </div>
       </div>
     </section>
+
+    <!-- 3. Why Work With Us -->
+    <WhyWorkWithUs lang={lang as "bg" | "en"} />
   </main>
 </BaseLayout>
 
 <style>
   .services-page {
-    padding: var(--gs-space-10) 0;
+    /* padding handled by components now */
     background-color: var(--gs-executive-white);
     min-height: 100vh;
+  }
+
+  .machinery-section {
+    padding: var(--gs-section-padding);
+    background-color: #fff;
   }
 
   .container {

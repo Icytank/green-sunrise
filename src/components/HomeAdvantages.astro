@@ -1,0 +1,132 @@
+---
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+const translate = (key: string) => t(`home.advantages.${key}` as TranslationKey, lang);
+
+const advantages = [
+  { key: "expertise", icon: "🏆" }, // Using emojis as placeholders for icons to keep it simple and light
+  { key: "machinery", icon: "🚜" },
+  { key: "precision", icon: "🎯" },
+  { key: "workflow", icon: "⚙️" },
+  { key: "partnership", icon: "🤝" },
+];
+---
+
+<section id="advantages">
+  <div class="cs-container">
+    <!-- Header -->
+    <SectionHeader
+      label={t("home.teamLabel" as TranslationKey, lang)} 
+      title={translate("title")}
+      description=""
+      align="center"
+    />
+
+    <!-- Grid -->
+    <ul class="cs-card-group">
+      {
+        advantages.map((adv) => (
+          <li class="cs-item">
+            <span class="cs-icon">{adv.icon}</span>
+            <h3 class="cs-h3">{translate(`${adv.key}.title`)}</h3>
+            <p class="cs-text">{translate(`${adv.key}.desc`)}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style lang="less">
+  #advantages {
+    padding: var(--gs-section-padding);
+    background-color: var(--gs-executive-white);
+  }
+
+  .cs-container {
+    width: 100%;
+    max-width: (1280/16rem);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(3rem, 6vw, 4rem);
+  }
+
+  .cs-card-group {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gs-space-4);
+  }
+  
+  /* Desktop Flex Override for Center Alignment */
+  @media only screen and (min-width: 64rem) {
+      .cs-card-group {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+      }
+  }
+
+  .cs-item {
+    list-style: none;
+    text-align: center;
+    padding: var(--gs-space-4);
+    background-color: #fff;
+    border: 1px solid var(--gs-border);
+    border-radius: 8px; /* Simple radius */
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gs-space-2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        border-color: var(--gs-institutional-green);
+    }
+
+    /* Responsive Spans */
+    @media only screen and (min-width: 30rem) {
+        grid-column: span 6;
+    }
+    
+    /* Desktop Flex Sizing */
+    @media only screen and (min-width: 64rem) {
+        width: calc(33.33% - var(--gs-space-4));
+        max-width: (400/16rem);
+    }
+  }
+
+  .cs-icon {
+    font-size: 3rem;
+    margin-bottom: var(--gs-space-2);
+    display: block;
+  }
+
+  .cs-h3 {
+    font-size: var(--gs-text-h4);
+    font-weight: 700;
+    color: var(--gs-text-primary);
+    margin: 0;
+  }
+
+  .cs-text {
+    font-size: var(--gs-text-base);
+    color: var(--gs-text-secondary);
+    line-height: var(--gs-leading-body);
+    margin: 0;
+  }
+</style>

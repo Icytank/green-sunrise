@@ -47,6 +47,7 @@ const projectsCollection = defineCollection({
 			date: z.date(),
 			heroImage: image(),
 			isVerified: z.boolean().default(false), // Toggles GS Stamp visibility
+			scope: z.string().optional(), // New field for detailed scope of work
 		}),
 });
 

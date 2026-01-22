@@ -17,6 +17,8 @@ import ProjectCard from "@components/ProjectCard.astro";
 import TeamMember from "@components/TeamMember.astro";
 import Button from "@components/Button.astro";
 import CTASimple from "@components/CTA/CTASimple.astro";
+import HomeAdvantages from "@components/HomeAdvantages.astro";
+import TrustedPartnerBanner from "@components/TrustedPartnerBanner.astro";
 
 // Optimization: Ensure high priority for LCP
 import heroImage from "@assets/images/hero/hero.jpg";
@@ -46,6 +48,9 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 
 <BaseLayout lang={lang} title="Pixel Perfect Websites" description="Meta description for the page" heroImage={optimizedHeroImage}>
 	<HomeHero lang={lang} />
+    
+    <!-- ADVANTAGES SECTION -->
+    <HomeAdvantages lang={lang} />
 	
 	<!-- MACHINERY SECTION -->
 	<section id="machinery" style="padding: var(--gs-section-padding) 0;">
@@ -125,6 +130,8 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	</section>
 
 	<CTASimple />
+    
+    <TrustedPartnerBanner lang={lang} />
 </BaseLayout>
 
 <style lang="less">

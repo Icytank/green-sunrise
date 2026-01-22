@@ -12,9 +12,9 @@ import { t } from "@utils/i18n-helpers";
 // Components
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner/Banner.astro";
-import FAQ from "@components/FAQ/FAQ.astro";
-import SideBySide from "@components/SideBySide/SideBySide.astro";
-import CTA from "@components/CTA/CTASimple.astro";
+import AboutIntro from "@components/AboutIntro.astro";
+import AboutMission from "@components/AboutMission.astro";
+import AboutValues from "@components/AboutValues.astro";
 import TeamMember from "@components/TeamMember.astro";
 
 // Images
@@ -30,7 +30,11 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 
 <BaseLayout lang={lang} title={lang === 'bg' ? 'За нас' : 'About'} description="Meta description for the page" heroImage={optimizedImage}>
 	<Banner title={lang === 'bg' ? 'За нас' : 'About Us'} image={optimizedImage} />
-	
+
+    <AboutIntro lang={lang} />
+    <AboutMission lang={lang} />
+    <AboutValues lang={lang} />
+
 	<section id="team" class="team-section">
 		<div class="container">
 			<div class="section-header">
@@ -54,10 +58,6 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 			</div>
 		</div>
 	</section>
-
-	<SideBySide />
-	<FAQ />
-	<CTA />
 </BaseLayout>
 
 <style>

@@ -5,6 +5,7 @@ location: "Пловдив, България"
 terrainType: "Flat"
 date: 2025-08-15
 heroImage: "../../../assets/images/projects/port1.jpg"
+scope: "Набиване на пилони, монтаж на конструкции, монтаж на модули"
 isVerified: true
 ---
 

@@ -28,7 +28,7 @@ const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-tran
     height: (50/16rem);
     padding: 0 (30/16rem);
     
-    color: #fff;
+    color: var(--gs-executive-white);
     background-color: var(--gs-primary);
     border: none;
     display: inline-block;
@@ -38,7 +38,7 @@ const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-tran
     box-sizing: border-box;
 
     &:hover {
-      background-color: var(--gs-primary-dark, var(--gs-primary));
+      background-color: var(--gs-success-emerald);
       transform: translateY(-2px);
     }
   }
@@ -55,9 +55,9 @@ const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-tran
     height: (50/16rem);
     padding: 0 (30/16rem);
     
-    color: #fff;
+    color: var(--gs-executive-white);
     background-color: transparent;
-    border: 2px solid #fff;
+    border: 2px solid var(--gs-executive-white);
     display: inline-block;
     position: relative;
     z-index: 1;
@@ -65,8 +65,8 @@ const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-tran
     box-sizing: border-box;
 
     &:hover {
-      background-color: #fff;
-      color: var(--primary);
+      background-color: var(--gs-executive-white);
+      color: var(--gs-primary);
     }
   }
 </style>

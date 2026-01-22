@@ -1,0 +1,59 @@
+---
+/**
+ * Container.astro
+ * 
+ * Universal layout container that enforces max-width, symmetric padding,
+ * and 8px grid alignment for the institutional portfolio aesthetic.
+ */
+
+interface Props {
+  /** Use narrow (960px) instead of full (1440px) max-width */
+  narrow?: boolean;
+  /** Additional CSS class(es) */
+  class?: string;
+  /** HTML tag to render (default: div) */
+  as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer';
+}
+
+const { 
+  narrow = false, 
+  class: className = '',
+  as: Tag = 'div'
+} = Astro.props;
+---
+
+<Tag 
+  class:list={[
+    'gs-container',
+    { 'gs-container--narrow': narrow },
+    className
+  ]}
+>
+  <slot />
+</Tag>
+
+<style>
+  .gs-container {
+    width: 100%;
+    max-width: var(--gs-container-max);
+    margin-inline: auto;
+    padding-inline: var(--gs-container-padding);
+  }
+
+  .gs-container--narrow {
+    max-width: var(--gs-container-narrow);
+  }
+
+  /* Responsive padding adjustments */
+  @media (min-width: 768px) {
+    .gs-container {
+      padding-inline: var(--gs-space-3); /* 24px on tablet+ */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gs-container {
+      padding-inline: var(--gs-space-4); /* 32px on desktop */
+    }
+  }
+</style>

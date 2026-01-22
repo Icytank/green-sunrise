@@ -13,8 +13,10 @@
 }
 
 body {
-    line-height: 1.5;
+    line-height: var(--gs-leading-body);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 img,
@@ -90,24 +92,32 @@ h6 {
 
 h1 {
     font-size: var(--gs-text-h1);
-    line-height: 1.1;
+    line-height: var(--gs-leading-heading);
 }
 
 h2 {
     font-size: var(--gs-text-h2);
-    line-height: 1.2;
+    line-height: var(--gs-leading-subheading);
 }
 
 h3 {
     font-size: var(--gs-text-h3);
+    line-height: var(--gs-leading-subheading);
 }
 
 h4 {
     font-size: var(--gs-text-h4);
+    line-height: var(--gs-leading-subheading);
 }
 
 h5 {
     font-size: var(--gs-text-h5);
+    line-height: var(--gs-leading-subheading);
+}
+
+h6 {
+    font-size: var(--gs-text-base);
+    line-height: var(--gs-leading-subheading);
 }
 
 code,

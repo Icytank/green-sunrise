@@ -44,7 +44,7 @@ const teamPreview = allTeam.slice(0, 4); // 4 looks good in grid
 const translate = (key: string) => t(`home.${key}` as any, lang);
 ---
 
-<BaseLayout title="Pixel Perfect Websites" description="Meta description for the page" heroImage={optimizedHeroImage}>
+<BaseLayout lang={lang} title="Pixel Perfect Websites" description="Meta description for the page" heroImage={optimizedHeroImage}>
 	<HomeHero lang={lang} />
 	
 	<!-- MACHINERY SECTION -->

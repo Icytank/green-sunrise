@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+// Force static generation for this route
+export const prerender = true;
 import { Image } from "astro:assets";
 import GSStamp from "../../../components/GSStamp.astro";
 import { t } from "../../../utils/i18n-helpers";
@@ -31,7 +34,7 @@ const ownedBadgeLabel = t('machinery.ownedBadge', lang as 'bg' | 'en');
 const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 'en');
 ---
 
-<BaseLayout title={`${title || model} | Green Sunrise`} description={`Technical audit and specifications for ${model}`}>
+<BaseLayout lang={lang as 'bg' | 'en'} title={`${title || model} | Green Sunrise`} description={`Technical audit and specifications for ${model}`}>
   <article class="audit-narrative">
       <header class="audit-header">
         <div class="container">

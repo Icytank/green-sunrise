@@ -28,7 +28,7 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 ---
 
 
-<BaseLayout title={lang === 'bg' ? 'За нас' : 'About'} description="Meta description for the page" heroImage={optimizedImage}>
+<BaseLayout lang={lang} title={lang === 'bg' ? 'За нас' : 'About'} description="Meta description for the page" heroImage={optimizedImage}>
 	<Banner title={lang === 'bg' ? 'За нас' : 'About Us'} image={optimizedImage} />
 	
 	<section id="team" class="team-section">

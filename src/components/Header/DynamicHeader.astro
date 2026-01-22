@@ -10,6 +10,7 @@
 // Utils
 import { Icon } from "astro-icon/components";
 import { isCurrentPage, getDropdownId } from "@utils/utils.js";
+import { getTranslatedPath } from "@utils/i18n-helpers";
 
 // Components
 import { Image } from "astro:assets";
@@ -17,29 +18,21 @@ import DarkModeToggle from "@components/DarkModeToggle/DarkModeToggle.astro";
 import LanguageSwitcher from "@components/LanguageSwitcher.astro";
 import stampLogo from "@assets/images/gs-stamp.png";
 
-// Data
-import navData from "@data/navData.json";
+// Logic
+import { getNavigation, getCTALabel } from "./HeaderLogic";
 
 interface Props {
 	lang: string;
 }
 
 const { lang } = Astro.props as Props;
+const currentLang = (lang === 'bg' || lang === 'en') ? lang : 'en';
 
-// Prefix URLs with language code
-const getLocalizedUrl = (url: string) => {
-	const prefix = `/${lang}`;
-	return `${prefix}${url}`;
-};
+const navigation = getNavigation(currentLang);
+const ctaLabel = getCTALabel(currentLang);
 
-const navigation = navData.map((item: any) => ({
-	...item,
-	url: getLocalizedUrl(item.url),
-	children: item.children?.map((child: any) => ({
-		...child,
-		url: getLocalizedUrl(child.url)
-	}))
-}));
+// Use centralized helper for other links
+const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 
 const currentPath = Astro.url.pathname;
 ---
@@ -104,7 +97,7 @@ const currentPath = Astro.url.pathname;
 			<LanguageSwitcher />
 		</div>
 
-		<a href={getLocalizedUrl("/contact/")} class="cs-button-solid cs-nav-button">Request Partnership</a>
+		<a href={getLocalizedUrl("/contact/")} class="cs-button-solid cs-nav-button">{ctaLabel}</a>
 		<!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
 		<DarkModeToggle />
 	</div>

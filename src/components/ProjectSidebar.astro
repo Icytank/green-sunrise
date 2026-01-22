@@ -72,7 +72,8 @@ const technicalSpecsTitle = t('technical.specsTitle', lang);
     border-radius: 12px;
     padding: var(--gs-space-6);
     position: sticky;
-    top: var(--gs-space-6);
+    top: calc(var(--gs-space-12) + var(--gs-space-3)); /* 120px to clear header */
+    z-index: 10; /* Lower than header (10000) */
   }
 
   .sidebar-title {

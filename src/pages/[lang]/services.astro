@@ -20,6 +20,7 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
 ---
 
 <BaseLayout 
+  lang={lang}
   title={t('machinery.pageTitle', lang as 'bg' | 'en')}
   description={t('machinery.pageDescription', lang as 'bg' | 'en')}
 >

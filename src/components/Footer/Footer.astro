@@ -10,6 +10,7 @@
 // Utils
 import { Icon } from "astro-icon/components";
 import { getCurrentYear } from "@utils/utils";
+import { getTranslatedPath } from "@utils/i18n-helpers";
 
 // Components
 import { Image } from "astro:assets";
@@ -18,7 +19,7 @@ import stampLogo from "@assets/images/gs-stamp.png";
 
 // Data
 import { BUSINESS } from "@data/client";
-import navData from "@data/navData.json";
+import { getFooterData } from "./FooterLogic";
 
 interface Props {
 	lang: string;
@@ -26,17 +27,10 @@ interface Props {
 
 const { lang } = Astro.props as Props;
 const currentYear = getCurrentYear();
+const currentLang = (lang === 'bg' || lang === 'en') ? lang : 'en';
 
-// Localization Helper
-const getLocalizedUrl = (url: string) => {
-	const prefix = lang === "bg" ? "" : `/${lang}`;
-	return `${prefix}${url}`;
-};
-
-const navigation = navData.map(item => ({
-	...item,
-	url: getLocalizedUrl(item.url)
-}));
+const footerData = getFooterData(currentLang);
+const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 ---
 
 <footer id="footer">
@@ -45,17 +39,17 @@ const navigation = navData.map(item => ({
 			<a class="logo" href={getLocalizedUrl("/")} aria-label="Return to Green Sunrise Home page">
 				<Image src={stampLogo} alt="Green Sunrise Logo" width={210} height={28} class="footer-logo-img" />
 			</a>
-			<p>Specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.</p>
+			<p>{footerData.description}</p>
 			<GSStamp className="footer-stamp" size={100} />
 		</div>
 		<div class="right-section">
 			<div class="lists">
 				<ul>
 					<li>
-						<h2>Navigation</h2>
+						<h2>{footerData.navigation.header}</h2>
 					</li>
 					{
-						navigation.map((entry) => (
+						footerData.navigation.items.map((entry) => (
 							<li class="cs-li">
 								<a href={entry.url}>{entry.key}</a>
 							</li>
@@ -64,16 +58,17 @@ const navigation = navData.map(item => ({
 				</ul>
 				<ul>
 					<li>
-						<h2>Services</h2>
+						<h2>{footerData.services.header}</h2>
 					</li>
-					<li><a href={getLocalizedUrl("/services/#machinery")}>Owned Machinery</a></li>
-					<li><a href={getLocalizedUrl("/services/#installation")}>PV Installation</a></li>
-					<li><a href={getLocalizedUrl("/services/#maintenance")}>Maintenance</a></li>
-					<li><a href={getLocalizedUrl("/services/#consulting")}>Technical Consulting</a></li>
+					{
+						footerData.services.items.map((item) => (
+							<li><a href={item.url}>{item.label}</a></li>
+						))
+					}
 				</ul>
 				<ul>
 					<li>
-						<h2>Contact</h2>
+						<h2>{footerData.contact.header}</h2>
 					</li>
 					<li>
 						<div class="contact-info">
@@ -128,7 +123,6 @@ const navigation = navData.map(item => ({
 						max-width: (210/16rem);
 						height: auto;
 						display: block;
-						filter: grayscale(1) brightness(1000%);
 					}
 				}
 

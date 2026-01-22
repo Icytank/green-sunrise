@@ -52,6 +52,24 @@
             "teamTitle": "Сертифицирани Екипи",
             "teamDesc": "Нашите специалисти притежават всички необходими квалификации за работа на терен.",
             "viewAll": "Виж всички"
+        },
+        "nav": {
+            "home": "Начало",
+            "about": "За Нас",
+            "services": "Услуги",
+            "projects": "Проекти",
+            "contact": "Контакти",
+            "requestPartnership": "Заяви Партньорство"
+        },
+        "footer": {
+            "description": "Специализиран европейски партньор за инсталация на индустриални фотоволтаици, разполагащ със собствена техника за набиване на пилони и експертни екипи.",
+            "navigation": "Навигация",
+            "services": "Услуги",
+            "contact": "Контакти",
+            "ownedMachinery": "Собствена Техника",
+            "pvInstallation": "Фотоволтаични Инсталации",
+            "maintenance": "Поддръжка",
+            "technicalConsulting": "Технически Консултации"
         }
     },
     "en": {
@@ -107,6 +125,24 @@
             "teamTitle": "Certified Teams",
             "teamDesc": "Our specialists hold all necessary qualifications for on-site operations.",
             "viewAll": "View All"
+        },
+        "nav": {
+            "home": "Home",
+            "about": "About",
+            "services": "Services",
+            "projects": "Projects",
+            "contact": "Contact",
+            "requestPartnership": "Request Partnership"
+        },
+        "footer": {
+            "description": "Specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.",
+            "navigation": "Navigation",
+            "services": "Services",
+            "contact": "Contact",
+            "ownedMachinery": "Owned Machinery",
+            "pvInstallation": "PV Installation",
+            "maintenance": "Maintenance",
+            "technicalConsulting": "Technical Consulting"
         }
     }
 }

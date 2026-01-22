@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 export function getStaticPaths() {
 	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
@@ -9,27 +10,168 @@ import { getImage } from "astro:assets";
 
 // Components
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Hero from "@components/Hero/Hero.astro";
-import Services from "@components/Services/Services.astro";
-import SideBySide from "@components/SideBySide/SideBySide.astro";
-import SideBySideReverse from "@components/SideBySideReverse/SideBySideReverse.astro";
-import Gallery from "@components/Gallery/Gallery.astro";
-import Testimonials from "@components/Testimonials/Testimonials.astro";
-import FAQ from "@components/FAQ/FAQ.astro";
+import HomeHero from "@components/HomeHero.astro";
+import SectionHeader from "@components/SectionHeader.astro";
+import MachineryCard from "@components/MachineryCard.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import TeamMember from "@components/TeamMember.astro";
+import Button from "@components/Button.astro";
 import CTASimple from "@components/CTA/CTASimple.astro";
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Banner (for rendering)
+// Optimization: Ensure high priority for LCP
 import heroImage from "@assets/images/hero/hero.jpg";
 const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
+
+// Data Fetching
+import { getCollection } from "astro:content";
+import { t } from "src/utils/i18n-helpers";
+
+// Fetch collections based on language
+// Note: We filter by ID starting with lang because typically localized content is in subfolders like src/content/machinery/en/...
+// Adjust filtering logic if your content structure differs (e.g. frontmatter lang field)
+const allMachinery = await getCollection("machinery", ({ id }) => id.startsWith(`${lang}/`));
+const allProjects = await getCollection("projects", ({ id }) => id.startsWith(`${lang}/`));
+const allTeam = await getCollection("teams", ({ id }) => id.startsWith(`${lang}/`));
+
+// Sort/Slice for Preview
+// Assuming we want to show 3 of each or specific "featured" logic. 
+// For now, taking first 3.
+const machineryPreview = allMachinery.slice(0, 3);
+const projectsPreview = allProjects.slice(0, 3);
+const teamPreview = allTeam.slice(0, 4); // 4 looks good in grid
+
+// Translation Helpers
+const translate = (key: string) => t(`home.${key}` as any, lang);
 ---
 
 <BaseLayout title="Pixel Perfect Websites" description="Meta description for the page" heroImage={optimizedHeroImage}>
-	<Hero image={optimizedHeroImage} />
-	<Services />
-	<SideBySide />
-	<SideBySideReverse />
-	<Gallery />
-	<Testimonials />
-	<FAQ />
+	<HomeHero lang={lang} />
+	
+	<!-- MACHINERY SECTION -->
+	<section id="machinery" style="padding: var(--gs-section-padding) 0;">
+		<div class="cs-container">
+			<SectionHeader 
+				label={translate("machineryLabel")} 
+				title={translate("machineryTitle")}
+				description={translate("machineryDesc")}
+			/>
+			<ul class="cs-card-group">
+				{machineryPreview.map((item) => (
+					<li class="cs-item">
+						<MachineryCard
+							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
+							lang={lang}
+							{...item.data}
+							image={item.data.heroImage}
+						/>
+					</li>
+				))}
+			</ul>
+			<div style="margin-top: var(--gs-space-4); text-align: center;">
+				<Button href={`/${lang}/machinery`} variant="secondary">{translate("viewAll")}</Button>
+			</div>
+		</div>
+	</section>
+
+	<!-- TEAM SECTION -->
+	<section id="team" style="padding: var(--gs-section-padding) 0; background-color: var(--gs-surface-secondary); text-align: center;"> <!-- Centered align for Team -->
+		<div class="cs-container">
+			<SectionHeader 
+				label={translate("teamLabel")} 
+				title={translate("teamTitle")}
+				description={translate("teamDesc")}
+				align="center"
+			/>
+			<ul class="cs-card-group-4"> <!-- 4 cols for team -->
+				{teamPreview.map((item) => (
+					<li class="cs-item">
+						<TeamMember
+							lang={lang}
+							{...item.data}
+						/>
+					</li>
+				))}
+			</ul>
+			<!-- View All Team? Maybe just About Us link -->
+			<div style="margin-top: var(--gs-space-4); text-align: center;">
+				<Button href={`/${lang}/about`} variant="secondary">{translate("viewAll")}</Button>
+			</div>
+		</div>
+	</section>
+
+	<!-- PROJECTS SECTION -->
+	<section id="projects" style="padding: var(--gs-section-padding) 0;">
+		<div class="cs-container">
+			<SectionHeader 
+				label={translate("projectsLabel")} 
+				title={translate("projectsTitle")}
+				description={translate("projectsDesc")}
+			/>
+			<ul class="cs-card-group">
+				{projectsPreview.map((item) => (
+					<li class="cs-item">
+						<ProjectCard
+							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
+							lang={lang}
+							{...item.data}
+						/>
+					</li>
+				))}
+			</ul>
+			<div style="margin-top: var(--gs-space-4); text-align: center;">
+				<Button href={`/${lang}/projects`} variant="secondary">{translate("viewAll")}</Button>
+			</div>
+		</div>
+	</section>
+
 	<CTASimple />
 </BaseLayout>
+
+<style lang="less">
+	/* Grid Layouts to match 8px grid (var(--gs-space-2) seems small for gap, usually 1rem or 1.5rem) */ 
+	/* Using --gs-space-4 for gap ~ 2rem/32px? Need to check tokens but assuming standard spacing */
+	
+	.cs-container {
+		width: 100%;
+		max-width: (1280/16rem);
+		margin: auto;
+		padding: 0 1rem;
+	}
+
+	.cs-card-group, .cs-card-group-4 {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: var(--gs-space-4);
+	}
+	
+	.cs-card-group {
+		.cs-item {
+			grid-column: span 12;
+			
+			@media only screen and (min-width: 48rem) {
+				grid-column: span 6;
+			}
+			
+			@media only screen and (min-width: 64rem) {
+				grid-column: span 4;
+			}
+		}
+	}
+
+	.cs-card-group-4 {
+		.cs-item {
+			grid-column: span 12;
+			
+			@media only screen and (min-width: 30rem) {
+				grid-column: span 6;
+			}
+			
+			@media only screen and (min-width: 64rem) {
+				grid-column: span 3;
+			}
+		}
+	}
+</style>

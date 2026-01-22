@@ -1,0 +1,91 @@
+---
+import GSStamp from "./GSStamp.astro";
+
+interface Props {
+  label: string;
+  title: string;
+  description?: string;
+  align?: "left" | "center" | "right";
+  withStamp?: boolean;
+}
+
+const { label, title, description, align = "left", withStamp = true } = Astro.props;
+---
+
+<div class:list={["cs-section-header", { "text-center": align === "center", "text-right": align === "right" }]}>
+  {withStamp && <div class="cs-stamp-wrapper"><GSStamp size={60} /></div>}
+  <span class="cs-topper">{label}</span>
+  <h2 class="cs-title">{title}</h2>
+  {description && <p class="cs-text">{description}</p>}
+  <slot />
+</div>
+
+<style lang="less">
+  .cs-section-header {
+    width: 100%;
+    margin-bottom: (32/16rem);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: (16/16rem);
+    
+    &.text-center {
+      align-items: center;
+      text-align: center;
+      
+      .cs-text {
+        text-align: center;
+      }
+    }
+    
+    &.text-right {
+      align-items: flex-end;
+      text-align: right;
+      
+      .cs-text {
+        text-align: right;
+      }
+    }
+  }
+
+  .cs-stamp-wrapper {
+    position: absolute;
+    top: -20px;
+    right: 0;
+    z-index: -1;
+    opacity: 0.1;
+    transform: rotate(15deg);
+    
+    @media only screen and (min-width: 48rem) {
+      right: -40px;
+      opacity: 0.15;
+    }
+  }
+  
+  .cs-topper {
+    font-size: var(--gs-text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gs-secondary);
+    display: block;
+    margin-bottom: (4/16rem);
+  }
+
+  .cs-title {
+    font-size: var(--gs-header-font-size);
+    font-weight: 900;
+    line-height: 1.2em;
+    margin: 0;
+    color: var(--gs-header-color);
+    max-width: (800/16rem);
+  }
+
+  .cs-text {
+    font-size: var(--gs-body-font-size);
+    line-height: 1.5em;
+    color: var(--gs-body-text-color);
+    max-width: (650/16rem);
+    margin: 0;
+  }
+</style>

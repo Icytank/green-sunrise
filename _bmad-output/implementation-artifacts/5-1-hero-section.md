@@ -1,6 +1,6 @@
 # Story 5.1: "Calculated Confidence" Hero Section
 
-Status: ready-for-dev
+Status: review
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 

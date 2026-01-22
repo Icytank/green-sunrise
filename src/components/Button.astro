@@ -1,0 +1,72 @@
+---
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary";
+  class?: string;
+  [key: string]: any;
+}
+
+const { href, variant = "primary", class: className, ...rest } = Astro.props;
+
+const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-transparent";
+---
+
+<a href={href} class:list={[variantClass, className]} {...rest}>
+  <slot />
+</a>
+
+<style lang="less">
+  /* Primary variant - Solid button */
+  .cs-button-solid {
+    font-size: (16/16rem);
+    font-weight: bold;
+    line-height: (50/16em);
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: auto;
+    height: (50/16rem);
+    padding: 0 (30/16rem);
+    
+    color: #fff;
+    background-color: var(--gs-primary);
+    border: none;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s, transform 0.2s;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: var(--gs-primary-dark, var(--gs-primary));
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Secondary variant - Transparent with Border */
+  .cs-button-transparent {
+    font-size: (16/16rem);
+    font-weight: bold;
+    line-height: (50/16em);
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: auto;
+    height: (50/16rem);
+    padding: 0 (30/16rem);
+    
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: #fff;
+      color: var(--primary);
+    }
+  }
+</style>

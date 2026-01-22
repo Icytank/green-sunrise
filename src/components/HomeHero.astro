@@ -1,0 +1,183 @@
+---
+import { Image } from "astro:assets";
+import heroImage from "@assets/images/hero/hero.jpg";
+import Button from "./Button.astro";
+import { t, type TranslationKey } from "src/utils/i18n-helpers";
+
+interface Props {
+  lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
+
+// Helper to get translation with type safety for this component
+const translate = (key: string) => t(`hero.${key}` as TranslationKey, lang);
+---
+
+<section id="hero">
+  <!-- Background Image with Overlay -->
+  <div class="cs-picture">
+    <div class="cs-overlay"></div>
+    <Image
+      src={heroImage}
+      alt="Solar PV site construction with pile drivers"
+      width={1920}
+      height={1080}
+      loading="eager"
+      fetchpriority="high"
+      class="cs-img"
+    />
+  </div>
+
+  <div class="cs-container">
+    <div class="cs-content">
+      <h1 class="cs-title">
+        {translate("title")}
+      </h1>
+      <p class="cs-text">
+        {translate("subtitle")}
+      </p>
+      <div class="cs-button-group">
+        <Button href={`/${lang}/projects`} variant="primary">{translate("viewProjects")}</Button>
+        <Button href={`/${lang}/contact`} variant="secondary">{translate("requestSpecs")}</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0rem) {
+    #hero {
+      /* Centers button */
+      text-align: center;
+      /* 168px - 250px top padding to account for header */
+      padding: clamp(10.5rem, 15vw, 15.625rem) 1rem clamp(3.75rem, 10vw, 6.25rem);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+
+      .cs-picture {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -2;
+
+        .cs-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .cs-overlay {
+          width: 100%;
+          height: 100%;
+          background: #000;
+          opacity: 0.5; /* Dark overlay for text contrast */
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1;
+        }
+      }
+
+      .cs-container {
+        width: 100%;
+        max-width: (1280/16rem);
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .cs-content {
+        max-width: (630/16rem);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .cs-title {
+        /* 39px - 61px */
+        font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+        font-weight: 900;
+        line-height: 1.2em;
+        text-align: center;
+        max-width: (800/16rem);
+        margin: 0 auto (16/16rem);
+        color: #fff;
+        position: relative;
+        text-wrap: balance;
+      }
+
+      .cs-text {
+        /* 16px - 20px */
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        line-height: 1.5em;
+        text-align: center;
+        width: 100%;
+        max-width: (520/16rem);
+        margin: 0 auto (32/16rem);
+        color: #fff;
+        opacity: 0.9;
+        text-wrap: pretty;
+      }
+
+      .cs-button-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: (16/16rem);
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  /* Tablet - 768px */
+  @media only screen and (min-width: 48rem) {
+    #hero {
+        text-align: left;
+        
+      .cs-container {
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .cs-content {
+        align-items: flex-start;
+        text-align: left;
+        max-width: (800/16rem);
+      }
+      
+      .cs-title {
+        text-align: left;
+        margin: 0 0 (16/16rem) 0;
+      }
+
+      .cs-text {
+        text-align: left;
+        margin: 0 0 (32/16rem) 0;
+      }
+
+      .cs-button-group {
+        justify-content: flex-start;
+      }
+    }
+  }
+  
+  /* Large Desktop - 1300px */
+  @media only screen and (min-width: 81.25rem) {
+      #hero {
+         /* Parallax effect on desktop if desired, or just fixed background */
+         /* background-attachment: fixed; - often janky, sticking to absolute image */
+      }
+  }
+</style>

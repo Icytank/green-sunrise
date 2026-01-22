@@ -34,6 +34,24 @@
             "terrainRooftop": "Покривен",
             "specsTitle": "Технически Спецификации",
             "verifiedDesc": "Този проект е верифициран от Green Sunrise"
+        },
+        "hero": {
+            "title": "Основи за индустриални фотоволтаици",
+            "subtitle": "Собствена техника. Сертифицирани екипи. Надеждно изпълнение за мащабни фотоволтаични проекти.",
+            "viewProjects": "Виж проектите",
+            "requestSpecs": "Заяви спецификации"
+        },
+        "home": {
+            "machineryLabel": "Флотът",
+            "machineryTitle": "Собствена Техника",
+            "machineryDesc": "Специализирано оборудване за набиване на пилони, собственост и поддръжка на Green Sunrise.",
+            "projectsLabel": "Проекти",
+            "projectsTitle": "Доказан Опит",
+            "projectsDesc": "Успешно завършени проекти в цяла Европа при различни терени и условия.",
+            "teamLabel": "Експертиза",
+            "teamTitle": "Сертифицирани Екипи",
+            "teamDesc": "Нашите специалисти притежават всички необходими квалификации за работа на терен.",
+            "viewAll": "Виж всички"
         }
     },
     "en": {
@@ -71,6 +89,24 @@
             "terrainRooftop": "Roof-top",
             "specsTitle": "Technical Specifications",
             "verifiedDesc": "This project is verified by Green Sunrise"
+        },
+        "hero": {
+            "title": "Foundations for Utility-Scale Solar",
+            "subtitle": "Owned Machinery. Certified Teams. Reliable execution for large-scale photovoltaic projects.",
+            "viewProjects": "View Projects",
+            "requestSpecs": "Request Specs"
+        },
+        "home": {
+            "machineryLabel": "The Fleet",
+            "machineryTitle": "Proprietary Machinery",
+            "machineryDesc": "Specialized pile driving equipment owned and maintained by Green Sunrise.",
+            "projectsLabel": "Track Record",
+            "projectsTitle": "Proven Performance",
+            "projectsDesc": "Successfully completed projects across Europe in diverse terrains and conditions.",
+            "teamLabel": "The Expertise",
+            "teamTitle": "Certified Teams",
+            "teamDesc": "Our specialists hold all necessary qualifications for on-site operations.",
+            "viewAll": "View All"
         }
     }
 }

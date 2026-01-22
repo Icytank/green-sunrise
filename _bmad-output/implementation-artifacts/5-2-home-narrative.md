@@ -1,6 +1,6 @@
 # Story 5.2: Institutional Home Page Narrative
 
-Status: ready-for-dev
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -22,16 +22,16 @@ so that I can quickly perform a high-level technical audit of their capacity.
 
 ## Tasks / Subtasks
 
-- [ ] Implement Home Page Narrative Structure (AC: 1, 2, 3, 6)
-  - [ ] Structure `src/pages/[lang]/index.astro` with semantically ordered sections
-  - [ ] Implement the `SectionHeader.astro` component to maintain institutional symmetry
-- [ ] Section Content Integration (AC: 3, 4, 5, 7)
-  - [ ] Integrate a "Machinery Preview" component (3 items)
-  - [ ] Integrate a "Featured Projects" component (3 items)
-  - [ ] Integrate the technical team summary
-- [ ] Stylistic Consistency (AC: 4, 5)
-  - [ ] Apply the 8px grid and token-based spacing rigorously to ensure a "Planned" look
-  - [ ] Ensure the GS Stamp is placed consistently according to the UX spec
+- [x] Implement Home Page Narrative Structure (AC: 1, 2, 3, 6)
+  - [x] Structure `src/pages/[lang]/index.astro` with semantically ordered sections
+  - [x] Implement the `SectionHeader.astro` component to maintain institutional symmetry
+- [x] Section Content Integration (AC: 3, 4, 5, 7)
+  - [x] Integrate a "Machinery Preview" component (3 items)
+  - [x] Integrate a "Featured Projects" component (3 items)
+  - [x] Integrate the technical team summary
+- [x] Stylistic Consistency (AC: 4, 5)
+  - [x] Apply the 8px grid and token-based spacing rigorously to ensure a "Planned" look
+  - [x] Ensure the GS Stamp is placed consistently according to the UX spec
 
 ## Dev Notes
 
@@ -58,10 +58,39 @@ so that I can quickly perform a high-level technical audit of their capacity.
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+Claude claude-sonnet-4-20250514 (Antigravity)
 
 ### Debug Log References
 
+- Build verification: `npm run build` - PASSED
+
 ### Completion Notes List
 
+- Home page implements 3 narrative sections: Machinery (Fleet), Team (Expertise), Projects (Track Record)
+- Each section uses `SectionHeader.astro` with Label/Title/Description pattern
+- GS Stamp integrated via `SectionHeader` `withStamp` prop (default true)
+- View All CTAs route to `/[lang]/machinery`, `/[lang]/about`, `/[lang]/projects`
+- Collection previews: 3 machinery items, 4 team members, 3 projects
+- Full bilingual translations added to `translations.json`
+
 ### File List
+
+- `src/pages/[lang]/index.astro` [MODIFY] - Added narrative sections with Machinery/Team/Projects previews
+- `src/components/SectionHeader.astro` [NEW] - Section header with label, title, description, and GS Stamp
+- `src/components/Button.astro` [NEW] - Reusable button component with primary/secondary variants
+- `src/data/translations.json` [MODIFY] - Added home.* namespace translations for BG/EN
+
+### Senior Developer Review (AI)
+
+**Reviewed:** 2026-01-22  
+**Reviewer:** Antigravity Code Review Workflow  
+**Outcome:** APPROVED with fixes applied
+
+**Issues Found & Fixed:**
+- H3: Added missing `cs-button-solid` primary button styles in `Button.astro`
+- H4: Removed duplicate `// Components` comment in `index.astro`
+- H1/H2: Updated story documentation (File List, task completion status)
+
+**Notes:**
+- Section order (Machinery→Team→Projects) matches translation labels (Fleet→Expertise→Track Record)
+- GS Stamp visibility is intentionally subtle (opacity 0.1-0.15) per design spec

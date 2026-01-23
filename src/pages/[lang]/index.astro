@@ -52,6 +52,32 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
     <!-- ADVANTAGES SECTION -->
     <HomeAdvantages lang={lang} />
 	
+	<!-- PROJECTS SECTION -->
+	<section id="projects" style="padding: var(--gs-section-padding) 0;">
+		<div class="cs-container">
+			<SectionHeader 
+				label={translate("projectsLabel")} 
+				title={translate("projectsTitle")}
+				description={translate("projectsDesc")}
+				align="center"
+			/>
+			<ul class="cs-card-group">
+				{projectsPreview.map((item) => (
+					<li class="cs-item">
+						<ProjectCard
+							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
+							lang={lang}
+							{...item.data}
+						/>
+					</li>
+				))}
+			</ul>
+			<div style="margin-top: var(--gs-space-4); text-align: center;">
+				<Button href={`/${lang}/projects`} variant="secondary">{translate("viewAll")}</Button>
+			</div>
+		</div>
+	</section>
+
 	<!-- MACHINERY SECTION -->
 	<section id="machinery" style="padding: var(--gs-section-padding) 0;">
 		<div class="cs-container">
@@ -59,6 +85,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				label={translate("machineryLabel")} 
 				title={translate("machineryTitle")}
 				description={translate("machineryDesc")}
+				align="center"
 			/>
 			<ul class="cs-card-group">
 				{machineryPreview.map((item) => (
@@ -104,30 +131,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 		</div>
 	</section>
 
-	<!-- PROJECTS SECTION -->
-	<section id="projects" style="padding: var(--gs-section-padding) 0;">
-		<div class="cs-container">
-			<SectionHeader 
-				label={translate("projectsLabel")} 
-				title={translate("projectsTitle")}
-				description={translate("projectsDesc")}
-			/>
-			<ul class="cs-card-group">
-				{projectsPreview.map((item) => (
-					<li class="cs-item">
-						<ProjectCard
-							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
-							lang={lang}
-							{...item.data}
-						/>
-					</li>
-				))}
-			</ul>
-			<div style="margin-top: var(--gs-space-4); text-align: center;">
-				<Button href={`/${lang}/projects`} variant="secondary">{translate("viewAll")}</Button>
-			</div>
-		</div>
-	</section>
+
 
 	<CTASimple />
     
@@ -149,35 +153,40 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 		padding: 0;
 		margin: 0;
 		list-style: none;
-		display: grid;
-		grid-template-columns: repeat(12, 1fr);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		gap: var(--gs-space-4);
 	}
 	
 	.cs-card-group {
 		.cs-item {
-			grid-column: span 12;
+			width: 100%;
 			
 			@media only screen and (min-width: 48rem) {
-				grid-column: span 6;
+				/* 2 columns: (100% - 1*gap) / 2 */
+				width: calc((100% - var(--gs-space-4)) / 2);
 			}
 			
 			@media only screen and (min-width: 64rem) {
-				grid-column: span 4;
+				/* 3 columns: (100% - 2*gap) / 3 */
+				width: calc((100% - (2 * var(--gs-space-4))) / 3);
 			}
 		}
 	}
 
 	.cs-card-group-4 {
 		.cs-item {
-			grid-column: span 12;
+			width: 100%;
 			
 			@media only screen and (min-width: 30rem) {
-				grid-column: span 6;
+				/* 2 columns: (100% - 1*gap) / 2 */
+				width: calc((100% - var(--gs-space-4)) / 2);
 			}
 			
 			@media only screen and (min-width: 64rem) {
-				grid-column: span 3;
+				/* 4 columns: (100% - 3*gap) / 4 */
+				width: calc((100% - (3 * var(--gs-space-4))) / 4);
 			}
 		}
 	}

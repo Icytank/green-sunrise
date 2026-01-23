@@ -81,10 +81,12 @@ const t = translations[lang];
     <div class="cs-radio-group">
       <label class="cs-radio-label">
         <input required type="radio" name="projectType" value="Utility" />
+        <span class="cs-radio-visual"></span>
         <span class="cs-radio-text">{t.typeUtility}</span>
       </label>
       <label class="cs-radio-label">
         <input required type="radio" name="projectType" value="Roof-top" />
+        <span class="cs-radio-visual"></span>
         <span class="cs-radio-text">{t.typeCommercial}</span>
       </label>
     </div>
@@ -278,9 +280,56 @@ const t = translations[lang];
   .cs-radio-label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-weight: 400;
       cursor: pointer;
+      position: relative;
+  }
+
+  /* Custom Radio Styling */
+  .cs-radio-label input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+  }
+
+  /* Create the custom radio circle */
+  .cs-radio-label .cs-radio-visual {
+      height: 1.25rem; /* 20px */
+      width: 1.25rem;
+      background-color: #fff;
+      border: 2px solid var(--gs-slate-gray); /* Default gray border */
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      transition: all 0.2s ease-in-out;
+  }
+
+  /* Hover state */
+  .cs-radio-label:hover .cs-radio-visual {
+      border-color: var(--gs-institutional-green);
+  }
+
+  /* Checked state border */
+  .cs-radio-label input[type="radio"]:checked ~ .cs-radio-visual {
+      border-color: var(--gs-institutional-green);
+      background-color: #fff;
+  }
+
+  /* Checked indicator dot */
+  .cs-radio-label input[type="radio"]:checked ~ .cs-radio-visual::after {
+      content: "";
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0.625rem; /* 10px */
+      height: 0.625rem;
+      border-radius: 50%;
+      background: var(--gs-institutional-green);
   }
   
   .cs-radio-text {

@@ -36,8 +36,6 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
         <p class="subtitle">{t("projects.methodology.intro" as TranslationKey, lang as 'bg' | 'en')}</p>
       </header>
 
-      <ProjectMethodology lang={lang as 'bg' | 'en'} />
-
       <!-- Project Filters -->
       <ProjectFilters lang={lang as 'bg' | 'en'} terrainTypes={terrainTypes} />
 
@@ -58,6 +56,12 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
           );
         })}
       </div>
+
+      <div class="approach-header">
+        <h2 class="font-display">{t("projects.approachTitle" as TranslationKey, lang as 'bg' | 'en')}</h2>
+      </div>
+
+      <ProjectMethodology lang={lang as 'bg' | 'en'} />
     </section>
 
 
@@ -66,7 +70,7 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
 
 <style>
   .projects-page {
-    padding: var(--gs-space-10) 0;
+    padding: var(--gs-section-padding);
     background-color: var(--gs-executive-white);
     min-height: 100vh;
   }
@@ -102,6 +106,7 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--gs-space-6);
+    margin-bottom: var(--gs-space-12);
   }
 
   /* Tablet: 2 columns */
@@ -123,6 +128,16 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
     .projects-grid {
       grid-template-columns: repeat(4, 1fr);
     }
+  }
+
+  .approach-header {
+    text-align: center;
+    margin-bottom: var(--gs-space-8);
+  }
+
+  .approach-header .font-display {
+    font-size: var(--gs-text-h2);
+    margin-bottom: 0;
   }
 </style>
 

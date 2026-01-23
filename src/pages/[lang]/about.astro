@@ -15,6 +15,7 @@ import Banner from "@components/Banner/Banner.astro";
 import AboutIntro from "@components/AboutIntro.astro";
 import AboutMission from "@components/AboutMission.astro";
 import AboutValues from "@components/AboutValues.astro";
+import SectionHeader from "@components/SectionHeader.astro";
 import TeamMember from "@components/TeamMember.astro";
 
 // Images
@@ -37,12 +38,12 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 
 	<section id="team" class="team-section">
 		<div class="container">
-			<div class="section-header">
-				<h2 class="section-title">{t('team.title', lang)}</h2>
-				<p class="section-subtitle">
-					{t('team.subtitle', lang)}
-				</p>
-			</div>
+			<SectionHeader 
+				label={t('team.label', lang)}
+				title={t('team.title', lang)}
+				description={t('team.subtitle', lang)}
+				align="center"
+			/>
 			<div class="team-grid">
 				{teamMembers.map((member) => (
 					<TeamMember 

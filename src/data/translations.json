@@ -1,6 +1,7 @@
 {
     "bg": {
         "machinery": {
+            "machineryTitle": "Флотът",
             "weight": "Тегло",
             "model": "Модел",
             "impactPower": "Сила на удара",
@@ -14,6 +15,7 @@
             "ownershipDeclaration": "Тази техника е част от собствения флот на Green Sunrise"
         },
         "team": {
+            "label": "Експертиза",
             "title": "Нашият Екип",
             "subtitle": "Професионалисти с доказан опит и европейски сертификати.",
             "experience": "Опит",
@@ -136,6 +138,7 @@
             "pageDescription": "Разгледайте нашето портфолио от соларни и енергийни проекти.",
             "title": "Нашите Проекти",
             "subtitle": "Верифицирано портфолио от реализирани проекти с точни технически спецификации.",
+            "approachTitle": "Нашият подход към проектите",
             "methodology": {
                 "intro": "Участници в строителството на енергийната инфраструктура на бъдещето.",
                 "steps": {
@@ -167,6 +170,7 @@
         },
         "about": {
             "intro": {
+                "label": "Кои сме ние",
                 "title": "Корпоративен Профил",
                 "text": "Green Sunrise Ltd е специализирана компания, фокусирана върху висококачественото изпълнение на инфраструктурни и енергийни проекти."
             },
@@ -179,6 +183,7 @@
                 "text": "Да бъдем предпочитан европейски партньор за реализацията на мащабни ВЕИ проекти, задавайки стандартите за ефективност и надеждност."
             },
             "values": {
+                "label": "Основни Принципи",
                 "title": "Нашите Ценности",
                 "list": {
                     "quality": {
@@ -238,6 +243,7 @@
     },
     "en": {
         "machinery": {
+            "machineryTitle": "The Fleet",
             "weight": "Weight",
             "model": "Model",
             "impactPower": "Impact Power",
@@ -251,6 +257,7 @@
             "ownershipDeclaration": "This machinery is part of the Green Sunrise proprietary fleet"
         },
         "team": {
+            "label": "Expertise",
             "title": "Our Team",
             "subtitle": "Professionals with proven experience and European certifications.",
             "experience": "Experience",
@@ -373,6 +380,7 @@
             "pageDescription": "Explore our portfolio of solar and energy projects.",
             "title": "Our Projects",
             "subtitle": "Verified portfolio of completed projects with precise technical specifications.",
+            "approachTitle": "Our Approach",
             "methodology": {
                 "intro": "Participants in construction of the energy infrastructure of the future.",
                 "steps": {
@@ -404,6 +412,7 @@
         },
         "about": {
             "intro": {
+                "label": "Who We Are",
                 "title": "Corporate Profile",
                 "text": "Green Sunrise Ltd is a specialized company focused on high-quality execution of infrastructure and renewable energy projects."
             },
@@ -416,6 +425,7 @@
                 "text": "To be the preferred European partner for large-scale RES projects, setting standards for efficiency and reliability."
             },
             "values": {
+                "label": "Core Principles",
                 "title": "Our Values",
                 "list": {
                     "quality": {

@@ -6,6 +6,7 @@ import ProjectFilters from "@components/ProjectFilters.astro";
 import ProjectMethodology from "@components/ProjectMethodology.astro";
 import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
+export const prerender = true;
 export function getStaticPaths() {
 	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }

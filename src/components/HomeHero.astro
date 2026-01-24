@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import heroImage from "@assets/images/hero/hero.jpg";
 import Button from "./Button.astro";
 import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
@@ -12,6 +11,9 @@ const { lang } = Astro.props;
 
 // Helper to get translation with type safety for this component
 const translate = (key: string) => t(`hero.${key}` as TranslationKey, lang);
+
+import defaultHeroImage from "@assets/images/home-hero.png";
+const { heroImage = defaultHeroImage } = Astro.props;
 ---
 
 <section id="hero">

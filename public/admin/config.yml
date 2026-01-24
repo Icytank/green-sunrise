@@ -1,12 +1,15 @@
-# Use DecapBridge auth (required)
+# Use DecapBridge PKCE auth (required)
 backend:
   name: git-gateway
-  repo: CodeStitchOfficial/Intermediate-Astro-Decap-CMS
+  repo: Icytank/green-sunrise
   branch: main
-  identity_url: https://auth.decapbridge.com/sites/1ea1e8dd-3c54-40d7-bbe1-74af6c8f16f6
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/e1424270-1cfd-42d8-94e2-9fcff26b0341/pkce
+  auth_token_endpoint: /sites/e1424270-1cfd-42d8-94e2-9fcff26b0341/token
   gateway_url: https://gateway.decapbridge.com
 
-  # Quickly see who did what (optional)
+  # See who did what (optional)
   commit_messages:
     create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
     update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
@@ -15,11 +18,18 @@ backend:
     deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
-# Logo for Decap login page. Change url to a link to the image you want to use, no file paths, must be a URL
+# Enable PKCE fields (optional, recommended)
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+# Better Decap + Bridge logo (optional)
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
-# Add site link in DecapCMS (optional)
-site_url: https://intermediate-astro-kit-decap-cms.netlify.app
+# Add site links in Decap CMS (optional)
+site_url: http://localhost:4321
 
 media_folder: src/assets/images/blog # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
 public_folder: "@assets/images/blog" # Same folder as above, but using a path alias for easier referencing in the markdown files.
@@ -37,4 +47,56 @@ collections:
       - { label: "Cover Image", name: "image", widget: "image" }
       - { label: "Image Caption", name: "imageAlt", widget: "string" }
       - { label: "Is it a featured post?", name: "isFeatured", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "projects-bg"
+    label: "Projects (BG)"
+    folder: "src/content/projects/bg"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Installed Capacity (MW)", name: "capacityMW", widget: "number", value_type: "float" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Terrain Type", name: "terrainType", widget: "select", options: ["Flat", "Mountainous", "Industrial", "Roof-top"] }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
+      - { label: "Scope of Work", name: "scope", widget: "string" }
+      - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "projects-en"
+    label: "Projects (EN)"
+    folder: "src/content/projects/en"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Installed Capacity (MW)", name: "capacityMW", widget: "number", value_type: "float" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Terrain Type", name: "terrainType", widget: "select", options: ["Flat", "Mountainous", "Industrial", "Roof-top"] }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
+      - { label: "Scope of Work", name: "scope", widget: "string" }
+      - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "machinery-bg"
+    label: "Machinery (BG)"
+    folder: "src/content/machinery/bg"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Weight", name: "weight", widget: "string" }
+      - { label: "Impact Power", name: "impactPower", widget: "string" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
+      - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "machinery-en"
+    label: "Machinery (EN)"
+    folder: "src/content/machinery/en"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Weight", name: "weight", widget: "string" }
+      - { label: "Impact Power", name: "impactPower", widget: "string" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
+      - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Body", name: "body", widget: "markdown" }

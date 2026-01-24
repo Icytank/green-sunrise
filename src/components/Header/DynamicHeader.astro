@@ -14,7 +14,7 @@ import { getTranslatedPath } from "@utils/i18n-helpers";
 
 // Components
 import { Image } from "astro:assets";
-import DarkModeToggle from "@components/DarkModeToggle/DarkModeToggle.astro";
+
 import LanguageSwitcher from "@components/LanguageSwitcher.astro";
 import stampLogo from "@assets/images/gs-stamp.png";
 
@@ -98,8 +98,6 @@ const currentPath = Astro.url.pathname;
 		</div>
 
 		<a href={getLocalizedUrl("/contact/")} class="cs-button-solid cs-nav-button">{ctaLabel}</a>
-		<!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
-		<DarkModeToggle />
 	</div>
 </header>
 

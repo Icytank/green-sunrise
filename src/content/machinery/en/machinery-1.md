@@ -1,12 +1,12 @@
 ---
-title: "English Heavy Excavator X5"
+title: "Heavy Excavator X5"
 model: "CAT-350"
 weight: "35t"
 
 impactPower: "450kJ"
-heroImage: "../../../assets/images/placeholder.jpg"
+heroImage: "../../../assets/images/services/construction.jpg"
 galleryImages:
-  - "../../../assets/images/placeholder.jpg"
+  - "../../../assets/images/services/construction.jpg"
 ---
 
 A sample machinery description in English.

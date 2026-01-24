@@ -4,7 +4,7 @@ capacityMW: 10.5
 location: "Plovdiv, Bulgaria"
 terrainType: "Flat"
 date: 2025-08-15
-heroImage: "../../../assets/images/services/construction.jpg"
+heroImage: "../../../assets/images/construction.jpg"
 scope: "Pile driving, mounting structures, module installation"
 isVerified: true
 ---

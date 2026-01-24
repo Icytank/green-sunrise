@@ -11,11 +11,11 @@ backend:
 
   # See who did what (optional)
   commit_messages:
-    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}> via DecapBridge
     openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
 
 # Enable PKCE fields (optional, recommended)
@@ -31,8 +31,8 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 # Add site links in Decap CMS (optional)
 site_url: http://localhost:4321
 
-media_folder: src/assets/images # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
-public_folder: "@assets/images" # Same folder as above, but using a path alias for easier referencing in the markdown files.
+media_folder: src/assets/images # Location where files will be stored in the repo
+public_folder: src/assets/images # Base path for the CMS to locate files
 
 collections:
 
@@ -50,6 +50,7 @@ collections:
       - { label: "Scope of Work", name: "scope", widget: "string" }
       - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
       - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "projects-en"
     label: "Projects (EN)"
     folder: "src/content/projects/en"
@@ -64,6 +65,7 @@ collections:
       - { label: "Scope of Work", name: "scope", widget: "string" }
       - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
       - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "machinery-bg"
     label: "Machinery (BG)"
     folder: "src/content/machinery/bg"
@@ -76,6 +78,7 @@ collections:
       - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Body", name: "body", widget: "markdown" }
+
   - name: "machinery-en"
     label: "Machinery (EN)"
     folder: "src/content/machinery/en"
@@ -87,4 +90,30 @@ collections:
       - { label: "Impact Power", name: "impactPower", widget: "string" }
       - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "teams-bg"
+    label: "Teams (BG)"
+    folder: "src/content/teams/bg"
+    create: true
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Certifications", name: "certifications", widget: "list", field: { label: "Certification", name: "certification", widget: "string" } }
+      - { label: "Years of Experience", name: "yearsExperience", widget: "number", value_type: "int" }
+      - { label: "Avatar", name: "avatar", widget: "image" }
+      - { label: "Verified?", name: "verified", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "teams-en"
+    label: "Teams (EN)"
+    folder: "src/content/teams/en"
+    create: true
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Certifications", name: "certifications", widget: "list", field: { label: "Certification", name: "certification", widget: "string" } }
+      - { label: "Years of Experience", name: "yearsExperience", widget: "number", value_type: "int" }
+      - { label: "Avatar", name: "avatar", widget: "image" }
+      - { label: "Verified?", name: "verified", widget: "boolean", default: false }
       - { label: "Body", name: "body", widget: "markdown" }

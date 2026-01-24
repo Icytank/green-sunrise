@@ -4,7 +4,7 @@ capacityMW: 10.5
 location: "Пловдив, България"
 terrainType: "Flat"
 date: 2025-08-15
-heroImage: "../../../assets/images/services/construction.jpg"
+heroImage: "../../../assets/images/construction.jpg"
 scope: "Набиване на пилони, монтаж на конструкции, монтаж на модули"
 isVerified: true
 ---

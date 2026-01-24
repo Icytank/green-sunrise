@@ -4,7 +4,7 @@ capacityMW: 2.8
 location: "Sofia, Bulgaria"
 terrainType: "Roof-top"
 date: 2025-11-20
-heroImage: "../../../assets/images/projects/port2.jpg"
+heroImage: "../../../assets/images/port2.jpg"
 scope: "Ballasted mounting system, module installation, electrical connection"
 isVerified: true
 ---

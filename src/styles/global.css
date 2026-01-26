@@ -50,6 +50,15 @@ h6 {
     isolation: isolate;
 }
 
+/* Main content stacking context - ensures page content stays below fixed header */
+main#main {
+    position: relative;
+    z-index: 1;
+    /* Below header z-index (10000) */
+    isolation: isolate;
+    /* Creates stacking context for all page content */
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: no-preference) {
     html {

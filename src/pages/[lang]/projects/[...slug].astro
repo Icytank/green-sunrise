@@ -292,6 +292,8 @@ const labels = t[lang as 'bg' | 'en'];
     display: flex;
     flex-direction: column;
     gap: var(--gs-space-6);
+    position: relative;
+    z-index: 1; /* Below header z-index (10000) */
   }
 
   .cta-button {

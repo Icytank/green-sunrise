@@ -1,14 +1,14 @@
 ---
 interface Props {
   href: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "outline";
   class?: string;
   [key: string]: any;
 }
 
 const { href, variant = "primary", class: className, ...rest } = Astro.props;
 
-const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-transparent";
+const variantClass = variant === "primary" ? "cs-button-solid" : variant === "outline" ? "cs-button-outline" : "cs-button-transparent";
 ---
 
 <a href={href} class:list={[variantClass, className]} {...rest}>
@@ -40,6 +40,33 @@ const variantClass = variant === "primary" ? "cs-button-solid" : "cs-button-tran
     &:hover {
       background-color: var(--gs-success-emerald);
       transform: translateY(-2px);
+    }
+  }
+
+  /* Outline variant - Dark Border/Text for Light Backgrounds */
+  .cs-button-outline {
+    font-size: (16/16rem);
+    font-weight: bold;
+    line-height: (50/16em);
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: auto;
+    height: (50/16rem);
+    padding: 0 (30/16rem);
+    
+    color: var(--gs-primary);
+    background-color: transparent;
+    border: 2px solid var(--gs-primary);
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+
+    &:hover {
+      background-color: var(--gs-primary);
+      color: var(--gs-executive-white);
     }
   }
 

@@ -18,7 +18,7 @@ import { BUSINESS } from "@data/client";
 import translations from "@data/translations.json";
 
 // Images
-import landingImage from "@assets/images/contact-header.png";
+import landingImage from "@assets/images/contact-header.jpg";
 const optimizedImage = await getImage({ src: landingImage, format: "webp" });
 
 // Get translations
@@ -32,7 +32,7 @@ const contactT = t.contact;
 	description={contactT.pageDescription} 
 	heroImage={optimizedImage}
 >
-	<Banner title={contactT.title} image={optimizedImage} />
+	<Banner title={contactT.title} image={optimizedImage} imagePosition="center 40%" />
 
 	<section id="cs-contact">
 		<div class="cs-container">

@@ -11,15 +11,23 @@ import type { GetImageResult } from "astro";
 interface Props {
 	title: string; // heading text
 	image: GetImageResult; // pre-optimized image from getImage()
+	imagePosition?: string; // object-position value (e.g. "top", "center", "0% 20%")
 }
 
-const { title, image } = Astro.props;
+const { title, image, imagePosition = "center" } = Astro.props;
 ---
 
-<section id="int-hero">
+<section id="int-hero" style={`--imagePosition: ${imagePosition}`}>
 	<h1 id="home-h">{title}</h1>
 
-	<Picture src={image.src} width={image.attributes.width} height={image.attributes.height} formats={["avif", "webp"]} alt="" priority />
+	<Picture 
+		src={image.src} 
+		width={image.attributes.width} 
+		height={image.attributes.height} 
+		formats={["avif", "webp"]} 
+		alt="" 
+		priority 
+	/>
 </section>
 
 <style lang="less">
@@ -64,6 +72,7 @@ const { title, image } = Astro.props;
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+					object-position: var(--imagePosition);
 					position: absolute;
 					top: 0;
 					left: 0;

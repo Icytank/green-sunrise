@@ -49,6 +49,7 @@ collections:
       - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Scope of Work", name: "scope", widget: "string" }
       - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
+      - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "projects-en"
@@ -64,6 +65,7 @@ collections:
       - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Scope of Work", name: "scope", widget: "string" }
       - { label: "Verified Project?", name: "isVerified", widget: "boolean", default: false }
+      - { label: "Gallery Images", name: "galleryImages", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "machinery-bg"

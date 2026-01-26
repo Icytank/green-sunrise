@@ -4,13 +4,13 @@ capacityMW: 0.3
 location: "с. Голямо Враново"
 terrainType: "Flat"
 date: 2023-03-15
-heroImage: "../../../assets/images/projects/golyamo-vranovo-pic1.jpg"
+heroImage: "../../../assets/images/golyamo-vranovo-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/golyamo-vranovo-pic2.jpg"
-  - "../../../assets/images/projects/golyamo-vranovo-pic3.jpg"
-  - "../../../assets/images/projects/golyamo-vranovo-pic4.jpg"
-  - "../../../assets/images/projects/golyamo-vranovo-pic5.jpg"
-  - "../../../assets/images/projects/golyamo-vranovo-pic6.jpg"
+  - "../../../assets/images/golyamo-vranovo-pic2.jpg"
+  - "../../../assets/images/golyamo-vranovo-pic3.jpg"
+  - "../../../assets/images/golyamo-vranovo-pic4.jpg"
+  - "../../../assets/images/golyamo-vranovo-pic5.jpg"
+  - "../../../assets/images/golyamo-vranovo-pic6.jpg"
 scope: "Набиване на профили"
 isVerified: true
 ---

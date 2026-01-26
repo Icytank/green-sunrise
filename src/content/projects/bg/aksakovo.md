@@ -4,7 +4,7 @@ capacityMW: 0.2
 location: "гр. Аксаково"
 terrainType: "Flat"
 date: 2025-11-20
-heroImage: "../../../assets/images/projects/aksakovo-pic1.jpg"
+heroImage: "../../../assets/images/aksakovo-pic1.jpg"
 scope: "Набиване на профили"
 isVerified: true
 ---

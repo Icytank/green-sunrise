@@ -4,10 +4,10 @@ capacityMW: 0.06
 location: "Gergavets, Sliven Region"
 terrainType: "Flat"
 date: 2023-04-25
-heroImage: "../../../assets/images/projects/gergavets-pic1.jpg"
+heroImage: "../../../assets/images/gergavets-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/gergavets-pic2.jpg"
-  - "../../../assets/images/projects/gergavets-pic3.jpg"
+  - "../../../assets/images/gergavets-pic2.jpg"
+  - "../../../assets/images/gergavets-pic3.jpg"
 scope: "Pile driving (profiles installation)"
 isVerified: true
 ---

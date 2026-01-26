@@ -4,9 +4,9 @@ capacityMW: 0.03
 location: "Zagrajden, Pleven Region"
 terrainType: "Flat"
 date: 2023-04-20
-heroImage: "../../../assets/images/projects/zagrajden-pic1.jpg"
+heroImage: "../../../assets/images/zagrajden-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/zagrajden-pic2.jpg"
+  - "../../../assets/images/zagrajden-pic2.jpg"
 scope: "Pile driving (profiles installation)"
 isVerified: true
 ---

@@ -4,10 +4,10 @@ capacityMW: 0.22
 location: "гр. Кубрат"
 terrainType: "Flat"
 date: 2025-11-15
-heroImage: "../../../assets/images/projects/kubrat-pic1.jpg"
+heroImage: "../../../assets/images/kubrat-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/kubrat-pic2.jpg"
-  - "../../../assets/images/projects/kubrat-pic3.jpg"
+  - "../../../assets/images/kubrat-pic2.jpg"
+  - "../../../assets/images/kubrat-pic3.jpg"
 scope: "Набиване на профили"
 isVerified: true
 ---

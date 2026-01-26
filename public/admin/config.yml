@@ -32,7 +32,7 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 site_url: http://localhost:4321
 
 media_folder: src/assets/images # Location where files will be stored in the repo
-public_folder: src/assets/images # Base path for the CMS to locate files
+public_folder: ../../../assets/images # Base path for the CMS to locate files
 
 collections:
 

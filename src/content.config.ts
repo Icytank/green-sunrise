@@ -34,6 +34,7 @@ const projectsCollection = defineCollection({
 			terrainType: TerrainType,
 			date: z.date(),
 			heroImage: image(),
+			galleryImages: z.array(image()).optional(), // Optional gallery images
 			isVerified: z.boolean().default(false), // Toggles GS Stamp visibility
 			scope: z.string().optional(), // New field for detailed scope of work
 		}),

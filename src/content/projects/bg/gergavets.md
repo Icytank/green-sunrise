@@ -1,0 +1,26 @@
+---
+title: "ФЕЦ с. Гергевец"
+capacityMW: 0.06
+location: "с. Гергевец, Сливенска област"
+terrainType: "Flat"
+date: 2023-04-25
+heroImage: "../../../assets/images/projects/project-4-gergavets/pic1.jpg"
+galleryImages:
+  - "../../../assets/images/projects/project-4-gergavets/pic2.jpg"
+  - "../../../assets/images/projects/project-4-gergavets/pic3.jpg"
+scope: "Набиване на профили"
+isVerified: true
+---
+
+## Предизвикателството
+
+Изграждане на фотоволтаична централа с обща инсталирана мощност 60 kWp в Сливенска област.
+
+## Технически Обхват
+
+- **Инсталирана мощност:** 60 kWp
+- **Роля:** Набиване на носещи профили
+
+## Резултатът
+
+Успешно набиване на носещи профили за фотоволтаична централа с обща инсталирана мощност 60 kWp.

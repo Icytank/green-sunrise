@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { lang } = Astro.params;
-const { title, capacityMW, location, terrainType, heroImage, isVerified, scope } = item.data;
+const { title, capacityMW, location, terrainType, heroImage, galleryImages, isVerified, scope } = item.data;
 const { Content } = await render(item);
 
 // Translations
@@ -57,6 +57,8 @@ const t = {
 };
 
 const labels = t[lang as 'bg' | 'en'];
+// Combine hero image and gallery images for the slider
+const allImages = [heroImage, ...(galleryImages || [])];
 ---
 
 <BaseLayout 
@@ -70,16 +72,41 @@ const labels = t[lang as 'bg' | 'en'];
       <a href={`/${lang}/projects`} class="back-link">{labels.backToProjects}</a>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Slider Section -->
     <header class="project-hero">
-      <div class="hero-image-wrapper">
-        <Image src={heroImage} alt={title} width={1920} class="hero-image" />
+      <div class="hero-slider-wrapper" id="hero-slider">
+        <div class="slider-track">
+          {allImages.map((img, index) => (
+             <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
+                <Image src={img} alt={`${title} - Image ${index + 1}`} width={1920} class="hero-image clickable-image" data-full-src={img.src} priority={index === 0} />
+             </div>
+          ))}
+        </div>
+        
+        {allImages.length > 1 && (
+          <>
+            <button class="slider-nav prev" aria-label="Previous slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="nav-icon"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="slider-nav next" aria-label="Next slide">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="nav-icon"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            
+            <div class="slider-indicators">
+              {allImages.map((_, index) => (
+                <button class={`indicator ${index === 0 ? 'active' : ''}`} aria-label={`Go to slide ${index + 1}`} data-index={index}></button>
+              ))}
+            </div>
+          </>
+        )}
+
         {isVerified && (
           <div class="hero-stamp">
             <GSStamp size={120} />
           </div>
         )}
       </div>
+      
       <div class="container hero-content">
         <div class="capacity-badge font-mono">
           <span class="capacity-value">{capacityMW}</span>
@@ -116,7 +143,199 @@ const labels = t[lang as 'bg' | 'en'];
       </aside>
     </div>
   </article>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <button class="lightbox-nav prev" id="lightbox-prev" aria-label="Previous image">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="lightbox-content" id="lightbox-img">
+    <button class="lightbox-nav next" id="lightbox-next" aria-label="Next image">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="lightbox-indicators" id="lightbox-indicators">
+      <!-- Dots will be injected here by JS -->
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  // Slider Logic
+  function setupSlider() {
+    const slider = document.getElementById('hero-slider');
+    if (!slider) return;
+
+    const track = slider.querySelector('.slider-track') as HTMLElement;
+    const slides = Array.from(slider.querySelectorAll('.slide'));
+    const prevBtn = slider.querySelector('.slider-nav.prev');
+    const nextBtn = slider.querySelector('.slider-nav.next');
+    const indicators = Array.from(slider.querySelectorAll('.indicator'));
+    
+    // If only one slide, don't initialize slider logic
+    if (slides.length <= 1) return;
+
+    let currentIndex = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function goToSlide(index: number) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      
+      currentIndex = index;
+      
+      // Update track position
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Update active classes
+      slides.forEach((slide, i) => {
+        if (i === currentIndex) slide.classList.add('active');
+        else slide.classList.remove('active');
+      });
+      
+      indicators.forEach((ind, i) => {
+        if (i === currentIndex) ind.classList.add('active');
+        else ind.classList.remove('active');
+      });
+    }
+
+    // Event Listeners
+    prevBtn?.addEventListener('click', () => goToSlide(currentIndex - 1));
+    nextBtn?.addEventListener('click', () => goToSlide(currentIndex + 1));
+    
+    indicators.forEach((ind, i) => {
+      ind.addEventListener('click', () => goToSlide(i));
+    });
+
+    // Touch Swipe Support
+    slider.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    slider.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const threshold = 50;
+      if (touchEndX < touchStartX - threshold) goToSlide(currentIndex + 1); // Swipe Left -> Next
+      if (touchEndX > touchStartX + threshold) goToSlide(currentIndex - 1); // Swipe Right -> Prev
+    }
+
+    // Keyboard Navigation (Slider)
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightbox')!.style.display !== 'flex') {
+         if (e.key === 'ArrowLeft') goToSlide(currentIndex - 1);
+         if (e.key === 'ArrowRight') goToSlide(currentIndex + 1);
+      }
+    });
+  }
+
+  // Lightbox Logic
+  function setupLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    
+    // Move lightbox to body to escape stacking context of <main>
+    document.body.appendChild(lightbox);
+    
+    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+    const closeBtn = document.querySelector('.close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxIndicators = document.getElementById('lightbox-indicators');
+    const clickableImages = Array.from(document.querySelectorAll('.clickable-image'));
+
+    let currentLightboxIndex = 0;
+    const imageUrls = clickableImages.map(img => img.getAttribute('data-full-src') || '');
+
+    // Generate Dots
+    if (lightboxIndicators) {
+      lightboxIndicators.innerHTML = '';
+      imageUrls.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.classList.add('lightbox-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Go to image ${index + 1}`);
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openLightbox(index);
+        });
+        lightboxIndicators.appendChild(dot);
+      });
+    }
+
+    function updateDots(index: number) {
+      if (!lightboxIndicators) return;
+      const dots = Array.from(lightboxIndicators.children);
+      dots.forEach((dot, i) => {
+        if (i === index) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
+    function openLightbox(index: number) {
+      if (index < 0) index = imageUrls.length - 1;
+      if (index >= imageUrls.length) index = 0;
+      
+      currentLightboxIndex = index;
+      lightbox!.style.display = 'flex';
+      lightboxImg!.src = imageUrls[currentLightboxIndex];
+      updateDots(currentLightboxIndex);
+      document.body.style.overflow = 'hidden';
+    }
+
+    clickableImages.forEach((img, index) => {
+      img.addEventListener('click', (e) => {
+        openLightbox(index);
+      });
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      lightbox!.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+    
+    lightboxPrev?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openLightbox(currentLightboxIndex - 1);
+    });
+
+    lightboxNext?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openLightbox(currentLightboxIndex + 1);
+    });
+
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox!.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox!.style.display === 'flex') {
+        if (e.key === 'Escape') {
+           lightbox!.style.display = 'none';
+           document.body.style.overflow = 'auto';
+        }
+        if (e.key === 'ArrowLeft') openLightbox(currentLightboxIndex - 1);
+        if (e.key === 'ArrowRight') openLightbox(currentLightboxIndex + 1);
+      }
+    });
+  }
+
+  // Initialize
+  function init() {
+    setupSlider();
+    setupLightbox();
+  }
+
+  init();
+  document.addEventListener('astro:after-swap', init);
+</script>
 
 <style>
   .project-detail {
@@ -149,32 +368,101 @@ const labels = t[lang as 'bg' | 'en'];
     margin-bottom: var(--gs-space-10);
   }
 
-  .hero-image-wrapper {
+  .hero-slider-wrapper {
     position: relative;
     width: 100%;
     height: 50vh;
     min-height: 400px;
     max-height: 600px;
     overflow: hidden;
+    background: #000; /* Placeholder color while loading */
+  }
+
+  .slider-track {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
   }
 
   .hero-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    user-select: none; /* Prevent selection while swiping */
+  }
+
+  /* Slider Navigation */
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 20;
+    color: white;
+  }
+
+  .slider-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .prev { left: var(--gs-space-6); }
+  .next { right: var(--gs-space-6); }
+
+  .slider-indicators {
+    position: absolute;
+    bottom: var(--gs-space-6);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+  }
+
+  .indicator {
+    width: 40px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 0;
+  }
+
+  .indicator.active {
+    background: var(--gs-success-emerald);
   }
 
   .hero-stamp {
     position: absolute;
     bottom: var(--gs-space-6);
     right: var(--gs-space-6);
-    z-index: 10;
+    z-index: 25; /* Higher than nav controls */
+    pointer-events: none; /* Let clicks pass through if needed */
   }
 
   .hero-content {
     margin-top: calc(-1 * var(--gs-space-10));
     position: relative;
-    z-index: 5;
+    z-index: 30;
     background: var(--gs-executive-white);
     padding: var(--gs-space-6);
     border-radius: 12px;
@@ -311,5 +599,112 @@ const labels = t[lang as 'bg' | 'en'];
 
   .cta-button:hover {
     background: var(--gs-institutional-green-dark, #27ae60);
+  }
+
+  /* Lightbox Styles */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 20000; /* Ensure it's above everything including navbar (10000) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.95);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    padding: var(--gs-space-10); /* Equal spacing around image */
+    box-sizing: border-box; /* Ensure padding is included in sizing */
+  }
+
+  .lightbox-content {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: zoom 0.3s ease-out;
+  }
+
+  @keyframes zoom {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    color: white;
+    font-size: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+  }
+
+  .close:hover {
+    color: var(--gs-success-emerald);
+  }
+  
+  .lightbox-nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10002;
+    padding: 0;
+  }
+  
+  .lightbox-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .lightbox-nav.prev {
+    left: 20px;
+  }
+  
+  .lightbox-nav.next {
+    right: 20px;
+  }
+  
+  .lightbox-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10002;
+  }
+  
+  :global(.lightbox-dot) {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  
+  :global(.lightbox-dot.active) {
+    background: var(--gs-success-emerald);
+    transform: scale(1.2);
   }
 </style>

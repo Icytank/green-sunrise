@@ -239,6 +239,11 @@
             "pvInstallation": "Фотоволтаични Инсталации",
             "maintenance": "Поддръжка",
             "technicalConsulting": "Технически Консултации"
+        },
+        "cta": {
+            "title": "Започнете проекта си с нас",
+            "description": "Готови сме да обсъдим вашите нужди и да предложим оптимално решение за следващия ви соларен проект.",
+            "button": "Заявете консултация"
         }
     },
     "en": {
@@ -481,6 +486,11 @@
             "pvInstallation": "PV Installation",
             "maintenance": "Maintenance",
             "technicalConsulting": "Technical Consulting"
+        },
+        "cta": {
+            "title": "Start Your Project With Us",
+            "description": "We're ready to discuss your requirements and provide the optimal solution for your next solar project.",
+            "button": "Request a Consultation"
         }
     }
 }

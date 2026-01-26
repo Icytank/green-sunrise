@@ -23,5 +23,5 @@ const optimizedImage = await getImage({ src: landingImage, format: "webp" });
 <BaseLayout title="Reviews" description="Meta description for the page" heroImage={optimizedImage}>
 	<Banner title="Reviews" image={optimizedImage} />
 	<ReviewsSection />
-	<CTA />
+	<CTA lang={lang as "bg" | "en"} />
 </BaseLayout>

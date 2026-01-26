@@ -5,20 +5,25 @@
 
 // Utils
 import { Picture } from "astro:assets";
+import { t } from "@utils/i18n-helpers";
 
 // Images
 import ctaImage from "@assets/images/home-cta.jpg";
+
+interface Props {
+	lang: "bg" | "en";
+}
+
+const { lang } = Astro.props;
 ---
 
 <section id="cta">
 	<div class="container">
 		<h2 class="title">
-			Get It Done
-			<br />
-			With Us Today
+			{t('cta.title', lang)}
 		</h2>
-		<p>Say something catchy, informative, and encouraging to click the button to go to the contact page. I like to add these to the bottom of all pages.</p>
-		<a href="/contact/" class="cs-button-solid">Get an Estimate Now</a>
+		<p>{t('cta.description', lang)}</p>
+		<a href={`/${lang}/contact/`} class="cta-button">{t('cta.button', lang)}</a>
 	</div>
 	<Picture src={ctaImage} alt="" layout="full-width" formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture" }} />
 </section>
@@ -80,6 +85,25 @@ import ctaImage from "@assets/images/home-cta.jpg";
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+				}
+			}
+
+			.cta-button {
+				display: inline-block;
+				padding: (16/16rem) (32/16rem);
+				background-color: var(--gs-institutional-green);
+				color: #fff;
+				font-size: (16/16rem);
+				font-weight: 700;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				border-radius: 4px;
+				transition: background-color 0.3s ease, transform 0.2s ease;
+
+				&:hover {
+					background-color: var(--gs-success-emerald);
+					transform: translateY(-2px);
 				}
 			}
 		}

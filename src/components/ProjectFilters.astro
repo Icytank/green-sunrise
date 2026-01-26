@@ -21,9 +21,10 @@ const t = {
     terrain: "Терен",
     capacity: "Капацитет",
     allCapacity: "Всички",
-    smallScale: "< 5 MW",
-    mediumScale: "5-15 MW",
-    largeScale: "> 15 MW",
+    microScale: "< 100 kWp",
+    smallScale: "100 - 500 kWp",
+    mediumScale: "500 kWp - 1 MW",
+    largeScale: "> 1 MW",
     clearFilters: "Изчисти филтрите"
   },
   en: {
@@ -31,9 +32,10 @@ const t = {
     terrain: "Terrain",
     capacity: "Capacity",
     allCapacity: "All",
-    smallScale: "< 5 MW",
-    mediumScale: "5-15 MW",
-    largeScale: "> 15 MW",
+    microScale: "< 100 kWp",
+    smallScale: "100 - 500 kWp",
+    mediumScale: "500 kWp - 1 MW",
+    largeScale: "> 1 MW",
     clearFilters: "Clear Filters"
   }
 };
@@ -58,6 +60,7 @@ const labels = t[lang];
     <label class="filter-label" for="capacity-filter">{labels.capacity}</label>
     <select id="capacity-filter" class="filter-select font-mono" aria-label={labels.capacity}>
       <option value="">{labels.allCapacity}</option>
+      <option value="micro">{labels.microScale}</option>
       <option value="small">{labels.smallScale}</option>
       <option value="medium">{labels.mediumScale}</option>
       <option value="large">{labels.largeScale}</option>
@@ -90,12 +93,14 @@ const labels = t[lang];
         let terrainMatch = !terrain || cardTerrain === terrain;
         let capacityMatch = true;
 
-        if (capacity === 'small') {
-          capacityMatch = cardCapacity < 5;
+        if (capacity === 'micro') {
+          capacityMatch = cardCapacity < 0.1; // < 100 kWp
+        } else if (capacity === 'small') {
+          capacityMatch = cardCapacity >= 0.1 && cardCapacity < 0.5; // 100-500 kWp
         } else if (capacity === 'medium') {
-          capacityMatch = cardCapacity >= 5 && cardCapacity <= 15;
+          capacityMatch = cardCapacity >= 0.5 && cardCapacity <= 1.0; // 500-1MW
         } else if (capacity === 'large') {
-          capacityMatch = cardCapacity > 15;
+          capacityMatch = cardCapacity > 1.0; // > 1 MW
         }
 
         if (terrainMatch && capacityMatch) {

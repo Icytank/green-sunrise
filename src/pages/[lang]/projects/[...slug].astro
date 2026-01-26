@@ -59,12 +59,22 @@ const t = {
 const labels = t[lang as 'bg' | 'en'];
 // Combine hero image and gallery images for the slider
 const allImages = [heroImage, ...(galleryImages || [])];
+
+// Helper: Format Capacity Logic (Inline for page script)
+const formatCapacity = (mw: number) => {
+  if (mw < 1) {
+    return { value: Math.round(mw * 1000), unit: 'kWp' };
+  }
+  return { value: parseFloat(mw.toFixed(2)), unit: 'MW' };
+};
+
+const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacityMW);
 ---
 
 <BaseLayout 
   lang={lang as 'bg' | 'en'}
   title={`${title} | Green Sunrise`} 
-  description={`${title} - ${capacityMW} MW ${terrainType} project in ${location}`}
+  description={`${title} - ${capacityValue} ${capacityUnitLabel} ${terrainType} project in ${location}`}
 >
   <article class="project-detail">
     <!-- Back Link -->
@@ -109,8 +119,8 @@ const allImages = [heroImage, ...(galleryImages || [])];
       
       <div class="container hero-content">
         <div class="capacity-badge font-mono">
-          <span class="capacity-value">{capacityMW}</span>
-          <span class="capacity-unit">MW</span>
+          <span class="capacity-value">{capacityValue}</span>
+          <span class="capacity-unit">{capacityUnitLabel}</span>
         </div>
         <h1 class="project-title">{title}</h1>
         <p class="project-location">{location} • {terrainType}</p>

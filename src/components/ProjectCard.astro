@@ -33,6 +33,16 @@ const {
   isVerified = false 
 } = Astro.props;
 
+// Helper: Format Capacity Logic
+const formatCapacity = (mw: number) => {
+  if (mw < 1) {
+    return { value: Math.round(mw * 1000), unit: 'kWp' };
+  }
+  return { value: parseFloat(mw.toFixed(2)), unit: 'MW' };
+};
+
+const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacityMW);
+
 const url = `/${lang}/projects/${slug}`;
 const terrainLabel = t('technical.terrain', lang);
 const locationLabel = t('technical.location', lang);
@@ -40,7 +50,7 @@ const terrainValue = translateTerrain(terrainType, lang);
 const verifiedLabel = t('technical.verifiedProject', lang);
 ---
 
-<a href={url} class="project-card" aria-label={`${title} - ${capacityMW} MW`} data-terrain={terrainType} data-capacity={capacityMW}>
+<a href={url} class="project-card" aria-label={`${title} - ${capacityValue} ${capacityUnitLabel}`} data-terrain={terrainType} data-capacity={capacityMW}>
   <div class="image-wrapper">
     <Image src={heroImage} alt={title} width={800} class="card-image" />
     {isVerified && (
@@ -51,10 +61,10 @@ const verifiedLabel = t('technical.verifiedProject', lang);
   </div>
   
   <div class="content">
-    <!-- Data Hero: MW Capacity -->
+    <!-- Data Hero: MW/kWp Capacity -->
     <div class="capacity-hero">
-      <span class="capacity-value font-mono">{capacityMW}</span>
-      <span class="capacity-unit font-mono">MW</span>
+      <span class="capacity-value font-mono">{capacityValue}</span>
+      <span class="capacity-unit font-mono">{capacityUnitLabel}</span>
     </div>
     
     <h3 class="title">{title}</h3>
@@ -190,7 +200,8 @@ const verifiedLabel = t('technical.verifiedProject', lang);
   .spec-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* Align to top for multiline text */
+    gap: var(--gs-space-4);
   }
 
   .spec-label {
@@ -199,12 +210,16 @@ const verifiedLabel = t('technical.verifiedProject', lang);
     letter-spacing: 0.05em;
     color: var(--gs-slate-gray);
     font-weight: 500;
+    flex-shrink: 0; /* Prevent label from shrinking */
+    margin-top: 2px; /* Visual alignment with first line of value */
   }
 
   .spec-value {
     font-size: var(--gs-text-sm);
     color: var(--gs-text-primary);
     font-weight: 600;
+    text-align: right; /* Align value to the right */
+    line-height: 1.4;
   }
 
   /* Responsive: Larger capacity on desktop */

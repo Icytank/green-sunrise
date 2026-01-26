@@ -25,11 +25,21 @@ const capacityLabel = t('technical.capacity', lang);
 const terrainLabel = t('technical.terrain', lang);
 const locationLabel = t('technical.location', lang);
 const scopeLabel = t('projects.detail.scope' as any, lang);
-const capacityUnit = t('technical.capacityUnit', lang);
+// const capacityUnit = t('technical.capacityUnit', lang); // Replaced by smart unit
 const terrainValue = translateTerrain(terrainType, lang);
 const verifiedTitle = t('technical.verifiedProject', lang);
 const verifiedDesc = t('technical.verifiedDesc', lang);
 const technicalSpecsTitle = t('technical.specsTitle', lang);
+
+// Helper: Format Capacity Logic
+const formatCapacity = (mw: number) => {
+  if (mw < 1) {
+    return { value: Math.round(mw * 1000), unit: 'kWp' };
+  }
+  return { value: parseFloat(mw.toFixed(2)), unit: 'MW' };
+};
+
+const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacityMW);
 ---
 
 <aside class="project-sidebar">
@@ -39,7 +49,7 @@ const technicalSpecsTitle = t('technical.specsTitle', lang);
     <!-- Capacity (Primary Data Point) -->
     <div class="spec-item capacity-highlight">
       <dt class="spec-label">{capacityLabel}</dt>
-      <dd class="spec-value capacity-value font-mono">{capacityMW} <span class="unit">{capacityUnit}</span></dd>
+      <dd class="spec-value capacity-value font-mono">{capacityValue} <span class="unit">{capacityUnitLabel}</span></dd>
     </div>
     
     <!-- Terrain -->

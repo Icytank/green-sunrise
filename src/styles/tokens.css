@@ -7,6 +7,11 @@
     --gs-surface: #F8FAFC;
     --gs-text-primary: #0F172A;
 
+    /* Text Colors */
+    --gs-header-color: var(--gs-institutional-green);
+    --gs-body-text-color: var(--gs-slate-gray);
+    --gs-body-text-color-white: #FFFFFF;
+
     /* Spacing Tokens (8px base) */
     --gs-space-1: 8px;
     --gs-space-2: 16px;

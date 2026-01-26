@@ -4,7 +4,7 @@ capacityMW: 0.2
 location: "Aksakovo"
 terrainType: "Flat"
 date: 2025-11-20
-heroImage: "../../../assets/images/projects/project-6-aksakovo/pic1.jpg"
+heroImage: "../../../assets/images/projects/aksakovo-pic1.jpg"
 scope: "Pile driving (profiles installation)"
 isVerified: true
 ---

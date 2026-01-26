@@ -4,13 +4,13 @@ capacityMW: 0.1
 location: "с. Бежаново, Плевенска област"
 terrainType: "Flat"
 date: 2023-04-15
-heroImage: "../../../assets/images/projects/project-2-bezhanovo/pic1.jpg"
+heroImage: "../../../assets/images/projects/bezhanovo-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/project-2-bezhanovo/pic2.jpg"
-  - "../../../assets/images/projects/project-2-bezhanovo/pic3.jpg"
-  - "../../../assets/images/projects/project-2-bezhanovo/pic4.jpg"
-  - "../../../assets/images/projects/project-2-bezhanovo/pic5.jpg"
-  - "../../../assets/images/projects/project-2-bezhanovo/pic6.jpg"
+  - "../../../assets/images/projects/bezhanovo-pic2.jpg"
+  - "../../../assets/images/projects/bezhanovo-pic3.jpg"
+  - "../../../assets/images/projects/bezhanovo-pic4.jpg"
+  - "../../../assets/images/projects/bezhanovo-pic5.jpg"
+  - "../../../assets/images/projects/bezhanovo-pic6.jpg"
 scope: "Набиване на профили"
 isVerified: true
 ---

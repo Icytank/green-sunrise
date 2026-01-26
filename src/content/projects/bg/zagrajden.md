@@ -4,9 +4,9 @@ capacityMW: 0.03
 location: "с. Загражден, Плевенска област"
 terrainType: "Flat"
 date: 2023-04-20
-heroImage: "../../../assets/images/projects/project-3-zagrajden/pic1.jpg"
+heroImage: "../../../assets/images/projects/zagrajden-pic1.jpg"
 galleryImages:
-  - "../../../assets/images/projects/project-3-zagrajden/pic2.jpg"
+  - "../../../assets/images/projects/zagrajden-pic2.jpg"
 scope: "Набиване на профили"
 isVerified: true
 ---

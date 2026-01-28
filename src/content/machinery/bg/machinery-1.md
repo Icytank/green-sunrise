@@ -1,11 +1,9 @@
 ---
-title: Тежък Багер CAT-350
-model: CAT-350
-weight: 35t
-impactPower: 450kJ
-heroImage: ../../../assets/images/golyamo-vranovo-pic3.jpg
-galleryImages:
-  - ../../../assets/images/golyamo-vranovo-pic3.jpg
+title: Машина за набиване на пилоти
+model: TONKER 830
+weight: 4.2t
+impactPower: 950kJ
+heroImage: ../../../assets/images/ramming-machine.png
+galleryImages: []
 ---
-
-A sample machinery description in Bulgarian.
+TONKER 830 е компактна и мощна машина, предназначена за набиване на пилоти при соларни и строителни проекти. Разполага с резервоар за гориво с капацитет **55 л**, ударна мощност **950 J** и работи стабилно при надлъжен наклон до **23% (13°)** и страничен наклон до **17% (10°)**. Общото тегло на машината е **4 200 kg**, а максималната височина на пилотите е **до 5,10 m**.

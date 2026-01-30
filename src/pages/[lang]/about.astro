@@ -47,15 +47,17 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 			/>
 			<div class="team-grid">
 				{teamMembers.map((member) => (
-					<TeamMember 
-						name={member.data.name}
-						role={member.data.role}
-						certifications={member.data.certifications}
-						yearsExperience={member.data.yearsExperience}
-						verified={member.data.verified}
-						avatar={member.data.avatar}
-						lang={lang}
-					/>
+					<div class="team-member-wrapper">
+						<TeamMember 
+							name={member.data.name}
+							role={member.data.role}
+							certifications={member.data.certifications}
+							yearsExperience={member.data.yearsExperience}
+							verified={member.data.verified}
+							avatar={member.data.avatar}
+							lang={lang}
+						/>
+					</div>
 				))}
 			</div>
 		</div>
@@ -95,14 +97,21 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 	}
 
 	.team-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		text-align: center;
 		gap: var(--gs-space-4);
+	}
+	
+	.team-member-wrapper {
+		width: 100%;
+		max-width: 350px; /* Nice card width */
+		flex: 1 1 280px; /* Responsive: grow/shrink, base width */
 	}
 
 	@media (min-width: 768px) {
 		.team-grid {
-			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 			gap: var(--gs-space-6);
 		}
 	}

@@ -48,15 +48,17 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
             // Extract slug from ID (e.g., "en/machinery-1" -> "machinery-1")
             const slug = machine.id.split("/").slice(1).join("/");
             return (
-              <MachineryCard
-                title={machine.data.title}
-                model={machine.data.model}
-                weight={machine.data.weight}
-                image={machine.data.heroImage}
-                slug={slug}
-                lang={lang as "bg" | "en"}
-                isOwned={machine.data.isOwned}
-              />
+              <div class="machinery-wrapper">
+                <MachineryCard
+                  title={machine.data.title}
+                  model={machine.data.model}
+                  weight={machine.data.weight}
+                  image={machine.data.heroImage}
+                  slug={slug}
+                  lang={lang as "bg" | "en"}
+                  isOwned={machine.data.isOwned}
+                />
+              </div>
             );
           })}
         </div>
@@ -106,8 +108,16 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
   }
 
   .machinery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
     gap: var(--gs-space-6);
+  }
+
+  .machinery-wrapper {
+    width: 100%;
+    max-width: 350px;
+    flex: 1 1 320px;
   }
 </style>

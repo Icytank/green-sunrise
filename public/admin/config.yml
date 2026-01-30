@@ -40,7 +40,9 @@ collections:
     label: "Projects (BG)"
     folder: "src/content/projects/bg"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug (Must match English version)", name: "custom_slug", widget: "string", hint: "e.g. 'pv-plant-belene'. Use lowercase latin letters and dashes only." }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Installed Capacity (MW)", name: "capacityMW", widget: "number", value_type: "float" }
       - { label: "Location", name: "location", widget: "string" }
@@ -56,7 +58,9 @@ collections:
     label: "Projects (EN)"
     folder: "src/content/projects/en"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug", name: "custom_slug", widget: "string", hint: "e.g. 'pv-plant-belene'" }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Installed Capacity (MW)", name: "capacityMW", widget: "number", value_type: "float" }
       - { label: "Location", name: "location", widget: "string" }
@@ -72,7 +76,9 @@ collections:
     label: "Machinery (BG)"
     folder: "src/content/machinery/bg"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug (Must match English version)", name: "custom_slug", widget: "string", hint: "e.g. 'pile-driver-1'. Use lowercase latin letters and dashes only." }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
       - { label: "Weight", name: "weight", widget: "string" }
@@ -85,7 +91,9 @@ collections:
     label: "Machinery (EN)"
     folder: "src/content/machinery/en"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug", name: "custom_slug", widget: "string", hint: "e.g. 'pile-driver-1'" }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
       - { label: "Weight", name: "weight", widget: "string" }
@@ -98,7 +106,9 @@ collections:
     label: "Teams (BG)"
     folder: "src/content/teams/bg"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug (Must match English version)", name: "custom_slug", widget: "string", hint: "e.g. 'ivan-ivanov'. Use lowercase latin letters and dashes only." }
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }
       - { label: "Certifications", name: "certifications", widget: "list", field: { label: "Certification", name: "certification", widget: "string" } }
@@ -111,7 +121,9 @@ collections:
     label: "Teams (EN)"
     folder: "src/content/teams/en"
     create: true
+    slug: "{{custom_slug}}"
     fields:
+      - { label: "URL Slug", name: "custom_slug", widget: "string", hint: "e.g. 'ivan-ivanov'" }
       - { label: "Name", name: "name", widget: "string" }
       - { label: "Role", name: "role", widget: "string" }
       - { label: "Certifications", name: "certifications", widget: "list", field: { label: "Certification", name: "certification", widget: "string" } }

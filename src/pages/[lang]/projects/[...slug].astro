@@ -22,7 +22,12 @@ export async function getStaticPaths() {
       throw new Error(`Invalid project ID format: ${item.id}. Expected lang/slug.`);
     }
     const lang = parts[0];
-    const slug = parts.slice(1).join("/").replace(/\.md$/, '');
+    let slug = parts.slice(1).join("/").replace(/\.md$/, '');
+    
+    // Strategy Validation: Use custom_slug if present to decouple URL from filename
+    if (item.data.custom_slug) {
+        slug = item.data.custom_slug;
+    }
     
     return {
       params: { lang, slug },

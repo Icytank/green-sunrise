@@ -45,8 +45,8 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
 
         <div class="machinery-grid">
           {allMachinery.map((machine) => {
-            // Extract slug from ID (e.g., "en/machinery-1" -> "machinery-1")
-            const slug = machine.id.split("/").slice(1).join("/");
+            // Extract slug prioritized by custom_slug
+            const slug = machine.data.custom_slug || machine.id.split("/").slice(1).join("/");
             return (
               <div class="machinery-wrapper">
                 <MachineryCard

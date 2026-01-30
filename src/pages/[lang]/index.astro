@@ -65,7 +65,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				{projectsPreview.map((item) => (
 					<li class="cs-item">
 						<ProjectCard
-							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
+							slug={item.data.custom_slug || item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
 							lang={lang}
 							{...item.data}
 						/>
@@ -91,7 +91,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				{machineryPreview.map((item) => (
 					<li class="cs-item">
 						<MachineryCard
-							slug={item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
+							slug={item.data.custom_slug || item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
 							lang={lang}
 							{...item.data}
 							image={item.data.heroImage}

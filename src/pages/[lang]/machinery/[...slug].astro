@@ -17,7 +17,12 @@ export async function getStaticPaths() {
         throw new Error(`Invalid machinery ID format: ${item.id}. Expected lang/slug.`);
     }
     const lang = parts[0];
-    const slug = parts.slice(1).join("/");
+    let slug = parts.slice(1).join("/").replace(/\.md$/, '');
+
+    // Decouple URL from filename: use custom_slug if present
+    if (item.data.custom_slug) {
+        slug = item.data.custom_slug;
+    }
     
     return {
       params: { lang, slug },

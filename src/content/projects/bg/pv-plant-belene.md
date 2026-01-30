@@ -1,6 +1,6 @@
 ---
+custom_slug: pv-plant-belene-2
 title: ФЕЦ гр. Белене
-custom_slug: pv-plant-belene
 capacityMW: 2.1
 location: гр. Белене
 terrainType: Flat

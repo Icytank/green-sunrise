@@ -1,6 +1,6 @@
 ---
+custom_slug: pv-plant-belene-2
 title: PV Plant Belene
-custom_slug: pv-plant-belene
 capacityMW: 2.1
 location: Belene
 terrainType: Flat

@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Bezhanovo"
+custom_slug: bezhanovo
 capacityMW: 0.1
 location: "Bezhanovo, Pleven Region"
 terrainType: "Flat"

@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Zagrajden"
+custom_slug: zagrajden
 capacityMW: 0.03
 location: "Zagrajden, Pleven Region"
 terrainType: "Flat"

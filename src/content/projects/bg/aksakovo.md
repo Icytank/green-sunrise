@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ гр. Аксаково"
+custom_slug: aksakovo
 capacityMW: 0.2
 location: "гр. Аксаково"
 terrainType: "Flat"

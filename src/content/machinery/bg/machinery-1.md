@@ -1,5 +1,6 @@
 ---
 title: Машина за набиване на пилоти
+custom_slug: machinery-1
 model: TONKER 830
 weight: 4.2t
 impactPower: 950kJ

@@ -1,5 +1,6 @@
 ---
 title: ФЕЦ гр. Вълчи Дол
+custom_slug: pv-plant-vulchi-dol
 capacityMW: 2
 location: гр. Вълчи Дол
 terrainType: Flat

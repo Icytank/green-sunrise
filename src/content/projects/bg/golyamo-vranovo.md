@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ с. Голямо Враново"
+custom_slug: golyamo-vranovo
 capacityMW: 0.3
 location: "с. Голямо Враново"
 terrainType: "Flat"

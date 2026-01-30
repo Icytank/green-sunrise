@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ с. Загражден"
+custom_slug: zagrajden
 capacityMW: 0.03
 location: "с. Загражден, Плевенска област"
 terrainType: "Flat"

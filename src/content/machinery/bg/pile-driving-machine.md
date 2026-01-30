@@ -1,5 +1,6 @@
 ---
 title: Машина за набиване на пилоти
+custom_slug: pile-driving-machine
 model: TONKER 830
 weight: 4t
 impactPower: 950kJ

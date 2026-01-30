@@ -18,6 +18,7 @@ const machineryCollection = defineCollection({
 			heroImage: image(),
 			galleryImages: z.array(image()),
 			isOwned: z.boolean().default(true),
+			custom_slug: z.string().optional(),
 		}),
 });
 
@@ -37,6 +38,7 @@ const projectsCollection = defineCollection({
 			galleryImages: z.array(image()).optional(), // Optional gallery images
 			isVerified: z.boolean().default(false), // Toggles GS Stamp visibility
 			scope: z.string().optional(), // New field for detailed scope of work
+			custom_slug: z.string().optional(),
 		}),
 });
 
@@ -50,6 +52,7 @@ const teamsCollection = defineCollection({
 			yearsExperience: z.number(),
 			avatar: image(),
 			verified: z.boolean().default(false),
+			custom_slug: z.string().optional(),
 		}),
 });
 

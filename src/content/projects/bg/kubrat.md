@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ гр. Кубрат"
+custom_slug: kubrat
 capacityMW: 0.22
 location: "гр. Кубрат"
 terrainType: "Flat"

@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Gergavets"
+custom_slug: gergavets
 capacityMW: 0.06
 location: "Gergavets, Sliven Region"
 terrainType: "Flat"

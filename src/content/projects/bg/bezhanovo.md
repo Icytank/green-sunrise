@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ с. Бежаново"
+custom_slug: bezhanovo
 capacityMW: 0.1
 location: "с. Бежаново, Плевенска област"
 terrainType: "Flat"

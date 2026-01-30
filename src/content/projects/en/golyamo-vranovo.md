@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Golyamo Vranovo"
+custom_slug: golyamo-vranovo
 capacityMW: 0.3
 location: "Golyamo Vranovo"
 terrainType: "Flat"

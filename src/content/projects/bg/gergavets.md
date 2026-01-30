@@ -1,5 +1,6 @@
 ---
 title: "ФЕЦ с. Гергевец"
+custom_slug: gergavets
 capacityMW: 0.06
 location: "с. Гергевец, Сливенска област"
 terrainType: "Flat"

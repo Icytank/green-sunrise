@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Aksakovo"
+custom_slug: aksakovo
 capacityMW: 0.2
 location: "Aksakovo"
 terrainType: "Flat"

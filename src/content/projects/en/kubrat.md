@@ -1,5 +1,6 @@
 ---
 title: "PV Plant Kubrat"
+custom_slug: kubrat
 capacityMW: 0.22
 location: "Kubrat"
 terrainType: "Flat"

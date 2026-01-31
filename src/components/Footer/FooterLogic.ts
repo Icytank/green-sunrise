@@ -19,6 +19,9 @@ export interface FooterData {
     };
     contact: {
         header: string;
+        addressLines: string;
+        cityName: string;
+        country: string;
     };
 }
 
@@ -57,7 +60,10 @@ export function getFooterData(lang: 'bg' | 'en'): FooterData {
             items: servicesItems
         },
         contact: {
-            header: t('footer.contact', lang)
+            header: t('footer.contact', lang),
+            addressLines: t('contact.addressLines', lang),
+            cityName: t('contact.cityName', lang),
+            country: t('contact.country', lang)
         }
     };
 }

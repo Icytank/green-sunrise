@@ -229,7 +229,9 @@
             "businessHours": "Работно време",
             "workingDays": "Понеделник - Петък",
             "followUs": "Последвайте ни",
-            "country": "България"
+            "country": "България",
+            "addressLines": "Индустриална зона",
+            "cityName": "Опака"
         },
         "footer": {
             "description": "Специализиран европейски партньор за инсталация на индустриални фотоволтаици, разполагащ със собствена техника за набиване на пилони и експертни екипи.",
@@ -477,7 +479,9 @@
             "businessHours": "Business Hours",
             "workingDays": "Monday - Friday",
             "followUs": "Follow Us",
-            "country": "Bulgaria"
+            "country": "Bulgaria",
+            "addressLines": "Industrial Zone",
+            "cityName": "Opaka"
         },
         "footer": {
             "description": "Specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.",

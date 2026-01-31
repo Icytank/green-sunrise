@@ -73,10 +73,8 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 					</li>
 					<li>
 						<div class="contact-info">
-							{BUSINESS.address.lineOne}<br />
-							{BUSINESS.address.lineTwo && <>{BUSINESS.address.lineTwo}<br /></>}
-							{BUSINESS.address.city}, {BUSINESS.address.state}<br />
-							VAT: {BUSINESS.vatNumber}
+							{footerData.contact.addressLines}<br />
+							{footerData.contact.cityName}, {footerData.contact.country}<br />
 						</div>
 					</li>
 					<li>
@@ -265,9 +263,9 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 				width: (750/16rem);
 				margin: 0;
 				.lists {
-					flex-direction: row;
-					justify-content: space-between;
-					gap: 1rem;
+					display: grid;
+					grid-template-columns: repeat(3, 1fr);
+					gap: 2rem;
 					text-align: left;
 
 					ul {

@@ -58,8 +58,7 @@ const contactT = t.contact;
               <div class="cs-info-content">
                 <span class="cs-info-label">{contactT.address}</span>
                 <a class="cs-info-link" href={BUSINESS.address.mapLink} target="_blank" rel="noopener noreferrer">
-                  {BUSINESS.address.lineOne && <span>{BUSINESS.address.lineOne}, </span>}
-                  {BUSINESS.address.city}, {contactT.country} {BUSINESS.address.zip}
+                  {contactT.addressLines}, {contactT.cityName}, {contactT.country} {BUSINESS.address.zip}
                 </a>
               </div>
             </div>

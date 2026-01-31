@@ -14,8 +14,9 @@ import { getTranslatedPath } from "@utils/i18n-helpers";
 
 // Components
 import { Image } from "astro:assets";
-import GSStamp from "@components/GSStamp.astro";
+import { Image } from "astro:assets";
 import stampLogo from "@assets/images/gs-stamp.png";
+import SocialLinks from "@components/SocialLinks.astro";
 
 // Data
 import { BUSINESS } from "@data/client";
@@ -40,7 +41,7 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 				<Image src={stampLogo} alt="Green Sunrise Logo" width={210} height={28} class="footer-logo-img" />
 			</a>
 			<p>{footerData.description}</p>
-			<GSStamp className="footer-stamp" size={100} />
+			<SocialLinks className="footer-socials" />
 		</div>
 		<div class="right-section">
 			<div class="lists">
@@ -136,6 +137,25 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 					color: var(--gs-executive-white);
 					opacity: 0.8;
 				}
+
+                :global(.footer-socials) {
+                    justify-content: center !important;
+                    display: flex !important;
+                    width: 100%;
+                    margin-bottom: (20/16rem); /* Reduced margin */
+                    color: var(--gs-executive-white);
+                    
+                    :global(.cs-social-link) {
+                         /* Override specific footer styles if needed, 
+                            but default 3rem size from component is good */
+                         background-color: rgba(255, 255, 255, 0.05); /* Slight visibility */
+                    }
+                    
+                    :global(.cs-social-link:hover) {
+                        background-color: rgba(255, 255, 255, 0.1);
+                        color: var(--gs-institutional-green);
+                    }
+                }
 			}
 
 			.right-section {
@@ -147,6 +167,8 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 					display: flex;
 					flex-direction: column;
 					gap: 2.5rem;
+					text-align: center;
+					
 					
 					ul {
 						margin: 0;
@@ -187,7 +209,7 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 								height: (2/16rem);
 								background: var(--gs-institutional-green);
 								display: block;
-								margin-top: 0.5rem;
+								margin: 0.5rem auto;
 							}
 						}
 					}
@@ -233,6 +255,10 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 					text-align: left;
 					margin-left: 0;
 				}
+                
+                :global(.footer-socials) {
+                    justify-content: flex-start !important;
+                }
 			}
 
 			.right-section {
@@ -242,6 +268,7 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 					flex-direction: row;
 					justify-content: space-between;
 					gap: 1rem;
+					text-align: left;
 
 					ul {
 						li {
@@ -270,6 +297,7 @@ const getLocalizedUrl = (url: string) => getTranslatedPath(url, currentLang);
 						
 						h2:after {
 							background: var(--gs-success-emerald);
+                            margin: 0.5rem 0;
 						}
 					}
 				}

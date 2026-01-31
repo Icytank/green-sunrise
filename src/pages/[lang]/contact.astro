@@ -12,6 +12,7 @@ import { getImage } from "astro:assets";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Banner from "@components/Banner/Banner.astro";
 import ContactForm from "@components/ContactForm.astro";
+import SocialLinks from "@components/SocialLinks.astro";
 
 // Data
 import { BUSINESS } from "@data/client";
@@ -108,8 +109,27 @@ const contactT = t.contact;
                   {contactT.workingDays}<br />
                   <span class="cs-highlight">{BUSINESS.businessHours.hours}</span>
                 </span>
+                </span>
               </div>
             </div>
+            
+             <!-- Socials -->
+            <div class="cs-info-item">
+              <div class="cs-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
+                  <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8.59 13.51L15.42 17.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="cs-info-content">
+                <span class="cs-info-label">{contactT.followUs || "Follow Us"}</span>
+                <SocialLinks className="contact-socials" iconSize={32} />
+              </div>
+            </div>
+            
           </div>
         </div>
 			</div>
@@ -257,7 +277,7 @@ const contactT = t.contact;
         font-family: var(--gs-font-mono);
       }
 
-			.cs-form-column {
+      .cs-form-column {
 				width: 100%;
         /* Form background matching card */
          background-color: #fff;
@@ -349,6 +369,7 @@ const contactT = t.contact;
            background-color: var(--primaryLight);
            color: var(--dark);
         }
+        
 			}
 		}
 	}

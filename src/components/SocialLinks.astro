@@ -1,0 +1,80 @@
+---
+import { BUSINESS } from "@data/client";
+
+interface Props {
+  className?: string;
+  iconSize?: number;
+}
+
+const { className = "", iconSize = 32 } = Astro.props;
+---
+
+<div class:list={["cs-social-group", className]}>
+  {BUSINESS.socials.facebook && (
+    <a
+      href={BUSINESS.socials.facebook}
+      class="cs-social-link"
+      aria-label="Visit our Facebook page"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg
+        class="cs-social-icon"
+        width={iconSize}
+        height={iconSize}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M22 12.06C22 6.53 17.5 2.05 11.97 2.05C6.43 2.05 1.93 6.53 1.93 12.06C1.93 17.06 5.57 21.2 10.4 21.96V14.96H7.85V12.06H10.4V9.85C10.4 7.33 11.9 5.93 14.16 5.93C15.24 5.93 16.37 6.13 16.37 6.13V8.6H15.13C13.88 8.6 13.49 9.38 13.49 10.18V12.06H16.27L15.83 14.96H13.49V22C18.35 21.23 22 17.08 22 12.06Z" />
+      </svg>
+    </a>
+  )}
+
+  {BUSINESS.socials.linkedin && (
+    <a
+      href={BUSINESS.socials.linkedin}
+      class="cs-social-link"
+      aria-label="Visit our LinkedIn page"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg
+        class="cs-social-icon"
+        width={iconSize}
+        height={iconSize}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M20.47 2H3.53C2.69 2 2 2.67 2 3.5V20.5C2 21.32 2.69 22 3.53 22H20.47C21.31 22 22 21.32 22 20.5V3.5C22 2.67 21.31 2 20.47 2ZM8.09 19H5.2V9.74H8.09V19ZM6.64 8.52H6.62C5.69 8.52 5.09 7.88 5.09 7.08C5.09 6.27 5.71 5.64 6.66 5.64C7.61 5.64 8.19 6.27 8.21 7.08C8.21 7.88 7.61 8.52 6.64 8.52ZM19 19H16.11V14.33C16.11 13.16 15.69 12.36 14.65 12.36C13.86 12.36 13.39 12.9 13.19 13.42C13.11 13.6 13.09 13.86 13.09 14.12V19H10.2V9.74H13.09V11C13.47 10.42 14.14 9.58 15.65 9.58C17.52 9.58 18.91 10.8 18.91 13.43V19H19Z" />
+      </svg>
+    </a>
+  )}
+</div>
+
+<style lang="less">
+  .cs-social-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .cs-social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3.5rem; 
+    height: 3.5rem;
+    background-color: transparent;
+    border-radius: 50%;
+    color: inherit;
+    transition: color 0.3s, background-color 0.3s;
+
+    &:hover {
+      color: var(--gs-institutional-green);
+      background-color: rgba(6, 78, 59, 0.05);
+    }
+  }
+</style>

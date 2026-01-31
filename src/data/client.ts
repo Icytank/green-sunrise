@@ -28,8 +28,8 @@ export const BUSINESS = {
 		hours: "09:00 - 18:00",
 	},
 	socials: {
-		facebook: "https://www.facebook.com/",
-		instagram: "https://www.instagram.com/",
+		facebook: "https://www.facebook.com/profile.php?id=100089523222177",
+		linkedin: "https://www.linkedin.com/company/green-sunrise-ltd/?viewAsMember=true",
 	},
 	logo: "/assets/logo.png", // Recommended: 112x112px
 };

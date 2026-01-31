@@ -228,6 +228,7 @@
             "address": "Адрес",
             "businessHours": "Работно време",
             "workingDays": "Понеделник - Петък",
+            "followUs": "Последвайте ни",
             "country": "България"
         },
         "footer": {
@@ -475,6 +476,7 @@
             "address": "Address",
             "businessHours": "Business Hours",
             "workingDays": "Monday - Friday",
+            "followUs": "Follow Us",
             "country": "Bulgaria"
         },
         "footer": {

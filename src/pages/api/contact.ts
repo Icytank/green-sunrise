@@ -4,7 +4,10 @@ import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { InquirySchema, type InquiryRecord } from '../../utils/inquiry-schema';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+    // Access runtime environment variables (Cloudflare) or fallback to build-time (Local Dev)
+    const runtimeEnv = locals.runtime?.env || import.meta.env;
+
     const formData = await request.formData();
 
     // 0. Extract Turnstile Token (Check presence)
@@ -36,7 +39,9 @@ export const POST: APIRoute = async ({ request }) => {
     const { leadName, email, company, projectType, message, lang } = validation.data;
 
     // 2. Verify Turnstile with Cloudflare
-    const secretKey = import.meta.env.TURNSTILE_SECRET_KEY;
+    // "Proper" Cloudflare way: access secret via runtime context
+    const secretKey = runtimeEnv.TURNSTILE_SECRET_KEY as string;
+
     if (!secretKey) {
         console.error('SERVER ERROR: TURNSTILE_SECRET_KEY is missing');
         return new Response(JSON.stringify({ success: false, message: 'Server configuration error' }), { status: 500 });
@@ -57,7 +62,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 3. Send Email via Resend
-    const resendKey = import.meta.env.RESEND_API_KEY;
+    const resendKey = runtimeEnv.RESEND_API_KEY as string;
+    const fromEmail = runtimeEnv.RESEND_FROM_EMAIL as string || 'leads@green-sunrise.bg';
+    const toEmail = runtimeEnv.RESEND_TO_EMAIL as string || 'office@green-sunrise.bg';
+
     if (!resendKey) {
         console.error('SERVER ERROR: RESEND_API_KEY is missing');
         return new Response(JSON.stringify({ success: false, message: 'Server configuration error' }), { status: 500 });
@@ -67,8 +75,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         const { error } = await resend.emails.send({
-            from: import.meta.env.RESEND_FROM_EMAIL || 'leads@green-sunrise.bg',
-            to: [import.meta.env.RESEND_TO_EMAIL || 'office@green-sunrise.bg'],
+            from: fromEmail,
+            to: [toEmail],
             subject: `New Lead: ${projectType} - ${company}`,
             html: `
         <h1>New B2B Inquiry (${lang.toUpperCase()})</h1>

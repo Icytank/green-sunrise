@@ -6,7 +6,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
 	output: "server",
 	adapter: cloudflare(),
-	site: "https://www.yourwebsite.com", // update me!
+	site: "https://green-sunrise.net", // update me!
 	integrations: [
 		icon(),
 		sitemap({
@@ -15,6 +15,11 @@ export default defineConfig({
 			priority: 0.7,
 		}),
 	],
+	vite: {
+		define: {
+			'import.meta.env.PUBLIC_TURNSTILE_SITE_KEY': JSON.stringify(process.env.PUBLIC_TURNSTILE_SITE_KEY),
+		},
+	},
 	i18n: {
 		defaultLocale: "bg",
 		locales: ["bg", "en"],

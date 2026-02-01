@@ -21,9 +21,26 @@ interface Props {
 	description: string;
 	lang?: string;
 	heroImage?: HeroImage; // optional - passing a heroImage to BaseLayout will 1. preload the image and 2. use the image for og socials tags in the <head>
+    ogType?: string;
+    alternateLinks?: { lang: string; href: string }[];
 }
 
-const { description, title, heroImage, lang = "bg" } = Astro.props as Props;
+const { description, title, heroImage, lang = "bg", ogType, alternateLinks } = Astro.props as Props;
+
+// Smart default for alternate links if not provided (assumes symmetric URL structure)
+let finalAlternateLinks = alternateLinks;
+if (!finalAlternateLinks) {
+    const currentPath = Astro.url.pathname;
+    // Remove trailing slash for consistency check, but preserve for replacement if needed, 
+    // although Astro usually normalizes.
+    
+    // Check if path starts with /bg or /en
+    if (lang === 'bg' && currentPath.startsWith('/bg')) {
+        finalAlternateLinks = [{ lang: 'en', href: Astro.url.origin + currentPath.replace('/bg', '/en') }];
+    } else if (lang === 'en' && currentPath.startsWith('/en')) {
+         finalAlternateLinks = [{ lang: 'bg', href: Astro.url.origin + currentPath.replace('/en', '/bg') }];
+    }
+}
 ---
 
 <html lang={lang}>
@@ -32,7 +49,14 @@ const { description, title, heroImage, lang = "bg" } = Astro.props as Props;
 		<ClientRouter />
 
 		<!-- SEO Meta Tags -->
-		<Meta title={title} description={description} heroImage={heroImage}>
+		<Meta 
+            title={title} 
+            description={description} 
+            heroImage={heroImage} 
+            lang={lang}
+            ogType={ogType}
+            alternateLinks={finalAlternateLinks}
+        >
 			<slot name="schema" slot="schema" />
 		</Meta>
 

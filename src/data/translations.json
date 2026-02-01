@@ -9,7 +9,7 @@
             "technicalSpecifications": "Технически спецификации",
             "ourMachinery": "Нашата Техника",
             "machinerySubtitle": "Високотехнологично оборудване за вашите проекти.",
-            "pageTitle": "Техника | Green Sunrise",
+            "pageTitle": "Техника",
             "pageDescription": "Нашата високотехнологична техника и оборудване.",
             "ownedBadge": "Собственост и поддръжка от Green Sunrise",
             "ownershipDeclaration": "Тази техника е част от собствения флот на Green Sunrise"
@@ -45,6 +45,8 @@
         },
         "home": {
             "machineryLabel": "Флотът",
+            "pageTitle": "Изграждане на ФЕЦ",
+            "pageDescription": "Специализирана компания за механичен монтаж и набиване на пилони за фотоволтаични централи. Собствен машинен парк и опитни екипи.",
             "machineryTitle": "Собствена Техника",
             "machineryDesc": "Специализирано оборудване за набиване на пилони, собственост и поддръжка на Green Sunrise.",
             "projectsLabel": "Проекти",
@@ -82,7 +84,7 @@
             }
         },
         "services": {
-            "pageTitle": "Услуги | Green Sunrise",
+            "pageTitle": "Услуги",
             "pageDescription": "Пълен обхват от услуги за изграждане на фотоволтаични централи.",
             "title": "Нашите Услуги",
             "list": {
@@ -134,7 +136,7 @@
             }
         },
         "projects": {
-            "pageTitle": "Проекти | Green Sunrise",
+            "pageTitle": "Проекти",
             "pageDescription": "Разгледайте нашето портфолио от соларни и енергийни проекти.",
             "title": "Нашите Проекти",
             "subtitle": "Верифицирано портфолио от реализирани проекти с точни технически спецификации.",
@@ -170,6 +172,8 @@
         },
         "about": {
             "intro": {
+                "pageTitle": "За Нас",
+                "pageDescription": "Научете повече за Green Sunrise - нашият опит, мисия и ценности в изграждането на устойчиви енергийни решения.",
                 "label": "Кои сме ние",
                 "title": "Корпоративен Профил",
                 "text": "Green Sunrise Ltd е специализирана компания, фокусирана върху висококачественото изпълнение на инфраструктурни и енергийни проекти."
@@ -218,7 +222,7 @@
             "requestPartnership": "Заяви Партньорство"
         },
         "contact": {
-            "pageTitle": "Контакт | Green Sunrise",
+            "pageTitle": "Контакт",
             "pageDescription": "Свържете се с нас за Вашия следващ соларен проект.",
             "title": "Свържете се с нас",
             "subtitle": "Готови сме да обсъдим Вашия проект.",
@@ -247,6 +251,11 @@
             "title": "Започнете проекта си с нас",
             "description": "Готови сме да обсъдим вашите нужди и да предложим оптимално решение за следващия ви соларен проект.",
             "button": "Заявете консултация"
+        },
+        "reviews": {
+            "pageTitle": "Отзиви",
+            "pageDescription": "Вижте какво казват нашите клиенти и партньори за съвместната ни работа.",
+            "title": "Отзиви"
         }
     },
     "en": {
@@ -259,7 +268,7 @@
             "technicalSpecifications": "Technical Specifications",
             "ourMachinery": "Our Machinery",
             "machinerySubtitle": "High-tech equipment for your projects.",
-            "pageTitle": "Machinery | Green Sunrise",
+            "pageTitle": "Machinery",
             "pageDescription": "Our high-tech machinery and equipment.",
             "ownedBadge": "Owned & Maintained by Green Sunrise",
             "ownershipDeclaration": "This machinery is part of the Green Sunrise proprietary fleet"
@@ -295,6 +304,8 @@
         },
         "home": {
             "machineryLabel": "The Fleet",
+            "pageTitle": "PV Plant Construction",
+            "pageDescription": "Specialized company for mechanical installation and pile driving for photovoltaic plants. Proprietary machinery fleet and experienced teams.",
             "machineryTitle": "Proprietary Machinery",
             "machineryDesc": "Specialized pile driving equipment owned and maintained by Green Sunrise.",
             "projectsLabel": "Track Record",
@@ -332,7 +343,7 @@
             }
         },
         "services": {
-            "pageTitle": "Services | Green Sunrise",
+            "pageTitle": "Services",
             "pageDescription": "Comprehensive mechanical installation services for PV plants.",
             "title": "Our Services",
             "list": {
@@ -384,7 +395,7 @@
             }
         },
         "projects": {
-            "pageTitle": "Projects | Green Sunrise",
+            "pageTitle": "Projects",
             "pageDescription": "Explore our portfolio of solar and energy projects.",
             "title": "Our Projects",
             "subtitle": "Verified portfolio of completed projects with precise technical specifications.",
@@ -420,6 +431,8 @@
         },
         "about": {
             "intro": {
+                "pageTitle": "About Us",
+                "pageDescription": "Learn more about Green Sunrise - our experience, mission, and values in building sustainable energy solutions.",
                 "label": "Who We Are",
                 "title": "Corporate Profile",
                 "text": "Green Sunrise Ltd is a specialized company focused on high-quality execution of infrastructure and renewable energy projects."
@@ -468,7 +481,7 @@
             "requestPartnership": "Request Partnership"
         },
         "contact": {
-            "pageTitle": "Contact | Green Sunrise",
+            "pageTitle": "Contact",
             "pageDescription": "Get in touch with us for your next solar project.",
             "title": "Get in Touch",
             "subtitle": "We're ready to discuss your project.",
@@ -497,6 +510,11 @@
             "title": "Start Your Project With Us",
             "description": "We're ready to discuss your requirements and provide the optimal solution for your next solar project.",
             "button": "Request a Consultation"
+        },
+        "reviews": {
+            "pageTitle": "Reviews",
+            "pageDescription": "See what our clients and partners say about working with us.",
+            "title": "Reviews"
         }
     }
 }

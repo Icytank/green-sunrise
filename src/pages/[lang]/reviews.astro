@@ -7,6 +7,7 @@ const { lang } = Astro.params;
 
 // Utils
 import { getImage } from "astro:assets";
+import { t } from "@utils/i18n-helpers";
 
 // Components
 import BaseLayout from "@layouts/BaseLayout.astro";
@@ -20,8 +21,13 @@ const optimizedImage = await getImage({ src: landingImage, format: "webp" });
 ---
 
 
-<BaseLayout title="Reviews" description="Meta description for the page" heroImage={optimizedImage}>
-	<Banner title="Reviews" image={optimizedImage} />
+<BaseLayout 
+    lang={lang as "bg" | "en"}
+    title={t('reviews.pageTitle' as any, lang as "bg" | "en")} 
+    description={t('reviews.pageDescription' as any, lang as "bg" | "en")} 
+    heroImage={optimizedImage}
+>
+	<Banner title={t('reviews.title' as any, lang as "bg" | "en")} image={optimizedImage} />
 	<ReviewsSection />
 	<CTA lang={lang as "bg" | "en"} />
 </BaseLayout>

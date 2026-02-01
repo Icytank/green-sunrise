@@ -15,9 +15,9 @@ let targetLang = "en";
 if (country === "BG") {
     targetLang = "bg";
 } else if (!country) {
-    // Fallback for local dev or when header is missing
     targetLang = "en"; 
 }
 
 return Astro.redirect(`/${targetLang}`);
 ---
+```

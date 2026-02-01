@@ -67,8 +67,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
         const { error } = await resend.emails.send({
-            from: 'Green Sunrise <leads@yourdomain.com>',
-            to: ['admin@yourdomain.com'],
+            from: import.meta.env.RESEND_FROM_EMAIL || 'leads@green-sunrise.bg',
+            to: [import.meta.env.RESEND_TO_EMAIL || 'office@green-sunrise.bg'],
             subject: `New Lead: ${projectType} - ${company}`,
             html: `
         <h1>New B2B Inquiry (${lang.toUpperCase()})</h1>

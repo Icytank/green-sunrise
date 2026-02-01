@@ -1,12 +1,22 @@
 ---
+import Meta from "@components/Meta/Meta.astro";
+import translations from "@data/translations.json";
+
+// Default to BG for root metadata (primary audience)
+const lang = "bg";
+const t = translations[lang].home;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Sunrise - Redirecting</title>
+    <!-- SEO & Meta Tags -->
+    <Meta 
+        title={t.pageTitle} 
+        description={t.pageDescription} 
+        lang={lang}
+    />
+    
     <!-- Default fallback to BG if JS is disabled -->
     <meta http-equiv="refresh" content="0;url=/bg" />
     

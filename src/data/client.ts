@@ -3,7 +3,7 @@ export const SITE = {
 	title: "Green Sunrise LTD",
 	tagline: "Professional PV Installation & Machinery Specialists",
 	description: "Green Sunrise LTD is a specialized European partner for utility-scale PV installation, owning proprietary pile-driving machinery and expert technical teams.",
-	url: "https://green-sunrise.bg",
+	url: "https://green-sunrise.net",
 	author: "Green Sunrise Team",
 	locale: "bg",
 };
@@ -12,9 +12,8 @@ export const SITE = {
 export const BUSINESS = {
 	name: "GREEN SUNRISE LTD",
 	email: "office@green-sunrise.bg",
-	phoneForTel: "+359-888-000-000",
-	phoneFormatted: "+359 888 000 000",
-	vatNumber: "BG206123456",
+	phoneForTel: "+359878692284",
+	phoneFormatted: "+359 878 692 284",
 	address: {
 		lineOne: "Industrial Zone",
 		lineTwo: "",

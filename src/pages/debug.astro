@@ -1,0 +1,51 @@
+---
+// Debug Page - Safe to remove after testing
+const runtime = Astro.locals.runtime;
+const cf = runtime?.cf;
+const country = cf?.country;
+const city = cf?.city;
+const continent = cf?.continent;
+const region = cf?.region;
+const regionCode = cf?.regionCode;
+
+const debugInfo = {
+  hasRuntime: !!runtime,
+  hasCf: !!cf,
+  country,
+  city: city || "Unknown",
+  continent,
+  region,
+  regionCode,
+  // Dump a few keys to see what's there (careful not to dump sensitive env vars)
+  keys: cf ? Object.keys(cf) : []
+};
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Geo</title>
+    <style>
+        body { font-family: monospace; padding: 2rem; background: #111; color: #0f0; }
+        pre { background: #222; padding: 1rem; border-radius: 4px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Cloudflare Geo Debug</h1>
+    
+    <h2>Detected Location</h2>
+    <ul>
+        <li>Country: <strong>{country || "UNDEFINED"}</strong></li>
+        <li>Region: {region} ({regionCode})</li>
+        <li>City: {city}</li>
+    </ul>
+
+    <h2>Raw Runtime Dump</h2>
+    <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+    
+    <h2>Instructions</h2>
+    <p>1. If Country is UNDEFINED, Cloudflare headers are not passing through.</p>
+    <p>2. If Country is "BG", then the redirect to /bg is correct behavior.</p>
+</body>
+</html>

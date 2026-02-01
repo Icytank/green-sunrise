@@ -1,40 +1,24 @@
 ---
-import Meta from "@components/Meta/Meta.astro";
-import translations from "@data/translations.json";
+// Server Side Logic for Smart Geo-Redirect
+// This runs on Cloudflare Edge
 
-// Default to BG for root metadata (primary audience)
-const lang = "bg";
-const t = translations[lang].home;
+const runtime = Astro.locals.runtime;
+const country = runtime?.cf?.country;
+
+// Logic: 
+// 1. If country is "BG", redirect to /bg
+// 2. For any other country (or if unknown/local dev), redirect to /en
+//    (English is the safer global default than Bulgarian)
+
+let targetLang = "en";
+
+if (country === "BG") {
+    targetLang = "bg";
+} else if (!country) {
+    // Fallback for local dev or when header is missing
+    // You can change this to "bg" if you prefer that as default
+    targetLang = "bg"; 
+}
+
+return Astro.redirect(`/${targetLang}`);
 ---
-
-<!DOCTYPE html>
-<html lang={lang}>
-<head>
-    <!-- SEO & Meta Tags -->
-    <Meta 
-        title={t.pageTitle} 
-        description={t.pageDescription} 
-        lang={lang}
-    />
-    
-    <!-- Default fallback to BG if JS is disabled -->
-    <meta http-equiv="refresh" content="0;url=/bg" />
-    
-    <script>
-        import { getPreferredLanguage } from '../utils/i18n-helpers';
-        
-        // Check stored preference
-        const preferred = getPreferredLanguage();
-        
-        if (preferred === 'en') {
-            window.location.replace('/en');
-        } else {
-            // Default to BG
-            window.location.replace('/bg');
-        }
-    </script>
-</head>
-<body>
-    <p>Redirecting...</p>
-</body>
-</html>

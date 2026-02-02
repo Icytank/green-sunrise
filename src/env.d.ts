@@ -2,6 +2,12 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
+interface Env {
+    TURNSTILE_SECRET_KEY: string;
+    GMAIL_USER: string;
+    GMAIL_APP_PASSWORD: string;
+}
+
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
 
 declare namespace App {

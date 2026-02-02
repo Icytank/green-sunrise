@@ -16,11 +16,12 @@
 		"@astrojs/check": "^0.9.6",
 		"@astrojs/cloudflare": "^12.6.12",
 		"@astrojs/sitemap": "^3.6.0",
+		"@types/nodemailer": "^7.0.9",
 		"astro": "^5.16.3",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.22",
 		"less": "^4.4.2",
-		"resend": "^6.8.0",
+		"nodemailer": "^7.0.13",
 		"typescript": "^5.9.3",
 		"zod": "^3.25.76"
 	},

@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from 'astro';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 import { InquirySchema, type InquiryRecord } from '../../utils/inquiry-schema';
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -61,51 +61,57 @@ export const POST: APIRoute = async ({ request, locals }) => {
         return new Response(JSON.stringify({ success: false, message: 'Invalid Turnstile token' }), { status: 400 });
     }
 
-    // 3. Send Email via Resend
-    const resendKey = runtimeEnv.RESEND_API_KEY as string;
-    const fromEmail = runtimeEnv.RESEND_FROM_EMAIL as string || 'leads@green-sunrise.bg';
-    const toEmail = runtimeEnv.RESEND_TO_EMAIL as string || 'office@green-sunrise.bg';
+    // 3. Send Email via Gmail SMTP (Nodemailer)
+    const gmailUser = runtimeEnv.GMAIL_USER as string;
+    const gmailPass = runtimeEnv.GMAIL_APP_PASSWORD as string;
+    const toEmail = 'office@green-sunrise.bg'; // Hardcoded or env var as needed
 
-    if (!resendKey) {
-        console.error('SERVER ERROR: RESEND_API_KEY is missing');
+    if (!gmailUser || !gmailPass) {
+        console.error('SERVER ERROR: GMAIL credentials missing');
+        // In local dev without keys, we might want to just log usage
+        if (!runtimeEnv.GMAIL_USER && import.meta.env.DEV) {
+            console.log('[DEV] Mock Send Email:', { leadName, email, projectType });
+            return new Response(JSON.stringify({ success: true, message: 'Inquiry sent successfully (MOCK)' }), { status: 200 });
+        }
         return new Response(JSON.stringify({ success: false, message: 'Server configuration error' }), { status: 500 });
     }
 
-    const resend = new Resend(resendKey);
-
     try {
-        const { error } = await resend.emails.send({
-            from: fromEmail,
-            to: [toEmail],
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false, // true for 465, false for other ports (using STARTTLS)
+            auth: {
+                user: gmailUser,
+                pass: gmailPass,
+            },
+        });
+
+        await transporter.sendMail({
+            from: `"Green Sunrise" <${gmailUser}>`, // Gmail overrides 'from' to be the authenticated user usually, but good practice
+            to: toEmail,
+            replyTo: email, // Set the reply-to as the lead's email
             subject: `New Lead: ${projectType} - ${company}`,
             html: `
-        <h1>New B2B Inquiry (${lang.toUpperCase()})</h1>
-        <p><strong>Name:</strong> ${leadName}</p>
-        <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Project Type:</strong> ${projectType}</p>
-        <hr />
-        <h3>Message:</h3>
-        <p>${message}</p>
-      `,
+                <h1>New B2B Inquiry (${lang.toUpperCase()})</h1>
+                <p><strong>Name:</strong> ${leadName}</p>
+                <p><strong>Company:</strong> ${company}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Project Type:</strong> ${projectType}</p>
+                <hr />
+                <h3>Message:</h3>
+                <p>${message}</p>
+            `,
         });
 
         // 4. Log the Inquiry Record (with timestamp)
         const timestamp = new Date().toISOString();
-        const record: InquiryRecord & { timestamp: string } = {
-            ...validation.data,
-            timestamp,
-        };
         console.log(`[LEAD] ${timestamp} | ${company} | ${projectType}`);
 
-        if (error) {
-            console.error('Resend Error:', error);
-            return new Response(JSON.stringify({ success: false, message: 'Failed to send email' }), { status: 500 });
-        }
-
         return new Response(JSON.stringify({ success: true, message: 'Inquiry sent successfully' }), { status: 200 });
-    } catch (e) {
-        console.error('Unexpected Error:', e);
-        return new Response(JSON.stringify({ success: false, message: 'Internal Server Error' }), { status: 500 });
+
+    } catch (error) {
+        console.error('Nodemailer Error:', error);
+        return new Response(JSON.stringify({ success: false, message: 'Failed to send email' }), { status: 500 });
     }
 };

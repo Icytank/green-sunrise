@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // 3. Send Email via Gmail SMTP (Nodemailer)
     const gmailUser = runtimeEnv.GMAIL_USER as string;
     const gmailPass = runtimeEnv.GMAIL_APP_PASSWORD as string;
-    const toEmail = runtimeEnv.CONTACT_DESTINATION_EMAIL as string || 'office@green-sunrise.bg';
+    const toEmail = runtimeEnv.CONTACT_DESTINATION_EMAIL as string;
 
 
 

@@ -38,33 +38,39 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const { leadName, email, company, projectType, message, lang } = validation.data;
 
-    // 2. Verify Turnstile with Cloudflare
-    // "Proper" Cloudflare way: access secret via runtime context
-    const secretKey = runtimeEnv.TURNSTILE_SECRET_KEY as string;
+    // 2. Verify Turnstile with Cloudflare (Skip in DEV)
+    if (!import.meta.env.DEV) {
+        // "Proper" Cloudflare way: access secret via runtime context
+        const secretKey = runtimeEnv.TURNSTILE_SECRET_KEY as string;
 
-    if (!secretKey) {
-        console.error('SERVER ERROR: TURNSTILE_SECRET_KEY is missing');
-        return new Response(JSON.stringify({ success: false, message: 'Server configuration error' }), { status: 500 });
-    }
+        if (!secretKey) {
+            console.error('SERVER ERROR: TURNSTILE_SECRET_KEY is missing');
+            return new Response(JSON.stringify({ success: false, message: 'Server configuration error' }), { status: 500 });
+        }
 
-    const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            secret: secretKey,
-            response: turnstileToken,
-        }),
-    });
+        const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                secret: secretKey,
+                response: turnstileToken,
+            }),
+        });
 
-    const verifyResult: any = await verifyResponse.json();
-    if (!verifyResult.success) {
-        return new Response(JSON.stringify({ success: false, message: 'Invalid Turnstile token' }), { status: 400 });
+        const verifyResult: any = await verifyResponse.json();
+        if (!verifyResult.success) {
+            return new Response(JSON.stringify({ success: false, message: 'Invalid Turnstile token' }), { status: 400 });
+        }
+    } else {
+        console.log('[DEV] Skipping Turnstile Validation');
     }
 
     // 3. Send Email via Gmail SMTP (Nodemailer)
     const gmailUser = runtimeEnv.GMAIL_USER as string;
     const gmailPass = runtimeEnv.GMAIL_APP_PASSWORD as string;
-    const toEmail = 'office@green-sunrise.bg'; // Hardcoded or env var as needed
+    const toEmail = runtimeEnv.CONTACT_DESTINATION_EMAIL as string || 'office@green-sunrise.bg';
+
+
 
     if (!gmailUser || !gmailPass) {
         console.error('SERVER ERROR: GMAIL credentials missing');

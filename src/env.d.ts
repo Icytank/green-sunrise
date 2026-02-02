@@ -6,6 +6,7 @@ interface Env {
     TURNSTILE_SECRET_KEY: string;
     GMAIL_USER: string;
     GMAIL_APP_PASSWORD: string;
+    CONTACT_DESTINATION_EMAIL: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;

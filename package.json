@@ -17,7 +17,7 @@
 		"@astrojs/cloudflare": "^12.6.12",
 		"@astrojs/sitemap": "^3.6.0",
 		"@types/nodemailer": "^7.0.9",
-		"astro": "^5.16.3",
+		"astro": "^5.17.1",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.22",
 		"less": "^4.4.2",

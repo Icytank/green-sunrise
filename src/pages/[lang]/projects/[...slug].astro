@@ -8,7 +8,7 @@
  */
 import { getCollection, render } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import ProjectSidebar from "@components/ProjectSidebar.astro";
 import GSStamp from "@components/GSStamp.astro";
 
@@ -63,7 +63,26 @@ const t = {
 
 const labels = t[lang as 'bg' | 'en'];
 // Combine hero image and gallery images for the slider
-const allImages = [heroImage, ...(galleryImages || [])];
+const rawImages = [heroImage, ...(galleryImages || [])];
+
+// Pre-optimize images for lightbox (full screen view)
+// This ensures the lightbox loads a compressed WebP version instead of the original raw asset (which can be 8MB+ JPEGs)
+const allImages = await Promise.all(rawImages.map(async (img) => {
+  const optimized = await getImage({
+    src: img,
+    format: "webp",
+    quality: 90, // High quality for lightbox
+    width: 1920  // Limit width to 1920px (Full HD) to prevent massive file sizes
+  });
+  
+  return {
+    original: img,
+    src: optimized.src,
+    alt: title
+  };
+}));
+
+console.log('DBUG: Optimized lightbox sources:', allImages.map(i => i.src));
 
 // Helper: Format Capacity Logic (Inline for page script)
 const formatCapacity = (mw: number) => {
@@ -93,7 +112,7 @@ const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacit
         <div class="slider-track">
           {allImages.map((img, index) => (
              <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
-                <Image src={img} alt={`${title} - Image ${index + 1}`} width={1920} class="hero-image clickable-image" data-full-src={img.src} priority={index === 0} />
+                <Image src={img.original} alt={`${title} - Image ${index + 1}`} width={1920} class="hero-image clickable-image" data-full-src={img.src} priority={index === 0} />
              </div>
           ))}
         </div>

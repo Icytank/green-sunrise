@@ -4,7 +4,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 // Force static generation for this route
 export const prerender = true;
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import GSStamp from "../../../components/GSStamp.astro";
 import { t } from "../../../utils/i18n-helpers";
 
@@ -37,6 +37,30 @@ const { title, model, weight, impactPower, heroImage, galleryImages, isOwned = t
 const { Content } = await render(item);
 const ownedBadgeLabel = t('machinery.ownedBadge', lang as 'bg' | 'en');
 const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 'en');
+
+// Pre-optimize hero image for lightbox
+const optimizedHero = await getImage({
+  src: heroImage,
+  format: "webp",
+  quality: 90,
+  width: 1920
+});
+
+// Pre-optimize gallery images for lightbox
+const optimizedGallery = await Promise.all((galleryImages || []).map(async (img) => {
+  const optimized = await getImage({
+    src: img,
+    format: "webp",
+    quality: 90,
+    width: 1920
+  });
+  return {
+    original: img,
+    src: optimized.src
+  };
+}));
+
+console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimizedGallery.map(i => i.src)]);
 ---
 
 <BaseLayout lang={lang as 'bg' | 'en'} title={title || model} description={`Technical audit and specifications for ${model}`}>
@@ -52,7 +76,7 @@ const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 
          <!-- Left: Gallery -->
          <div class="gallery-section">
             <div class="hero-image-wrapper">
-               <Image src={heroImage} alt={title} width={1200} class="hero-image clickable-image" data-full-src={heroImage.src} />
+               <Image src={heroImage} alt={title} width={1200} class="hero-image clickable-image" data-full-src={optimizedHero.src} />
                {isOwned && (
                  <div class="stamp-overlay" title={ownedBadgeLabel} aria-label={ownedBadgeLabel}>
                    <GSStamp size={100} />
@@ -60,10 +84,10 @@ const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 
                )}
             </div>
             
-            {galleryImages && galleryImages.length > 0 && (
+            {optimizedGallery && optimizedGallery.length > 0 && (
                 <div class="gallery-grid">
-                {galleryImages.map((img, i) => (
-                    <Image src={img} alt={`${title} detail ${i+1}`} width={300} class="gallery-thumb clickable-image" data-full-src={img.src} />
+                {optimizedGallery.map((img, i) => (
+                    <Image src={img.original} alt={`${title} detail ${i+1}`} width={300} class="gallery-thumb clickable-image" data-full-src={img.src} />
                 ))}
                 </div>
             )}

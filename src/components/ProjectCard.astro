@@ -52,7 +52,14 @@ const verifiedLabel = t('technical.verifiedProject', lang);
 
 <a href={url} class="project-card" aria-label={`${title} - ${capacityValue} ${capacityUnitLabel}`} data-terrain={terrainType} data-capacity={capacityMW}>
   <div class="image-wrapper">
-    <Image src={heroImage} alt={title} width={800} class="card-image" />
+    <Image 
+      src={heroImage} 
+      alt={title} 
+      width={800} 
+      widths={[400, 800]}
+      sizes="(min-width: 1920px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+      class="card-image" 
+    />
     {isVerified && (
       <div class="stamp-wrapper" title={verifiedLabel}>
         <GSStamp size={70} />

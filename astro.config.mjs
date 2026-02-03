@@ -34,4 +34,7 @@ export default defineConfig({
 	image: {
 		layout: "constrained",
 	},
+	build: {
+		inlineStylesheets: "always",
+	},
 });

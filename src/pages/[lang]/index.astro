@@ -70,6 +70,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				title={translate("projectsTitle")}
 				description={translate("projectsDesc")}
 				align="center"
+				withStamp={false}
 			/>
 			<ul class="cs-card-group">
 				{projectsPreview.map((item) => (
@@ -96,6 +97,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				title={translate("machineryTitle")}
 				description={translate("machineryDesc")}
 				align="center"
+				withStamp={false}
 			/>
 			<ul class="cs-card-group">
 				{machineryPreview.map((item) => (
@@ -123,6 +125,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				title={translate("teamTitle")}
 				description={translate("teamDesc")}
 				align="center"
+				withStamp={false}
 			/>
 			<ul class="cs-card-group-4"> <!-- 4 cols for team -->
 				{teamPreview.map((item) => (

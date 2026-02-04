@@ -49,6 +49,7 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 				title={t('team.title', lang)}
 				description={t('team.subtitle', lang)}
 				align="center"
+				withStamp={false}
 			/>
 			<div class="team-grid">
 				{teamMembers.map((member) => (

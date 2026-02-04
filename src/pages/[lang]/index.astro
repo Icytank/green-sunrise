@@ -35,12 +35,17 @@ const allMachinery = await getCollection("machinery", ({ id }) => id.startsWith(
 const allProjects = await getCollection("projects", ({ id }) => id.startsWith(`${lang}/`));
 const allTeam = await getCollection("teams", ({ id }) => id.startsWith(`${lang}/`));
 
+// Sort by capacityMW descending and slice top 3
+const projectsPreview = allProjects
+    .sort((a, b) => (b.data.capacityMW || 0) - (a.data.capacityMW || 0))
+    .slice(0, 3);
+
+const teamPreview = allTeam.slice(0, 4); // 4 looks good in grid
+
 // Sort/Slice for Preview
 // Assuming we want to show 3 of each or specific "featured" logic. 
 // For now, taking first 3.
 const machineryPreview = allMachinery.slice(0, 3);
-const projectsPreview = allProjects.slice(0, 3);
-const teamPreview = allTeam.slice(0, 4); // 4 looks good in grid
 
 // Translation Helpers
 const translate = (key: string) => t(`home.${key}` as any, lang);

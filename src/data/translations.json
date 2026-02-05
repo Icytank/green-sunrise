@@ -251,11 +251,6 @@
             "title": "Започнете проекта си с нас",
             "description": "Готови сме да обсъдим вашите нужди и да предложим оптимално решение за следващия ви соларен проект.",
             "button": "Заявете консултация"
-        },
-        "reviews": {
-            "pageTitle": "Отзиви",
-            "pageDescription": "Вижте какво казват нашите клиенти и партньори за съвместната ни работа.",
-            "title": "Отзиви"
         }
     },
     "en": {
@@ -510,11 +505,6 @@
             "title": "Start Your Project With Us",
             "description": "We're ready to discuss your requirements and provide the optimal solution for your next solar project.",
             "button": "Request a Consultation"
-        },
-        "reviews": {
-            "pageTitle": "Reviews",
-            "pageDescription": "See what our clients and partners say about working with us.",
-            "title": "Reviews"
         }
     }
 }

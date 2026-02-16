@@ -5,9 +5,12 @@ import type { GetImageResult } from "astro";
 import "@styles/tokens.css";
 import "@styles/global.css";
 
-// Fonts
 import "@fontsource-variable/inter";
 import "@fontsource/geist-mono";
+
+// Asset URLs for preloading
+import interFontUrl from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import geistFontUrl from "@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2?url";
 
 // Components
 import DynamicHeader from "@components/Header/DynamicHeader.astro";
@@ -87,14 +90,14 @@ if (!finalAlternateLinks) {
 		<!-- Preload critical fonts -->
 		<link
 			rel="preload"
-			href="/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+			href={interFontUrl}
 			as="font"
 			type="font/woff2"
 			crossorigin
 		/>
 		<link
 			rel="preload"
-			href="/@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2"
+			href={geistFontUrl}
 			as="font"
 			type="font/woff2"
 			crossorigin

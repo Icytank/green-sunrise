@@ -14,16 +14,18 @@ export async function getStaticPaths() {
   return machinery.map((item) => {
     const parts = item.id.split("/");
     if (parts.length < 2) {
-        throw new Error(`Invalid machinery ID format: ${item.id}. Expected lang/slug.`);
+      throw new Error(
+        `Invalid machinery ID format: ${item.id}. Expected lang/slug.`,
+      );
     }
     const lang = parts[0];
-    let slug = parts.slice(1).join("/").replace(/\.md$/, '');
+    let slug = parts.slice(1).join("/").replace(/\.md$/, "");
 
     // Decouple URL from filename: use custom_slug if present
     if (item.data.custom_slug) {
-        slug = item.data.custom_slug;
+      slug = item.data.custom_slug;
     }
-    
+
     return {
       params: { lang, slug },
       props: { item },
@@ -33,167 +35,216 @@ export async function getStaticPaths() {
 
 const { item } = Astro.props;
 const { lang } = Astro.params;
-const { title, model, weight, impactPower, heroImage, galleryImages, isOwned = true } = item.data;
+const {
+  title,
+  model,
+  weight,
+  impactPower,
+  heroImage,
+  galleryImages,
+  isOwned = true,
+} = item.data;
 const { Content } = await render(item);
-const ownedBadgeLabel = t('machinery.ownedBadge', lang as 'bg' | 'en');
-const ownershipDeclaration = t('machinery.ownershipDeclaration', lang as 'bg' | 'en');
+const ownedBadgeLabel = t("machinery.ownedBadge", lang as "bg" | "en");
+const ownershipDeclaration = t(
+  "machinery.ownershipDeclaration",
+  lang as "bg" | "en",
+);
 
 // Pre-optimize hero image for lightbox
 const optimizedHero = await getImage({
   src: heroImage,
   format: "webp",
   quality: 90,
-  width: 1920
+  width: 1920,
 });
 
 // Pre-optimize gallery images for lightbox
-const optimizedGallery = await Promise.all((galleryImages || []).map(async (img) => {
-  const optimized = await getImage({
-    src: img,
-    format: "webp",
-    quality: 90,
-    width: 1920
-  });
-  return {
-    original: img,
-    src: optimized.src
-  };
-}));
+const optimizedGallery = await Promise.all(
+  (galleryImages || []).map(async (img) => {
+    const optimized = await getImage({
+      src: img,
+      format: "webp",
+      quality: 90,
+      width: 1920,
+    });
+    return {
+      original: img,
+      src: optimized.src,
+    };
+  }),
+);
 
-console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimizedGallery.map(i => i.src)]);
+console.log("DBUG: Machinery optimized sources:", [
+  optimizedHero.src,
+  ...optimizedGallery.map((i) => i.src),
+]);
 ---
 
-<BaseLayout lang={lang as 'bg' | 'en'} title={title || model} description={`Technical audit and specifications for ${model}`}>
+<BaseLayout
+  lang={lang as "bg" | "en"}
+  title={title || model}
+  description={`Technical audit and specifications for ${model}`}
+>
   <article class="audit-narrative">
-      <header class="audit-header">
-        <div class="container">
-           <h1 class="font-display">{title}</h1>
-           <p class="model-badge font-mono">{model}</p>
-        </div>
-      </header>
-      
-      <div class="audit-grid container">
-         <!-- Left: Gallery -->
-         <div class="gallery-section">
-            <div class="hero-image-wrapper">
-               <Image src={heroImage} alt={title} width={1200} class="hero-image clickable-image" data-full-src={optimizedHero.src} />
-               {isOwned && (
-                 <div class="stamp-overlay" title={ownedBadgeLabel} aria-label={ownedBadgeLabel}>
-                   <GSStamp size={100} />
-                 </div>
-               )}
-            </div>
-            
-            {optimizedGallery && optimizedGallery.length > 0 && (
-                <div class="gallery-grid">
-                {optimizedGallery.map((img, i) => (
-                    <Image src={img.original} alt={`${title} detail ${i+1}`} width={300} class="gallery-thumb clickable-image" data-full-src={img.src} />
-                ))}
-                </div>
-            )}
-         </div>
-
-         <!-- Right: Specs / Narrative -->
-         <div class="info-section">
-            <section class="the-machine margin-bottom-4">
-               <h2 class="section-title">{t('machinery.theMachine', lang as 'bg' | 'en')}</h2>
-               <div class="prose">
-                  <Content />
-               </div>
-            </section>
-
-            <section class="technical-specifications">
-               <h2 class="section-title">{t('machinery.technicalSpecifications', lang as 'bg' | 'en')}</h2>
-               <div class="specs-wrapper">
-                  <dl class="specs-list font-mono">
-                     <div class="spec-row">
-                        <dt>{t('machinery.model', lang as 'bg' | 'en')}</dt>
-                        <dd>{model}</dd>
-                     </div>
-                     <div class="spec-row">
-                        <dt>{t('machinery.weight', lang as 'bg' | 'en')}</dt>
-                        <dd>{weight}</dd>
-                     </div>
-                     {impactPower && (
-                      <div class="spec-row">
-                        <dt>{t('machinery.impactPower', lang as 'bg' | 'en')}</dt>
-                        <dd>{impactPower}</dd>
-                     </div>
-                     )}
-                  </dl>
-                  {isOwned && (
-                    <div class="ownership-declaration">
-                       <span class="ownership-indicator"></span>
-                       <div class="declaration-content">
-                         <div class="declaration-icon">
-                           <GSStamp size={40} />
-                         </div>
-                         <p>{ownershipDeclaration}</p>
-                       </div>
-                    </div>
-                  )}
-               </div>
-            </section>
-         </div>
+    <header class="audit-header" id="int-hero">
+      <div class="container">
+        <h1 class="font-display">{title}</h1>
+        <p class="model-badge font-mono">{model}</p>
       </div>
+    </header>
+
+    <div class="audit-grid container">
+      <!-- Left: Gallery -->
+      <div class="gallery-section">
+        <div class="hero-image-wrapper">
+          <Image
+            src={heroImage}
+            alt={title}
+            width={1200}
+            class="hero-image clickable-image"
+            data-full-src={optimizedHero.src}
+          />
+          {
+            isOwned && (
+              <div
+                class="stamp-overlay"
+                title={ownedBadgeLabel}
+                aria-label={ownedBadgeLabel}
+              >
+                <GSStamp size={100} />
+              </div>
+            )
+          }
+        </div>
+
+        {
+          optimizedGallery && optimizedGallery.length > 0 && (
+            <div class="gallery-grid">
+              {optimizedGallery.map((img, i) => (
+                <Image
+                  src={img.original}
+                  alt={`${title} detail ${i + 1}`}
+                  width={300}
+                  class="gallery-thumb clickable-image"
+                  data-full-src={img.src}
+                />
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Right: Specs / Narrative -->
+      <div class="info-section">
+        <section class="the-machine margin-bottom-4">
+          <h2 class="section-title">
+            {t("machinery.theMachine", lang as "bg" | "en")}
+          </h2>
+          <div class="prose">
+            <Content />
+          </div>
+        </section>
+
+        <section class="technical-specifications">
+          <h2 class="section-title">
+            {t("machinery.technicalSpecifications", lang as "bg" | "en")}
+          </h2>
+          <div class="specs-wrapper">
+            <dl class="specs-list font-mono">
+              <div class="spec-row">
+                <dt>{t("machinery.model", lang as "bg" | "en")}</dt>
+                <dd>{model}</dd>
+              </div>
+              <div class="spec-row">
+                <dt>{t("machinery.weight", lang as "bg" | "en")}</dt>
+                <dd>{weight}</dd>
+              </div>
+              {
+                impactPower && (
+                  <div class="spec-row">
+                    <dt>{t("machinery.impactPower", lang as "bg" | "en")}</dt>
+                    <dd>{impactPower}</dd>
+                  </div>
+                )
+              }
+            </dl>
+            {
+              isOwned && (
+                <div class="ownership-declaration">
+                  <span class="ownership-indicator" />
+                  <div class="declaration-content">
+                    <div class="declaration-icon">
+                      <GSStamp size={40} />
+                    </div>
+                    <p>{ownershipDeclaration}</p>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+        </section>
+      </div>
+    </div>
   </article>
 
   <!-- Lightbox Modal -->
   <div id="lightbox" class="lightbox">
-     <span class="close">&times;</span>
-     <img class="lightbox-content" id="lightbox-img">
+    <span class="close">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" />
   </div>
 </BaseLayout>
 
 <script>
   function setupLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-    const closeBtn = document.querySelector('.close');
-    const clickableImages = document.querySelectorAll('.clickable-image');
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById(
+      "lightbox-img",
+    ) as HTMLImageElement;
+    const closeBtn = document.querySelector(".close");
+    const clickableImages = document.querySelectorAll(".clickable-image");
 
-    clickableImages.forEach(img => {
-      img.addEventListener('click', (e) => {
+    clickableImages.forEach((img) => {
+      img.addEventListener("click", (e) => {
         const target = e.currentTarget as HTMLImageElement;
-        const fullSrc = target.getAttribute('data-full-src');
+        const fullSrc = target.getAttribute("data-full-src");
         if (fullSrc) {
-          lightbox!.style.display = 'flex';
+          lightbox!.style.display = "flex";
           lightboxImg!.src = fullSrc;
-          document.body.style.overflow = 'hidden'; // Prevent scroll
+          document.body.style.overflow = "hidden"; // Prevent scroll
         }
       });
     });
 
-    closeBtn?.addEventListener('click', () => {
-      lightbox!.style.display = 'none';
-      document.body.style.overflow = 'auto';
+    closeBtn?.addEventListener("click", () => {
+      lightbox!.style.display = "none";
+      document.body.style.overflow = "auto";
     });
 
-    lightbox?.addEventListener('click', (e) => {
+    lightbox?.addEventListener("click", (e) => {
       if (e.target === lightbox) {
-        lightbox!.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        lightbox!.style.display = "none";
+        document.body.style.overflow = "auto";
       }
     });
 
     // Handle escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox!.style.display === 'flex') {
-        lightbox!.style.display = 'none';
-        document.body.style.overflow = 'auto';
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox!.style.display === "flex") {
+        lightbox!.style.display = "none";
+        document.body.style.overflow = "auto";
       }
     });
   }
 
   // Initialize lightbox on page load and after Astro transitions
   setupLightbox();
-  document.addEventListener('astro:after-swap', setupLightbox);
+  document.addEventListener("astro:after-swap", setupLightbox);
 </script>
 
 <style>
   /* Local styles for Audit Narrative */
   .audit-narrative {
-    padding-top: 140px;
     padding-bottom: var(--gs-space-10);
   }
 
@@ -205,9 +256,15 @@ console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimiz
 
   .audit-header {
     background: var(--gs-executive-white);
-    padding: var(--gs-space-8) 0;
+    padding: var(--gs-space-12) 0 var(--gs-space-8);
     margin-bottom: var(--gs-space-6);
     border-bottom: 1px solid var(--gs-border);
+  }
+
+  @media (max-width: 768px) {
+    .audit-header {
+      padding: var(--gs-space-10) 0 var(--gs-space-6);
+    }
   }
 
   .font-display {
@@ -246,7 +303,9 @@ console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimiz
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: var(--gs-space-4);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 
   .hero-image {
@@ -276,7 +335,7 @@ console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimiz
     cursor: pointer; /* Interaction hint */
     transition: opacity 0.2s;
   }
-  
+
   .gallery-thumb:hover {
     opacity: 0.8;
   }
@@ -316,11 +375,11 @@ console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimiz
     color: var(--gs-text-primary);
     font-weight: 700;
   }
-  
+
   .margin-bottom-4 {
     margin-bottom: var(--gs-space-4);
   }
-  
+
   .prose {
     line-height: 1.6;
     color: var(--gs-slate-gray);
@@ -393,8 +452,14 @@ console.log('DBUG: Machinery optimized sources:', [optimizedHero.src, ...optimiz
   }
 
   @keyframes zoom {
-    from {transform: scale(0.9); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 
   .close {

@@ -66,6 +66,10 @@
     --gs-container-padding: var(--gs-space-2);
     /* 16px side padding */
 
+    /* Header Height Clearances */
+    --gs-header-height: 70px;
+    /* Default mobile height */
+
     /* Legacy/Compat Mappings (Preserved for existing components) */
     --gs-primary: var(--gs-institutional-green);
     --gs-background: var(--gs-executive-white);
@@ -96,4 +100,10 @@ body.dark-mode {
     /* Emerald for links */
     --gs-border: #334155;
     /* Darker border */
+}
+/* Responsive Overrides for Tokens */
+@media only screen and (min-width: 64rem) {
+    :root {
+        --gs-header-height: 80px;
+    }
 }

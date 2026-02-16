@@ -35,6 +35,10 @@ select {
     font: inherit;
 }
 
+html {
+    scroll-padding-top: var(--gs-header-height);
+}
+
 p,
 h1,
 h2,
@@ -57,6 +61,13 @@ main#main {
     /* Below header z-index (10000) */
     isolation: isolate;
     /* Creates stacking context for all page content */
+    padding-top: var(--gs-header-height);
+}
+
+/* Sections that should extend behind the fixed header (Hero, Banners) */
+#hero,
+#int-hero {
+    margin-top: calc(-1 * var(--gs-header-height));
 }
 
 /* Reduced Motion */

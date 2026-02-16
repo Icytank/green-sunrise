@@ -25,11 +25,13 @@ import heroImage from "@assets/images/home-hero.png";
 const optimizedHeroImage = await getImage({
 	src: heroImage,
 	format: "webp",
-	quality: 50,
+	quality: 40,
 	width: 1920,
 	height: 1080,
 	widths: [360, 720, 1300, 1920],
 	sizes: "100vw",
+	fit: "cover",
+	position: "center",
 });
 
 // Data Fetching

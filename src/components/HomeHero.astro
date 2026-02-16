@@ -28,7 +28,9 @@ const { heroImage = defaultHeroImage } = Astro.props;
       height={1080}
       widths={[360, 720, 1300, 1920]}
       sizes="100vw"
-      quality={50}
+      quality={40}
+      fit="cover"
+      position="center"
       loading="eager"
       fetchpriority="high"
       class="cs-img"

@@ -2,7 +2,7 @@
 /**
  * PROJECT CARD COMPONENT
  * ====================
- * 
+ *
  * "Data Hero" card pattern for project gallery.
  * Features: Large MW capacity display, GSStamp for verified projects,
  * technical metadata (location, terrain), high-contrast styling.
@@ -22,60 +22,70 @@ interface Props {
   isVerified?: boolean;
 }
 
-const { 
-  title, 
-  capacityMW, 
-  location, 
-  terrainType, 
-  heroImage, 
-  slug, 
-  lang, 
-  isVerified = false 
+const {
+  title,
+  capacityMW,
+  location,
+  terrainType,
+  heroImage,
+  slug,
+  lang,
+  isVerified = false,
 } = Astro.props;
 
 // Helper: Format Capacity Logic
 const formatCapacity = (mw: number) => {
   if (mw < 1) {
-    return { value: Math.round(mw * 1000), unit: 'kWp' };
+    return { value: Math.round(mw * 1000), unit: "kWp" };
   }
-  return { value: parseFloat(mw.toFixed(2)), unit: 'MW' };
+  return { value: parseFloat(mw.toFixed(2)), unit: "MW" };
 };
 
-const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacityMW);
+const { value: capacityValue, unit: capacityUnitLabel } =
+  formatCapacity(capacityMW);
 
 const url = `/${lang}/projects/${slug}`;
-const terrainLabel = t('technical.terrain', lang);
-const locationLabel = t('technical.location', lang);
+const terrainLabel = t("technical.terrain", lang);
+const locationLabel = t("technical.location", lang);
 const terrainValue = translateTerrain(terrainType, lang);
-const verifiedLabel = t('technical.verifiedProject', lang);
+const verifiedLabel = t("technical.verifiedProject", lang);
 ---
 
-<a href={url} class="project-card" aria-label={`${title} - ${capacityValue} ${capacityUnitLabel}`} data-terrain={terrainType} data-capacity={capacityMW}>
+<a
+  href={url}
+  class="project-card"
+  aria-label={`${title} - ${capacityValue} ${capacityUnitLabel}`}
+  data-terrain={terrainType}
+  data-capacity={capacityMW}
+>
   <div class="image-wrapper">
-    <Image 
-      src={heroImage} 
-      alt={title} 
-      width={800} 
-      widths={[400, 800]}
+    <Image
+      src={heroImage}
+      alt={title}
+      width={800}
+      widths={[400, 600, 800]}
       sizes="(min-width: 1920px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-      class="card-image" 
+      quality={50}
+      class="card-image"
     />
-    {isVerified && (
-      <div class="stamp-wrapper" title={verifiedLabel}>
-        <GSStamp size={70} />
-      </div>
-    )}
+    {
+      isVerified && (
+        <div class="stamp-wrapper" title={verifiedLabel}>
+          <GSStamp size={70} />
+        </div>
+      )
+    }
   </div>
-  
+
   <div class="content">
     <!-- Data Hero: MW/kWp Capacity -->
     <div class="capacity-hero">
       <span class="capacity-value font-mono">{capacityValue}</span>
       <span class="capacity-unit font-mono">{capacityUnitLabel}</span>
     </div>
-    
+
     <h3 class="title">{title}</h3>
-    
+
     <!-- Technical Metadata -->
     <div class="tech-specs">
       <div class="spec-row">
@@ -100,21 +110,23 @@ const verifiedLabel = t('technical.verifiedProject', lang);
     overflow: hidden;
     text-decoration: none;
     color: var(--gs-text-primary);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                border-color 0.3s ease;
+    transition:
+      transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      border-color 0.3s ease;
     height: 100%;
     position: relative;
   }
 
   /* Technical Authority hover state (AC7: zero-lag elevation) */
-  .project-card:hover, .project-card:focus-visible {
+  .project-card:hover,
+  .project-card:focus-visible {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 78, 59, 0.12);
     border-color: var(--gs-institutional-green);
     outline: none;
   }
-  
+
   .project-card:focus-visible {
     box-shadow: 0 0 0 4px var(--gs-institutional-green);
   }

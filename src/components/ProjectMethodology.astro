@@ -1,41 +1,41 @@
 ---
 import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
-
 interface Props {
-  lang: "bg" | "en";
+    lang: "bg" | "en";
 }
 
 const { lang } = Astro.props;
 
-const tr = (key: string) => t(`projects.methodology.steps.${key}` as TranslationKey, lang);
+const tr = (key: string) =>
+    t(`projects.methodology.steps.${key}` as TranslationKey, lang);
 
 const steps = [
-  { key: 'adherence', icon: '📋' },
-  { key: 'precision', icon: '🎯' },
-  { key: 'coordination', icon: '🔄' },
-  { key: 'efficiency', icon: '⚡' },
-  { key: 'safety', icon: '🛡️' }
+    { key: "adherence", icon: "📋" },
+    { key: "precision", icon: "🎯" },
+    { key: "coordination", icon: "🔄" },
+    { key: "efficiency", icon: "⚡" },
+    { key: "safety", icon: "🛡️" },
 ];
 ---
 
 <section id="methodology">
     <div class="cs-container">
-
-
         <div class="cs-steps">
-            {steps.map((step, index) => (
-                <div class="cs-step">
-                    <div class="cs-icon-wrapper">
-                        <span class="cs-icon">{step.icon}</span>
-                        <span class="cs-number">{index + 1}</span>
+            {
+                steps.map((step, index) => (
+                    <div class="cs-step">
+                        <div class="cs-icon-wrapper">
+                            <span class="cs-icon">{step.icon}</span>
+                            <span class="cs-number">{index + 1}</span>
+                        </div>
+                        <div class="cs-content">
+                            <h3 class="cs-h3">{tr(`${step.key}.title`)}</h3>
+                            <p class="cs-text">{tr(`${step.key}.desc`)}</p>
+                        </div>
                     </div>
-                    <div class="cs-content">
-                        <h3 class="cs-h3">{tr(`${step.key}.title`)}</h3>
-                        <p class="cs-text">{tr(`${step.key}.desc`)}</p>
-                    </div>
-                </div>
-            ))}
+                ))
+            }
         </div>
     </div>
 </section>
@@ -43,7 +43,7 @@ const steps = [
 <style lang="less">
     #methodology {
         padding: 0 0 var(--gs-section-padding) 0;
-        background-color: #fff;
+        background-color: var(--gs-surface);
     }
 
     .cs-container {
@@ -55,8 +55,6 @@ const steps = [
         gap: var(--gs-space-10);
     }
 
-
-
     .cs-steps {
         width: 100%;
         padding: 0;
@@ -65,7 +63,7 @@ const steps = [
         grid-template-columns: repeat(12, 1fr);
         gap: var(--gs-space-4);
     }
-    
+
     /* Desktop Flex Override */
     @media only screen and (min-width: 64rem) {
         .cs-steps {
@@ -89,11 +87,14 @@ const steps = [
 
         grid-column: span 12;
 
-        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease,
+            border-color 0.3s ease;
 
         &:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             border-color: var(--gs-institutional-green);
         }
 

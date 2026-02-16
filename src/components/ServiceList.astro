@@ -3,7 +3,7 @@ import { t, type TranslationKey } from "src/utils/i18n-helpers";
 import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
-  lang: "bg" | "en";
+    lang: "bg" | "en";
 }
 
 const { lang } = Astro.props;
@@ -11,31 +11,33 @@ const { lang } = Astro.props;
 const tr = (key: string) => t(`services.list.${key}` as TranslationKey, lang);
 
 const services = [
-  { key: 'pileDriving', icon: '🔩' },
-  { key: 'structureInstallation', icon: '🏗️' },
-  { key: 'moduleInstallation', icon: '☀️' },
-  { key: 'epcSupport', icon: '🤝' },
-  { key: 'labourTeams', icon: '👷' },
+    { key: "pileDriving", icon: "🔩" },
+    { key: "structureInstallation", icon: "🏗️" },
+    { key: "moduleInstallation", icon: "☀️" },
+    { key: "epcSupport", icon: "🤝" },
+    { key: "labourTeams", icon: "👷" },
 ];
 ---
 
 <section id="services-list">
     <div class="cs-container">
         <SectionHeader
-            label={t("nav.services" as TranslationKey, lang)} 
+            label={t("nav.services" as TranslationKey, lang)}
             title={t("services.title" as TranslationKey, lang)}
             description=""
             align="left"
         />
 
         <div class="cs-grid">
-            {services.map((s) => (
-                <div class="cs-card">
-                    <span class="cs-icon">{s.icon}</span>
-                    <h3 class="cs-h3">{tr(`${s.key}.title`)}</h3>
-                    <p class="cs-text">{tr(`${s.key}.desc`)}</p>
-                </div>
-            ))}
+            {
+                services.map((s) => (
+                    <div class="cs-card">
+                        <span class="cs-icon">{s.icon}</span>
+                        <h3 class="cs-h3">{tr(`${s.key}.title`)}</h3>
+                        <p class="cs-text">{tr(`${s.key}.desc`)}</p>
+                    </div>
+                ))
+            }
         </div>
     </div>
 </section>
@@ -43,7 +45,7 @@ const services = [
 <style lang="less">
     #services-list {
         padding: var(--gs-section-padding);
-        background-color: var(--gs-surface-secondary);
+        background-color: var(--gs-surface);
     }
 
     .cs-container {
@@ -60,7 +62,7 @@ const services = [
         grid-template-columns: repeat(12, 1fr);
         gap: var(--gs-space-4);
     }
-    
+
     /* Desktop Flex Override for Center Alignment */
     @media only screen and (min-width: 64rem) {
         .cs-grid {
@@ -75,8 +77,10 @@ const services = [
         padding: var(--gs-space-6);
         border-radius: 8px;
         border: 1px solid var(--gs-border);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+
         grid-column: span 12;
 
         /* Tablet - 2 cols */
@@ -89,7 +93,7 @@ const services = [
             width: calc(33.33% - var(--gs-space-4));
             max-width: (400/16rem);
         }
-        
+
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -97,7 +101,7 @@ const services = [
 
         &:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
             border-color: var(--gs-institutional-green);
         }
     }

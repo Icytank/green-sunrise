@@ -2,7 +2,7 @@
 /**
  * PROJECT SIDEBAR COMPONENT
  * ========================
- * 
+ *
  * Technical specifications sidebar for project detail page.
  * Features: MW capacity, terrain, location, verification status with GSStamp.
  */
@@ -18,46 +18,51 @@ interface Props {
   scope?: string;
 }
 
-const { capacityMW, terrainType, location, isVerified, lang, scope } = Astro.props;
+const { capacityMW, terrainType, location, isVerified, lang, scope } =
+  Astro.props;
 
 // Use centralized translations
-const capacityLabel = t('technical.capacity', lang);
-const terrainLabel = t('technical.terrain', lang);
-const locationLabel = t('technical.location', lang);
-const scopeLabel = t('projects.detail.scope' as any, lang);
+const capacityLabel = t("technical.capacity", lang);
+const terrainLabel = t("technical.terrain", lang);
+const locationLabel = t("technical.location", lang);
+const scopeLabel = t("projects.detail.scope" as any, lang);
 // const capacityUnit = t('technical.capacityUnit', lang); // Replaced by smart unit
 const terrainValue = translateTerrain(terrainType, lang);
-const verifiedTitle = t('technical.verifiedProject', lang);
-const verifiedDesc = t('technical.verifiedDesc', lang);
-const technicalSpecsTitle = t('technical.specsTitle', lang);
+const verifiedTitle = t("technical.verifiedProject", lang);
+const verifiedDesc = t("technical.verifiedDesc", lang);
+const technicalSpecsTitle = t("technical.specsTitle", lang);
 
 // Helper: Format Capacity Logic
 const formatCapacity = (mw: number) => {
   if (mw < 1) {
-    return { value: Math.round(mw * 1000), unit: 'kWp' };
+    return { value: Math.round(mw * 1000), unit: "kWp" };
   }
-  return { value: parseFloat(mw.toFixed(2)), unit: 'MW' };
+  return { value: parseFloat(mw.toFixed(2)), unit: "MW" };
 };
 
-const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacityMW);
+const { value: capacityValue, unit: capacityUnitLabel } =
+  formatCapacity(capacityMW);
 ---
 
 <aside class="project-sidebar">
   <h2 class="sidebar-title">{technicalSpecsTitle}</h2>
-  
+
   <dl class="specs-list">
     <!-- Capacity (Primary Data Point) -->
     <div class="spec-item capacity-highlight">
       <dt class="spec-label">{capacityLabel}</dt>
-      <dd class="spec-value capacity-value font-mono">{capacityValue} <span class="unit">{capacityUnitLabel}</span></dd>
+      <dd class="spec-value capacity-value font-mono">
+        {capacityValue}
+        <span class="unit">{capacityUnitLabel}</span>
+      </dd>
     </div>
-    
+
     <!-- Terrain -->
     <div class="spec-item">
       <dt class="spec-label">{terrainLabel}</dt>
       <dd class="spec-value">{terrainValue}</dd>
     </div>
-    
+
     <!-- Location -->
     <div class="spec-item">
       <dt class="spec-label">{locationLabel}</dt>
@@ -65,24 +70,28 @@ const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacit
     </div>
 
     <!-- Scope of Work -->
-    {scope && (
-      <div class="spec-item">
-        <dt class="spec-label">{scopeLabel}</dt>
-        <dd class="spec-value">{scope}</dd>
-      </div>
-    )}
+    {
+      scope && (
+        <div class="spec-item">
+          <dt class="spec-label">{scopeLabel}</dt>
+          <dd class="spec-value">{scope}</dd>
+        </div>
+      )
+    }
   </dl>
 
   <!-- Verification Status -->
-  {isVerified && (
-    <div class="verification-badge">
-      <GSStamp size={80} />
-      <div class="verification-text">
-        <span class="verification-title">{verifiedTitle}</span>
-        <span class="verification-desc">{verifiedDesc}</span>
+  {
+    isVerified && (
+      <div class="verification-badge">
+        <GSStamp size={80} />
+        <div class="verification-text">
+          <span class="verification-title">{verifiedTitle}</span>
+          <span class="verification-desc">{verifiedDesc}</span>
+        </div>
       </div>
-    </div>
-  )}
+    )
+  }
 </aside>
 
 <style>
@@ -91,6 +100,12 @@ const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacit
     border: 1px solid var(--gs-border);
     border-radius: 12px;
     padding: var(--gs-space-6);
+  }
+
+  @media (max-width: 768px) {
+    .project-sidebar {
+      padding: var(--gs-space-4);
+    }
   }
 
   .sidebar-title {
@@ -114,6 +129,8 @@ const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacit
     display: flex;
     flex-direction: column;
     gap: var(--gs-space-1);
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .spec-label {
@@ -122,6 +139,7 @@ const { value: capacityValue, unit: capacityUnitLabel } = formatCapacity(capacit
     letter-spacing: 0.08em;
     color: var(--gs-slate-gray);
     font-weight: 600;
+    hyphens: auto;
   }
 
   .spec-value {

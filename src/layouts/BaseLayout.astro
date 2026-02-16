@@ -6,12 +6,7 @@ import "@styles/tokens.css";
 import "@styles/global.css";
 
 // Fonts
-import "@fontsource/inter";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/inter/800.css";
-import "@fontsource/inter/900.css";
+import "@fontsource-variable/inter";
 import "@fontsource/geist-mono";
 
 // Components
@@ -30,25 +25,42 @@ interface Props {
 	description: string;
 	lang?: string;
 	heroImage?: HeroImage; // optional - passing a heroImage to BaseLayout will 1. preload the image and 2. use the image for og socials tags in the <head>
-    ogType?: string;
-    alternateLinks?: { lang: string; href: string }[];
+	ogType?: string;
+	alternateLinks?: { lang: string; href: string }[];
 }
 
-const { description, title, heroImage, lang = "bg", ogType, alternateLinks } = Astro.props as Props;
+const {
+	description,
+	title,
+	heroImage,
+	lang = "bg",
+	ogType,
+	alternateLinks,
+} = Astro.props as Props;
 
 // Smart default for alternate links if not provided (assumes symmetric URL structure)
 let finalAlternateLinks = alternateLinks;
 if (!finalAlternateLinks) {
-    const currentPath = Astro.url.pathname;
-    // Remove trailing slash for consistency check, but preserve for replacement if needed, 
-    // although Astro usually normalizes.
-    
-    // Check if path starts with /bg or /en
-    if (lang === 'bg' && currentPath.startsWith('/bg')) {
-        finalAlternateLinks = [{ lang: 'en', href: Astro.url.origin + currentPath.replace('/bg', '/en') }];
-    } else if (lang === 'en' && currentPath.startsWith('/en')) {
-         finalAlternateLinks = [{ lang: 'bg', href: Astro.url.origin + currentPath.replace('/en', '/bg') }];
-    }
+	const currentPath = Astro.url.pathname;
+	// Remove trailing slash for consistency check, but preserve for replacement if needed,
+	// although Astro usually normalizes.
+
+	// Check if path starts with /bg or /en
+	if (lang === "bg" && currentPath.startsWith("/bg")) {
+		finalAlternateLinks = [
+			{
+				lang: "en",
+				href: Astro.url.origin + currentPath.replace("/bg", "/en"),
+			},
+		];
+	} else if (lang === "en" && currentPath.startsWith("/en")) {
+		finalAlternateLinks = [
+			{
+				lang: "bg",
+				href: Astro.url.origin + currentPath.replace("/en", "/bg"),
+			},
+		];
+	}
 }
 ---
 
@@ -59,19 +71,34 @@ if (!finalAlternateLinks) {
 		<ClientRouter />
 
 		<!-- SEO Meta Tags -->
-		<Meta 
-            title={title} 
-            description={description} 
-            heroImage={heroImage} 
-            lang={lang}
-            ogType={ogType}
-            alternateLinks={finalAlternateLinks}
-        >
+		<Meta
+			title={title}
+			description={description}
+			heroImage={heroImage}
+			lang={lang}
+			ogType={ogType}
+			alternateLinks={finalAlternateLinks}
+		>
 			<slot name="schema" slot="schema" />
 		</Meta>
 
 		<!-- Fonts (Self-hosted via @fontsource) -->
 		<!-- Optimization: Eliminates blocking round-trips to fonts.googleapis.com -->
+		<!-- Preload critical fonts -->
+		<link
+			rel="preload"
+			href="/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link
+			rel="preload"
+			href="/@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 		<style>
 			/* Critical Font Loading */
 		</style>
@@ -84,7 +111,9 @@ if (!finalAlternateLinks) {
 	</head>
 	<body>
 		<!-- Screen reader skip main nav -->
-		<a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
+		<a class="skip" aria-label="skip to main content" href="#main"
+			>Click To Skip To Main Content</a
+		>
 
 		<DynamicHeader lang={lang} />
 		<main id="main">

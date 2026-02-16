@@ -17,50 +17,59 @@ interface Props {
 const { title, model, weight, image, slug, lang, isOwned = true } = Astro.props;
 const url = getMachineryUrl(slug, lang);
 const formattedWeight = formatSpecValue(weight, "");
-const ownedBadgeLabel = t('machinery.ownedBadge', lang);
-const ownershipDeclaration = t('machinery.ownershipDeclaration', lang);
+const ownedBadgeLabel = t("machinery.ownedBadge", lang);
+const ownershipDeclaration = t("machinery.ownershipDeclaration", lang);
 ---
 
 <a href={url} class="machinery-card group" aria-label={`${title} - ${model}`}>
   <div class="image-wrapper">
-    <Image 
-      src={image} 
-      alt={title} 
-      width={600} 
-      widths={[300, 600]}
+    <Image
+      src={image}
+      alt={title}
+      width={800}
+      widths={[400, 800]}
       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-      class="card-image" 
+      quality={60}
+      class="card-image"
     />
-    {isOwned && (
-      <div class="stamp-wrapper" title={ownedBadgeLabel} aria-label={ownedBadgeLabel}>
-        <GSStamp size={60} />
-      </div>
-    )}
+    {
+      isOwned && (
+        <div
+          class="stamp-wrapper"
+          title={ownedBadgeLabel}
+          aria-label={ownedBadgeLabel}
+        >
+          <GSStamp size={60} />
+        </div>
+      )
+    }
     <!-- Audit-on-Hover Overlay -->
     <div class="audit-overlay">
-       <div class="overlay-content">
-          <span class="overlay-label">{t('machinery.model', lang)}</span>
-          <span class="overlay-value">{model}</span>
-          <div class="overlay-divider"></div>
-          <span class="overlay-label">{t('machinery.weight', lang)}</span>
-          <span class="overlay-value">{formattedWeight}</span>
-       </div>
+      <div class="overlay-content">
+        <span class="overlay-label">{t("machinery.model", lang)}</span>
+        <span class="overlay-value">{model}</span>
+        <div class="overlay-divider"></div>
+        <span class="overlay-label">{t("machinery.weight", lang)}</span>
+        <span class="overlay-value">{formattedWeight}</span>
+      </div>
     </div>
   </div>
   <div class="content">
     <h3 class="title">{title}</h3>
-    {isOwned && (
-      <div class="ownership-declaration" aria-label={ownedBadgeLabel}>
-        <span class="ownership-indicator"></span>
-        <span class="ownership-text">{ownershipDeclaration}</span>
-      </div>
-    )}
+    {
+      isOwned && (
+        <div class="ownership-declaration" aria-label={ownedBadgeLabel}>
+          <span class="ownership-indicator" />
+          <span class="ownership-text">{ownershipDeclaration}</span>
+        </div>
+      )
+    }
     <div class="card-footer">
-       <p class="model-text">{model}</p>
-       <div class="specs">
-         <span class="label">{t('machinery.weight', lang)}</span>
-         <span class="value">{formattedWeight}</span>
-       </div>
+      <p class="model-text">{model}</p>
+      <div class="specs">
+        <span class="label">{t("machinery.weight", lang)}</span>
+        <span class="value">{formattedWeight}</span>
+      </div>
     </div>
   </div>
 </a>
@@ -75,21 +84,23 @@ const ownershipDeclaration = t('machinery.ownershipDeclaration', lang);
     overflow: hidden;
     text-decoration: none;
     color: var(--gs-text-primary);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
-                border-color 0.3s ease;
+    transition:
+      transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      border-color 0.3s ease;
     height: 100%;
     position: relative;
   }
 
   /* Hover Effects (AC: subtle lift, clear focus ring) */
-  .machinery-card:hover, .machinery-card:focus-visible {
+  .machinery-card:hover,
+  .machinery-card:focus-visible {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 78, 59, 0.12);
     border-color: var(--gs-institutional-green);
     outline: none;
   }
-  
+
   .machinery-card:focus-visible {
     box-shadow: 0 0 0 4px var(--gs-institutional-green); /* Using token instead of hardcoded hex */
   }

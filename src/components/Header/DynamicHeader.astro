@@ -26,7 +26,7 @@ interface Props {
 }
 
 const { lang } = Astro.props as Props;
-const currentLang = (lang === 'bg' || lang === 'en') ? lang : 'en';
+const currentLang = lang === "bg" || lang === "en" ? lang : "en";
 
 const navigation = getNavigation(currentLang);
 const ctaLabel = getCTALabel(currentLang);
@@ -40,13 +40,31 @@ const currentPath = Astro.url.pathname;
 <header id="cs-navigation">
 	<div class="cs-container">
 		<!--Nav Logo-->
-		<a href={getLocalizedUrl("/")} class="cs-logo" aria-label="Return to Green Sunrise Home page">
-			<Image src={stampLogo} alt="Green Sunrise Stamp Logo" width={210} height={28} />
+		<a
+			href={getLocalizedUrl("/")}
+			class="cs-logo"
+			aria-label="Return to Green Sunrise Home page"
+		>
+			<Image
+				src={stampLogo}
+				alt="Green Sunrise Stamp Logo"
+				width={200}
+				height={27}
+				loading="eager"
+				fetchpriority="high"
+			/>
 		</a>
 		<!--Navigation List-->
 		<nav class="cs-nav" aria-label="main navigation">
 			<!--Mobile Nav Toggle-->
-			<button class="cs-toggle" id="cs-toggle" aria-expanded="false" aria-controls="cs-ul-wrapper" aria-haspopup="menu" aria-label="mobile menu toggle">
+			<button
+				class="cs-toggle"
+				id="cs-toggle"
+				aria-expanded="false"
+				aria-controls="cs-ul-wrapper"
+				aria-haspopup="menu"
+				aria-label="mobile menu toggle"
+			>
 				<span class="cs-box" aria-hidden="true">
 					<span class="cs-line cs-line1" aria-hidden="true"></span>
 					<span class="cs-line cs-line2" aria-hidden="true"></span>
@@ -58,26 +76,75 @@ const currentPath = Astro.url.pathname;
 				<ul id="cs-expanded" class="cs-ul">
 					{
 						navigation.map((entry) => (
-							<li class:list={["cs-li", { "cs-dropdown": entry.children?.length > 0 }]}>
-								{entry.children?.length > 0 ? (
+							<li
+								class:list={[
+									"cs-li",
+									{
+										"cs-dropdown":
+											(entry.children?.length ?? 0) > 0,
+									},
+								]}
+							>
+								{(entry.children?.length ?? 0) > 0 ? (
 									// If entry has children in navData.json, create a button and a dropdown icon
-									<button id={getDropdownId(entry.key)} aria-expanded="false" aria-haspopup="menu" class:list={["cs-li-link cs-dropdown-toggle", { "cs-active": currentPath.includes(entry.url) }]}>
+									<button
+										id={getDropdownId(entry.key)}
+										aria-expanded="false"
+										aria-haspopup="menu"
+										class:list={[
+											"cs-li-link cs-dropdown-toggle",
+											{
+												"cs-active":
+													currentPath.includes(
+														entry.url,
+													),
+											},
+										]}
+									>
 										{entry.key}
-										<Icon name="mdi--caret" class="cs-drop-icon" />
+										<Icon
+											name="mdi--caret"
+											class="cs-drop-icon"
+										/>
 									</button>
 								) : (
 									// If entry does not have children in navData.json, create an anchor
-									<a href={entry.url} class:list={["cs-li-link", { "cs-active": currentPath === entry.url }]} aria-current={isCurrentPage(currentPath, entry.url)}>
+									<a
+										href={entry.url}
+										class:list={[
+											"cs-li-link",
+											{
+												"cs-active":
+													currentPath === entry.url,
+											},
+										]}
+										aria-current={isCurrentPage(
+											currentPath,
+											entry.url,
+										)}
+									>
 										{entry.key}
 									</a>
 								)}
 
-								{entry.children?.length > 0 && (
+								{(entry.children?.length ?? 0) > 0 && (
 									// If entry has children in navData.json, create a drop down menu
-									<ul class="cs-drop-ul" aria-labelledby={getDropdownId(entry.key)}>
-										{entry.children.map((child: any) => (
+									<ul
+										class="cs-drop-ul"
+										aria-labelledby={getDropdownId(
+											entry.key,
+										)}
+									>
+										{entry.children?.map((child: any) => (
 											<li class="cs-drop-li">
-												<a href={child.url} class="cs-li-link cs-drop-link" aria-current={isCurrentPage(currentPath, child.url)}>
+												<a
+													href={child.url}
+													class="cs-li-link cs-drop-link"
+													aria-current={isCurrentPage(
+														currentPath,
+														child.url,
+													)}
+												>
 													{child.key}
 												</a>
 											</li>
@@ -97,7 +164,10 @@ const currentPath = Astro.url.pathname;
 			<LanguageSwitcher />
 		</div>
 
-		<a href={getLocalizedUrl("/contact/")} class="cs-button-solid cs-nav-button">{ctaLabel}</a>
+		<a
+			href={getLocalizedUrl("/contact/")}
+			class="cs-button-solid cs-nav-button">{ctaLabel}</a
+		>
 	</div>
 </header>
 
@@ -214,7 +284,8 @@ const currentPath = Astro.url.pathname;
 
 				.cs-line2 {
 					top: 50%;
-					transform: translate(-50%, -50%) translateY(0) rotate(-225deg);
+					transform: translate(-50%, -50%) translateY(0)
+						rotate(-225deg);
 					transform-origin: center;
 				}
 
@@ -300,7 +371,8 @@ const currentPath = Astro.url.pathname;
 				height: 65vh;
 				margin: 0;
 				/* 28px - 40px */
-				padding: (48/16rem) clamp(1.75rem, 3vw, 2.5rem) (32/16rem) (70/16rem);
+				padding: (48/16rem) clamp(1.75rem, 3vw, 2.5rem) (32/16rem)
+					(70/16rem);
 				display: flex;
 				flex-direction: column;
 				justify-content: flex-start;
@@ -397,37 +469,37 @@ const currentPath = Astro.url.pathname;
 				background-color: var(--gs-deep-navy-slate);
 
 				.cs-logo {
-						/* makes it white */
-						filter: grayscale(1) brightness(1000%);
-					}
-	
-					.cs-line {
-						background-color: var(--gs-executive-white);
-					}
-	
-					.cs-ul-wrapper {
-						background-color: var(--gs-deep-navy-slate);
-					}
-	
-					.cs-li-link {
+					/* makes it white */
+					filter: grayscale(1) brightness(1000%);
+				}
+
+				.cs-line {
+					background-color: var(--gs-executive-white);
+				}
+
+				.cs-ul-wrapper {
+					background-color: var(--gs-deep-navy-slate);
+				}
+
+				.cs-li-link {
+					color: var(--gs-executive-white);
+				}
+
+				.header-lang-switcher {
+					/* Ensure visibility in dark mobile menu */
+					:global(.language-switcher) {
 						color: var(--gs-executive-white);
 					}
-	
-					.header-lang-switcher {
-						/* Ensure visibility in dark mobile menu */
-						:global(.language-switcher) {
-							color: var(--gs-executive-white); 
-						}
-						:global(.lang-link) {
-							color: var(--gs-executive-white);
-						}
-						:global(.lang-link.active) {
-							color: var(--gs-success-emerald);
-						}
+					:global(.lang-link) {
+						color: var(--gs-executive-white);
+					}
+					:global(.lang-link.active) {
+						color: var(--gs-success-emerald);
 					}
 				}
 			}
 		}
+	}
 
 	/*-- -------------------------- -->
 <---     Navigation Dropdown    -->
@@ -868,7 +940,8 @@ const currentPath = Astro.url.pathname;
 
 				.cs-li-link {
 					color: var(--gs-executive-white);
-					&.cs-active, &:hover {
+					&.cs-active,
+					&:hover {
 						color: var(--gs-success-emerald);
 						&:before {
 							background-color: var(--gs-success-emerald);

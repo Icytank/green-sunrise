@@ -22,7 +22,12 @@ import TrustedPartnerBanner from "@components/TrustedPartnerBanner.astro";
 
 // Optimization: Ensure high priority for LCP
 import heroImage from "@assets/images/home-hero.png";
-const optimizedHeroImage = await getImage({ src: heroImage, format: "webp" });
+const optimizedHeroImage = await getImage({
+	src: heroImage,
+	format: "webp",
+	widths: [360, 720, 1200, 1920],
+	sizes: "100vw",
+});
 
 // Data Fetching
 import { getCollection } from "astro:content";
@@ -31,19 +36,25 @@ import { t } from "src/utils/i18n-helpers";
 // Fetch collections based on language
 // Note: We filter by ID starting with lang because typically localized content is in subfolders like src/content/machinery/en/...
 // Adjust filtering logic if your content structure differs (e.g. frontmatter lang field)
-const allMachinery = await getCollection("machinery", ({ id }) => id.startsWith(`${lang}/`));
-const allProjects = await getCollection("projects", ({ id }) => id.startsWith(`${lang}/`));
-const allTeam = await getCollection("teams", ({ id }) => id.startsWith(`${lang}/`));
+const allMachinery = await getCollection("machinery", ({ id }) =>
+	id.startsWith(`${lang}/`),
+);
+const allProjects = await getCollection("projects", ({ id }) =>
+	id.startsWith(`${lang}/`),
+);
+const allTeam = await getCollection("teams", ({ id }) =>
+	id.startsWith(`${lang}/`),
+);
 
 // Sort by capacityMW descending and slice top 3
 const projectsPreview = allProjects
-    .sort((a, b) => (b.data.capacityMW || 0) - (a.data.capacityMW || 0))
-    .slice(0, 3);
+	.sort((a, b) => (b.data.capacityMW || 0) - (a.data.capacityMW || 0))
+	.slice(0, 3);
 
 const teamPreview = allTeam.slice(0, 4); // 4 looks good in grid
 
 // Sort/Slice for Preview
-// Assuming we want to show 3 of each or specific "featured" logic. 
+// Assuming we want to show 3 of each or specific "featured" logic.
 // For now, taking first 3.
 const machineryPreview = allMachinery.slice(0, 3);
 
@@ -51,40 +62,50 @@ const machineryPreview = allMachinery.slice(0, 3);
 const translate = (key: string) => t(`home.${key}` as any, lang);
 ---
 
-<BaseLayout 
-    lang={lang} 
-    title={translate("pageTitle")} 
-    description={translate("pageDescription")} 
-    heroImage={optimizedHeroImage}
+<BaseLayout
+	lang={lang}
+	title={translate("pageTitle")}
+	description={translate("pageDescription")}
+	heroImage={optimizedHeroImage}
 >
 	<HomeHero lang={lang} heroImage={heroImage} />
-    
-    <!-- ADVANTAGES SECTION -->
-    <HomeAdvantages lang={lang} />
-	
+
+	<!-- ADVANTAGES SECTION -->
+	<HomeAdvantages lang={lang} />
+
 	<!-- PROJECTS SECTION -->
 	<section id="projects" style="padding: var(--gs-section-padding) 0;">
 		<div class="cs-container">
-			<SectionHeader 
-				label={translate("projectsLabel")} 
+			<SectionHeader
+				label={translate("projectsLabel")}
 				title={translate("projectsTitle")}
 				description={translate("projectsDesc")}
 				align="center"
 				withStamp={false}
 			/>
 			<ul class="cs-card-group">
-				{projectsPreview.map((item) => (
-					<li class="cs-item">
-						<ProjectCard
-							slug={item.data.custom_slug || item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
-							lang={lang}
-							{...item.data}
-						/>
-					</li>
-				))}
+				{
+					projectsPreview.map((item) => (
+						<li class="cs-item">
+							<ProjectCard
+								slug={
+									item.data.custom_slug ||
+									item.id
+										.split("/")
+										.pop()!
+										.replace(/\.[^/.]+$/, "")
+								}
+								lang={lang}
+								{...item.data}
+							/>
+						</li>
+					))
+				}
 			</ul>
 			<div style="margin-top: var(--gs-space-4); text-align: center;">
-				<Button href={`/${lang}/projects`} variant="outline">{translate("viewAll")}</Button>
+				<Button href={`/${lang}/projects`} variant="outline"
+					>{translate("viewAll")}</Button
+				>
 			</div>
 		</div>
 	</section>
@@ -92,69 +113,85 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	<!-- MACHINERY SECTION -->
 	<section id="machinery" style="padding: var(--gs-section-padding) 0;">
 		<div class="cs-container">
-			<SectionHeader 
-				label={translate("machineryLabel")} 
+			<SectionHeader
+				label={translate("machineryLabel")}
 				title={translate("machineryTitle")}
 				description={translate("machineryDesc")}
 				align="center"
 				withStamp={false}
 			/>
 			<ul class="cs-card-group">
-				{machineryPreview.map((item) => (
-					<li class="cs-item">
-						<MachineryCard
-							slug={item.data.custom_slug || item.id.split('/').pop()!.replace(/\.[^/.]+$/, "")}
-							lang={lang}
-							{...item.data}
-							image={item.data.heroImage}
-						/>
-					</li>
-				))}
+				{
+					machineryPreview.map((item) => (
+						<li class="cs-item">
+							<MachineryCard
+								slug={
+									item.data.custom_slug ||
+									item.id
+										.split("/")
+										.pop()!
+										.replace(/\.[^/.]+$/, "")
+								}
+								lang={lang}
+								{...item.data}
+								image={item.data.heroImage}
+							/>
+						</li>
+					))
+				}
 			</ul>
 			<div style="margin-top: var(--gs-space-4); text-align: center;">
-				<Button href={`/${lang}/machinery`} variant="outline">{translate("viewAll")}</Button>
+				<Button href={`/${lang}/machinery`} variant="outline"
+					>{translate("viewAll")}</Button
+				>
 			</div>
 		</div>
 	</section>
 
 	<!-- TEAM SECTION -->
-	<section id="team" style="padding: var(--gs-section-padding) 0; background-color: var(--gs-surface-secondary); text-align: center;"> <!-- Centered align for Team -->
+	<section
+		id="team"
+		style="padding: var(--gs-section-padding) 0; background-color: var(--gs-surface-secondary); text-align: center;"
+	>
+		<!-- Centered align for Team -->
 		<div class="cs-container">
-			<SectionHeader 
-				label={translate("teamLabel")} 
+			<SectionHeader
+				label={translate("teamLabel")}
 				title={translate("teamTitle")}
 				description={translate("teamDesc")}
 				align="center"
 				withStamp={false}
 			/>
-			<ul class="cs-card-group-4"> <!-- 4 cols for team -->
-				{teamPreview.map((item) => (
-					<li class="cs-item">
-						<TeamMember
-							lang={lang}
-							{...item.data}
-						/>
-					</li>
-				))}
+			<ul class="cs-card-group-4">
+				<!-- 4 cols for team -->
+				{
+					teamPreview.map((item) => (
+						<li class="cs-item">
+							<TeamMember lang={lang} {...item.data} />
+						</li>
+					))
+				}
 			</ul>
 			<!-- View All Team? Maybe just About Us link -->
-			<div style="margin-top: var(--gs-space-4); text-align: center; padding-bottom: 2rem;">
-				<Button href={`/${lang}/about`} variant="outline">{translate("viewAll")}</Button>
+			<div
+				style="margin-top: var(--gs-space-4); text-align: center; padding-bottom: 2rem;"
+			>
+				<Button href={`/${lang}/about`} variant="outline"
+					>{translate("viewAll")}</Button
+				>
 			</div>
 		</div>
 	</section>
 
-
-
 	<CTASimple lang={lang} />
-    
-    <TrustedPartnerBanner lang={lang} />
+
+	<TrustedPartnerBanner lang={lang} />
 </BaseLayout>
 
 <style lang="less">
-	/* Grid Layouts to match 8px grid (var(--gs-space-2) seems small for gap, usually 1rem or 1.5rem) */ 
+	/* Grid Layouts to match 8px grid (var(--gs-space-2) seems small for gap, usually 1rem or 1.5rem) */
 	/* Using --gs-space-4 for gap ~ 2rem/32px? Need to check tokens but assuming standard spacing */
-	
+
 	.cs-container {
 		width: 100%;
 		max-width: (1280/16rem);
@@ -162,7 +199,8 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 		padding: 0 1rem;
 	}
 
-	.cs-card-group, .cs-card-group-4 {
+	.cs-card-group,
+	.cs-card-group-4 {
 		padding: 0;
 		margin: 0;
 		list-style: none;
@@ -171,16 +209,16 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 		justify-content: center;
 		gap: var(--gs-space-4);
 	}
-	
+
 	.cs-card-group {
 		.cs-item {
 			width: 100%;
-			
+
 			@media only screen and (min-width: 48rem) {
 				/* 2 columns: (100% - 1*gap) / 2 */
 				width: calc((100% - var(--gs-space-4)) / 2);
 			}
-			
+
 			@media only screen and (min-width: 64rem) {
 				/* 3 columns: (100% - 2*gap) / 3 */
 				width: calc((100% - (2 * var(--gs-space-4))) / 3);
@@ -191,12 +229,12 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	.cs-card-group-4 {
 		.cs-item {
 			width: 100%;
-			
+
 			@media only screen and (min-width: 30rem) {
 				/* 2 columns: (100% - 1*gap) / 2 */
 				width: calc((100% - var(--gs-space-4)) / 2);
 			}
-			
+
 			@media only screen and (min-width: 64rem) {
 				/* 4 columns: (100% - 3*gap) / 4 */
 				width: calc((100% - (3 * var(--gs-space-4))) / 4);

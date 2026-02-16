@@ -9,7 +9,8 @@ interface Props extends TeamMemberProps {
     avatar: ImageMetadata;
 }
 
-const { name, role, certifications, yearsExperience, verified, lang, avatar } = Astro.props;
+const { name, role, certifications, yearsExperience, verified, lang, avatar } =
+    Astro.props;
 
 const formattedExperience = formatExperience(yearsExperience);
 const filteredCertifications = processCertifications(certifications);
@@ -17,30 +18,46 @@ const filteredCertifications = processCertifications(certifications);
 
 <div class="team-member-card">
     <div class="image-container">
-        <Image src={avatar} alt={name} width={400} height={400} class="avatar" />
-        {verified && (
-            <div class="stamp-overlay" title={t('team.verifiedProfile', lang)} aria-label={t('team.verifiedProfile', lang)}>
-                <GSStamp size={70} />
-            </div>
-        )}
+        <Image
+            src={avatar}
+            alt={name}
+            width={400}
+            height={400}
+            class="avatar"
+        />
+        {
+            verified && (
+                <div
+                    class="stamp-overlay"
+                    title={t("team.verifiedProfile", lang)}
+                    aria-label={t("team.verifiedProfile", lang)}
+                >
+                    <GSStamp size={60} />
+                </div>
+            )
+        }
     </div>
     <div class="info">
         <h3 class="name">{name}</h3>
         <p class="role">{role}</p>
         <div class="experience">
-            <span class="exp-label">{t('team.experience', lang)}:</span>
-            <span class="exp-value">{formattedExperience} {t('team.yearsSuffix', lang)}</span>
+            <span class="exp-label">{t("team.experience", lang)}:</span>
+            <span class="exp-value"
+                >{formattedExperience} {t("team.yearsSuffix", lang)}</span
+            >
         </div>
-        {filteredCertifications.length > 0 && (
-            <div class="certifications">
-                <h4 class="cert-title">{t('team.certifications', lang)}</h4>
-                <ul class="cert-list">
-                    {filteredCertifications.map((cert) => (
-                        <li>{cert}</li>
-                    ))}
-                </ul>
-            </div>
-        )}
+        {
+            filteredCertifications.length > 0 && (
+                <div class="certifications">
+                    <h4 class="cert-title">{t("team.certifications", lang)}</h4>
+                    <ul class="cert-list">
+                        {filteredCertifications.map((cert) => (
+                            <li>{cert}</li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
     </div>
 </div>
 
@@ -53,7 +70,9 @@ const filteredCertifications = processCertifications(certifications);
         flex-direction: column;
         gap: var(--gs-space-3);
         height: 100%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
         position: relative;
     }
 

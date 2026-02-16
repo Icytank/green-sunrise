@@ -9,11 +9,28 @@ interface Props {
   withStamp?: boolean;
 }
 
-const { label, title, description, align = "left", withStamp = true } = Astro.props;
+const {
+  label,
+  title,
+  description,
+  align = "left",
+  withStamp = true,
+} = Astro.props;
 ---
 
-<div class:list={["cs-section-header", { "text-center": align === "center", "text-right": align === "right" }]}>
-  {withStamp && <div class="cs-stamp-wrapper"><GSStamp size={60} /></div>}
+<div
+  class:list={[
+    "cs-section-header",
+    { "text-center": align === "center", "text-right": align === "right" },
+  ]}
+>
+  {
+    withStamp && (
+      <div class="cs-stamp-wrapper">
+        <GSStamp size={60} />
+      </div>
+    )
+  }
   <span class="cs-topper">{label}</span>
   <h2 class="cs-title">{title}</h2>
   {description && <p class="cs-text">{description}</p>}
@@ -28,20 +45,20 @@ const { label, title, description, align = "left", withStamp = true } = Astro.pr
     display: flex;
     flex-direction: column;
     gap: (16/16rem);
-    
+
     &.text-center {
       align-items: center;
       text-align: center;
-      
+
       .cs-text {
         text-align: center;
       }
     }
-    
+
     &.text-right {
       align-items: flex-end;
       text-align: right;
-      
+
       .cs-text {
         text-align: right;
       }
@@ -55,13 +72,13 @@ const { label, title, description, align = "left", withStamp = true } = Astro.pr
     z-index: -1;
     opacity: 0.1;
     transform: rotate(15deg);
-    
+
     @media only screen and (min-width: 48rem) {
       right: -40px;
       opacity: 0.15;
     }
   }
-  
+
   .cs-topper {
     font-size: var(--gs-text-sm);
     font-weight: 700;

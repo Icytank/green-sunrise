@@ -2,22 +2,31 @@
 /**
  * GS STAMP COMPONENT
  * =================
- * 
+ *
  * High-authority trust badge for verified machinery and projects.
  */
 import { Image } from "astro:assets";
 import stampImg from "@assets/images/gs-stamp.png";
 
 interface Props {
-  className?: string;
-  size?: number;
+    className?: string;
+    size?: number;
 }
 
 const { className = "", size = 120 } = Astro.props;
 ---
 
-<div class={`gs-stamp ${className}`} style={`width: ${size}px; height: ${size}px;`}>
-    <Image src={stampImg} alt="GS Verified Stamp" class="gs-stamp-img" width={size} />
+<div
+    class={`gs-stamp ${className}`}
+    style={`width: ${size}px; height: ${size}px;`}
+>
+    <Image
+        src={stampImg}
+        alt="GS Verified Stamp"
+        class="gs-stamp-img"
+        width={size}
+        loading="eager"
+    />
 </div>
 
 <style>

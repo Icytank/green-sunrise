@@ -107,7 +107,25 @@ if (!finalAlternateLinks) {
 		</style>
 
 		<!-- If present, preloads the image passed as a prop -->
-		{heroImage && <link rel="preload" href={heroImage.src} as="image" />}
+		{
+			heroImage && (
+				<link
+					rel="preload"
+					as="image"
+					href={heroImage.src}
+					imagesrcset={
+						"srcSet" in heroImage
+							? heroImage.srcSet.attribute
+							: undefined
+					}
+					imagesizes={
+						"attributes" in heroImage
+							? heroImage.attributes.sizes
+							: undefined
+					}
+				/>
+			)
+		}
 
 		<!-- Sitewide Scripts -->
 		<script src="@utils/nav.ts"></script>

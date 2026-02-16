@@ -118,12 +118,6 @@ const { value: capacityValue, unit: capacityUnitLabel } =
   description={`${title} - ${capacityValue} ${capacityUnitLabel} ${terrainType} project in ${location}`}
 >
   <article class="project-detail">
-    <!-- Back Link -->
-    <div class="container">
-      <a href={`/${lang}/projects`} class="back-link">{labels.backToProjects}</a
-      >
-    </div>
-
     <!-- Hero Slider Section -->
     <header class="project-hero">
       <div class="hero-slider-wrapper" id="hero-slider">
@@ -484,18 +478,10 @@ const { value: capacityValue, unit: capacityUnitLabel } =
     padding: 0 var(--gs-space-4);
   }
 
-  .back-link {
-    display: inline-block;
-    padding: var(--gs-space-4) 0;
-    color: var(--gs-slate-gray);
-    text-decoration: none;
-    font-size: var(--gs-text-sm);
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-
-  .back-link:hover {
-    color: var(--gs-institutional-green);
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--gs-space-4);
   }
 
   /* Hero Section */

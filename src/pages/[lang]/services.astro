@@ -38,6 +38,7 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
           title={t("machinery.ourMachinery", lang as "bg" | "en")}
           description={t("machinery.machinerySubtitle", lang as "bg" | "en")}
           align="center"
+          withStamp={false}
         />
 
         <div class="flex flex-wrap justify-center text-center gap-gs-6">

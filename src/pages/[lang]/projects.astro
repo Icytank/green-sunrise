@@ -8,7 +8,7 @@ import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
 export const prerender = true;
 export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
+  return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
 
 const { lang } = Astro.params;
@@ -19,59 +19,77 @@ const allProjects = await getCollection("projects", ({ id }) => {
 });
 
 // Sort by capacity (highest first) for impact
-const sortedProjects = allProjects.sort((a, b) => b.data.capacityMW - a.data.capacityMW);
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.capacityMW - a.data.capacityMW,
+);
 
 // Extract unique terrain types for filter dropdown
-const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
+const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
 ---
 
-<BaseLayout 
+<BaseLayout
   lang={lang}
-  title={t("projects.pageTitle" as TranslationKey, lang as 'bg' | 'en')}
-  description={t("projects.pageDescription" as TranslationKey, lang as 'bg' | 'en')}
+  title={t("projects.pageTitle" as TranslationKey, lang as "bg" | "en")}
+  description={t(
+    "projects.pageDescription" as TranslationKey,
+    lang as "bg" | "en",
+  )}
 >
   <main class="projects-page">
     <section class="container">
       <header class="page-header">
-        <h1 class="font-display">{t("projects.title" as TranslationKey, lang as 'bg' | 'en')}</h1>
-        <p class="subtitle">{t("projects.methodology.intro" as TranslationKey, lang as 'bg' | 'en')}</p>
+        <h1 class="font-display">
+          {t("projects.title" as TranslationKey, lang as "bg" | "en")}
+        </h1>
+        <p class="subtitle">
+          {
+            t(
+              "projects.methodology.intro" as TranslationKey,
+              lang as "bg" | "en",
+            )
+          }
+        </p>
       </header>
 
       <!-- Project Filters -->
-      <ProjectFilters lang={lang as 'bg' | 'en'} terrainTypes={terrainTypes} />
+      <ProjectFilters lang={lang as "bg" | "en"} terrainTypes={terrainTypes} />
 
       <div class="projects-grid">
-        {sortedProjects.map((project) => {
-          const slug = project.data.custom_slug || project.id.split("/").slice(1).join("/").replace(/\.md$/, '');
-          return (
-            <ProjectCard
-              title={project.data.title}
-              capacityMW={project.data.capacityMW}
-              location={project.data.location}
-              terrainType={project.data.terrainType}
-              heroImage={project.data.heroImage}
-              slug={slug}
-              lang={lang as "bg" | "en"}
-              isVerified={project.data.isVerified}
-            />
-          );
-        })}
+        {
+          sortedProjects.map((project) => {
+            const slug =
+              project.data.custom_slug ||
+              project.id.split("/").slice(1).join("/").replace(/\.md$/, "");
+            return (
+              <ProjectCard
+                title={project.data.title}
+                capacityMW={project.data.capacityMW}
+                location={project.data.location}
+                terrainType={project.data.terrainType}
+                heroImage={project.data.heroImage}
+                slug={slug}
+                lang={lang as "bg" | "en"}
+                isVerified={project.data.isVerified}
+              />
+            );
+          })
+        }
       </div>
 
       <div class="approach-header">
-        <h2 class="font-display">{t("projects.approachTitle" as TranslationKey, lang as 'bg' | 'en')}</h2>
+        <h2 class="font-display">
+          {t("projects.approachTitle" as TranslationKey, lang as "bg" | "en")}
+        </h2>
       </div>
 
-      <ProjectMethodology lang={lang as 'bg' | 'en'} />
+      <ProjectMethodology lang={lang as "bg" | "en"} />
     </section>
-
-
   </main>
 </BaseLayout>
 
 <style>
   .projects-page {
-    padding: var(--gs-section-padding);
+    padding: clamp(3.75rem, 7.82vw, 6.25rem) 0;
     background-color: var(--gs-executive-white);
     min-height: 100vh;
   }
@@ -79,7 +97,13 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
   .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--gs-space-4);
+    padding: 0 var(--gs-space-2);
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding: 0 var(--gs-space-4);
+    }
   }
 
   .page-header {
@@ -141,4 +165,3 @@ const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
     margin-bottom: 0;
   }
 </style>
-

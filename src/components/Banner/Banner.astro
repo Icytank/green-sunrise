@@ -20,13 +20,13 @@ const { title, image, imagePosition = "center" } = Astro.props;
 <section id="int-hero" style={`--imagePosition: ${imagePosition}`}>
 	<h1 id="home-h">{title}</h1>
 
-	<Picture 
-		src={image.src} 
-		width={image.attributes.width} 
-		height={image.attributes.height} 
-		formats={["avif", "webp"]} 
-		alt="" 
-		priority 
+	<Picture
+		src={image.src}
+		width={image.attributes.width}
+		height={image.attributes.height}
+		formats={["avif", "webp"]}
+		alt=""
+		priority
 	/>
 </section>
 
@@ -110,7 +110,7 @@ const { title, image, imagePosition = "center" } = Astro.props;
 			min-height: (300/16rem);
 			padding-top: (180/16rem);
 			background-attachment: fixed;
-			padding-block-end: (100/16rem);
+			padding-block-end: (40/16rem);
 		}
 	}
 </style>

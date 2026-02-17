@@ -35,13 +35,17 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
     lang as "bg" | "en",
   )}
 >
-  <main class="projects-page">
-    <section class="container">
-      <header class="page-header">
-        <h1 class="font-display">
+  <main class="min-h-screen bg-gs-executive-white py-gs-section-padding-y">
+    <section class="max-w-[1400px] mx-auto px-gs-2 md:px-gs-4">
+      <header class="text-center mb-gs-10">
+        <h1
+          class="text-gs-h1 text-gs-institutional-green font-bold mb-gs-3 font-gs-primary"
+        >
           {t("projects.title" as TranslationKey, lang as "bg" | "en")}
         </h1>
-        <p class="subtitle">
+        <p
+          class="text-gs-h5 text-gs-slate-gray max-w-[700px] mx-auto leading-gs-leading-body"
+        >
           {
             t(
               "projects.methodology.intro" as TranslationKey,
@@ -54,7 +58,9 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
       <!-- Project Filters -->
       <ProjectFilters lang={lang as "bg" | "en"} terrainTypes={terrainTypes} />
 
-      <div class="projects-grid">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gs-6 mb-gs-12"
+      >
         {
           sortedProjects.map((project) => {
             const slug =
@@ -76,8 +82,10 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
         }
       </div>
 
-      <div class="approach-header">
-        <h2 class="font-display">
+      <div class="text-center mb-gs-8">
+        <h2
+          class="text-gs-h2 text-gs-institutional-green font-bold m-0 font-gs-primary"
+        >
           {t("projects.approachTitle" as TranslationKey, lang as "bg" | "en")}
         </h2>
       </div>
@@ -86,82 +94,3 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
     </section>
   </main>
 </BaseLayout>
-
-<style>
-  .projects-page {
-    padding: clamp(3.75rem, 7.82vw, 6.25rem) 0;
-    background-color: var(--gs-executive-white);
-    min-height: 100vh;
-  }
-
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--gs-space-2);
-  }
-
-  @media (min-width: 768px) {
-    .container {
-      padding: 0 var(--gs-space-4);
-    }
-  }
-
-  .page-header {
-    text-align: center;
-    margin-bottom: var(--gs-space-10);
-  }
-
-  .font-display {
-    font-size: var(--gs-text-h1);
-    color: var(--gs-institutional-green);
-    margin-bottom: var(--gs-space-3);
-    font-family: var(--gs-font-primary);
-  }
-
-  .subtitle {
-    font-size: var(--gs-text-h5);
-    color: var(--gs-slate-gray);
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* CSS Grid: 12-column responsive layout (AC2) */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--gs-space-6);
-    margin-bottom: var(--gs-space-12);
-  }
-
-  /* Tablet: 2 columns */
-  @media (min-width: 768px) {
-    .projects-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  /* Desktop: 3 columns */
-  @media (min-width: 1024px) {
-    .projects-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  /* 4K: 4 columns */
-  @media (min-width: 1920px) {
-    .projects-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .approach-header {
-    text-align: center;
-    margin-bottom: var(--gs-space-8);
-  }
-
-  .approach-header .font-display {
-    font-size: var(--gs-text-h2);
-    margin-bottom: 0;
-  }
-</style>

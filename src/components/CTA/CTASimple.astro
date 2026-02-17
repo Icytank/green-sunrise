@@ -17,163 +17,44 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<section id="cta">
-	<div class="container">
-		<h2 class="title">
-			{t('cta.title', lang)}
+<section
+	id="cta"
+	class="relative py-[50px] lg:py-[168px] xl:mt-[100px] z-[1] flex items-center justify-center overflow-hidden"
+>
+	<div class="relative z-10 text-center px-4 xl:w-[90.0625%] xl:mx-auto">
+		<h2
+			class="text-[clamp(2.25rem,9vw,3rem)] font-black leading-tight text-center mb-9 text-white relative"
+		>
+			{t("cta.title", lang)}
 		</h2>
-		<p>{t('cta.description', lang)}</p>
-		<a href={`/${lang}/contact/`} class="cta-button">{t('cta.button', lang)}</a>
+		<p
+			class="text-center w-[96%] max-w-[598px] mx-auto mb-9 text-white leading-relaxed"
+		>
+			{t("cta.description", lang)}
+		</p>
+		<a
+			href={`/${lang}/contact/`}
+			class="inline-block px-8 py-4 bg-gs-institutional-green text-white text-[16px] font-bold no-underline uppercase tracking-widest rounded transition-all duration-300 hover:bg-gs-success-emerald hover:-translate-y-[2px]"
+		>
+			{t("cta.button", lang)}
+		</a>
 	</div>
-	<Picture src={ctaImage} alt="" layout="full-width" formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture" }} />
+
+	<!-- Background and Decorative Elements -->
+	<div class="absolute inset-0 z-[-1]">
+		<Picture
+			src={ctaImage}
+			alt=""
+			layout="full-width"
+			formats={["avif", "webp"]}
+			class="w-full h-full object-cover"
+		/>
+		<div class="absolute inset-0 bg-black/70"></div>
+	</div>
+
+	<!-- Decorative Squares for Large Screens -->
+	<div
+		class="hidden xl:block absolute inset-x-0 bottom-0 h-[1108px] bg-[url('/src/icons/cta-squares.svg')] bg-center bg-contain bg-no-repeat z-[0] opacity-50 pointer-events-none"
+	>
+	</div>
 </section>
-
-<style lang="less">
-	/* Mobile */
-	@media only screen and (min-width: 0em) {
-		#cta {
-			padding: (50/16rem) 0;
-			position: relative;
-
-			&:before {
-				content: "";
-				width: 100%;
-				height: 100%;
-				background: #000;
-				opacity: 0.7;
-				display: block;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: -1;
-			}
-
-			.container {
-				text-align: center;
-			}
-
-			.title {
-				font-size: ~"min(9vw, 3rem)";
-				font-weight: 900;
-				line-height: 58/48;
-				text-align: center;
-				margin-bottom: (36/16rem);
-				color: #fff;
-				position: relative;
-			}
-
-			p {
-				text-align: center;
-				width: 96%;
-				max-width: (598/16rem);
-				margin: auto;
-				margin-bottom: (36/16rem);
-				color: #fff;
-				opacity: 1;
-			}
-
-			.cs-picture {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: -2;
-
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-				}
-			}
-
-			.cta-button {
-				display: inline-block;
-				padding: (16/16rem) (32/16rem);
-				background-color: var(--gs-institutional-green);
-				color: #fff;
-				font-size: (16/16rem);
-				font-weight: 700;
-				text-decoration: none;
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				border-radius: 4px;
-				transition: background-color 0.3s ease, transform 0.2s ease;
-
-				&:hover {
-					background-color: var(--gs-success-emerald);
-					transform: translateY(-2px);
-				}
-			}
-		}
-	}
-
-	/* Small Desktop */
-	@media only screen and (min-width: 64em) {
-		#cta {
-			padding: (168/16rem) 0;
-		}
-	}
-
-	/* Large Desktop */
-	@media only screen and (min-width: 1300px) {
-		#cta {
-			margin-top: (100/16rem);
-			position: relative;
-			&:before {
-				display: none;
-			}
-			&:after {
-				content: "";
-				// width: (2000/16rem);
-				width: 100%; /* a fixed width causes overflow on desktop */
-				height: (1108/16rem);
-				background: url("/src/icons/cta-squares.svg");
-				background-position: center;
-				background-size: contain;
-				background-repeat: no-repeat;
-				opacity: 1;
-				display: block;
-				position: absolute;
-				bottom: 0;
-				left: 50%;
-				z-index: -3;
-				transform: translateX(-50%);
-			}
-			.container {
-				width: 90.0625%;
-				margin: auto;
-			}
-
-			.cs-picture {
-				width: 90.0625%;
-				left: 50%;
-				transform: translateX(-50%);
-				&:before {
-					content: "";
-					width: 100%;
-					height: 100%;
-					background: #000;
-					opacity: 0.7;
-					display: block;
-					position: absolute;
-					top: 0;
-					left: 0;
-					z-index: 1;
-				}
-			}
-		}
-	}
-
-	/* Dark Mode */
-	@media only screen and (min-width: 0em) {
-		body.dark-mode {
-			#cta {
-				&:after {
-					display: none;
-				}
-			}
-		}
-	}
-</style>

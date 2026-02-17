@@ -1,6 +1,7 @@
 ---
 import { t, type TranslationKey } from "src/utils/i18n-helpers";
 import SectionHeader from "./SectionHeader.astro";
+import IconCard from "./IconCard.astro";
 
 interface Props {
   lang: "bg" | "en";
@@ -20,8 +21,13 @@ const advantages = [
 ];
 ---
 
-<section id="advantages">
-  <div class="cs-container">
+<section
+  id="advantages"
+  class="py-[clamp(3.75rem,7.82vw,6.25rem)] px-4 bg-gs-executive-white overflow-hidden"
+>
+  <div
+    class="w-full max-w-[1280px] mx-auto flex flex-col items-center gap-[clamp(3rem,6vw,4rem)]"
+  >
     <!-- Header -->
     <SectionHeader
       label={t("home.teamLabel" as TranslationKey, lang)}
@@ -31,103 +37,19 @@ const advantages = [
     />
 
     <!-- Grid -->
-    <ul class="gs-advantages-group">
+    <ul class="w-full m-0 p-0 flex flex-wrap justify-center gap-gs-4 list-none">
       {
         advantages.map((adv) => (
-          <li class="gs-advantage-item">
-            <span class="cs-icon">{adv.icon}</span>
-            <h3 class="cs-h3">{translate(`${adv.key}.title`)}</h3>
-            <p class="cs-text">{translate(`${adv.key}.desc`)}</p>
+          <li class="list-none w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)] lg:max-w-[400px]">
+            <IconCard
+              icon={adv.icon}
+              title={translate(`${adv.key}.title`)}
+              description={translate(`${adv.key}.desc`)}
+              class="h-full"
+            />
           </li>
         ))
       }
     </ul>
   </div>
 </section>
-
-<style>
-  #advantages {
-    padding: var(--gs-section-padding);
-    background-color: var(--gs-executive-white);
-    overflow: hidden;
-  }
-
-  .cs-container {
-    width: 100%;
-    max-width: 80rem; /* 1280px / 16 */
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(3rem, 6vw, 4rem);
-  }
-
-  .gs-advantages-group {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--gs-space-4);
-    list-style: none;
-  }
-
-  .gs-advantage-item {
-    list-style: none;
-    text-align: center;
-    padding: var(--gs-space-4);
-    background-color: #fff;
-    border: 1px solid var(--gs-border);
-    border-radius: 8px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--gs-space-2);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-  }
-
-  .gs-advantage-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    border-color: var(--gs-institutional-green);
-  }
-
-  /* Tablet: 2 columns */
-  @media only screen and (min-width: 48rem) {
-    .gs-advantage-item {
-      width: calc((100% - var(--gs-space-4)) / 2);
-    }
-  }
-
-  /* Desktop: 3 columns */
-  @media only screen and (min-width: 64rem) {
-    .gs-advantage-item {
-      width: calc(33.33% - var(--gs-space-4));
-      max-width: 25rem; /* 400px / 16 */
-    }
-  }
-
-  .cs-icon {
-    font-size: 3rem;
-    margin-bottom: var(--gs-space-2);
-    display: block;
-  }
-
-  .cs-h3 {
-    font-size: var(--gs-text-h4);
-    font-weight: 700;
-    color: var(--gs-text-primary);
-    margin: 0;
-  }
-
-  .cs-text {
-    font-size: var(--gs-text-base);
-    color: var(--gs-text-secondary);
-    line-height: var(--gs-leading-body);
-    margin: 0;
-  }
-</style>

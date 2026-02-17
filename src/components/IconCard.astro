@@ -1,0 +1,34 @@
+---
+interface Props {
+    icon: string;
+    title: string;
+    description: string;
+    class?: string;
+}
+
+const { icon, title, description, class: className } = Astro.props;
+---
+
+<div
+    class:list={[
+        "text-center p-gs-4 bg-white border border-gs-slate-gray/20 rounded-lg flex flex-col items-center gap-gs-2 transition-all duration-300 hover:-translate-y-[5px] hover:shadow-lg hover:border-gs-institutional-green group",
+        className,
+    ]}
+>
+    <div class="relative">
+        <span
+            class="text-[3rem] mb-gs-2 block transition-transform duration-300 group-hover:scale-110"
+            role="img"
+            aria-hidden="true"
+        >
+            {icon}
+        </span>
+        <slot name="header-extras" />
+    </div>
+    <h3 class="text-gs-h4 font-bold text-gs-text-primary m-0">
+        {title}
+    </h3>
+    <p class="text-gs-base text-gs-secondary leading-gs-leading-body m-0">
+        {description}
+    </p>
+</div>

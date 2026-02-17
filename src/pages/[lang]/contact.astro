@@ -1,9 +1,9 @@
 ---
 export const prerender = true;
 export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
+  return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: "en" | "bg" };
 
 // Utils
 import { getImage } from "astro:assets";
@@ -27,349 +27,271 @@ const t = translations[lang as keyof typeof translations];
 const contactT = t.contact;
 ---
 
-<BaseLayout 
-	lang={lang} 
-	title={contactT.pageTitle} 
-	description={contactT.pageDescription} 
-	heroImage={optimizedImage}
+<BaseLayout
+  lang={lang}
+  title={contactT.pageTitle}
+  description={contactT.pageDescription}
+  heroImage={optimizedImage}
 >
-	<Banner title={contactT.title} image={optimizedImage} imagePosition="center 40%" />
+  <Banner
+    title={contactT.title}
+    image={optimizedImage}
+    imagePosition="center 40%"
+  />
 
-	<section id="cs-contact">
-		<div class="cs-container">
-			<!-- Left Column: Company Info -->
-			<div class="cs-info-column">
-        <div class="cs-info-card">
-          <span class="cs-topper">{contactT.companyInfo}</span>
-          <h2 class="cs-title">{BUSINESS.name}</h2>
-          <p class="cs-text">{contactT.subtitle}</p>
+  <section
+    id="contact"
+    class="bg-gs-executive-white pt-8 pb-16 md:pt-12 md:pb-24 px-gs-4"
+  >
+    <div
+      class="max-w-[1400px] mx-auto bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_2fr]"
+    >
+      <!-- Left Column: Company Info -->
+      <div
+        class="bg-gs-executive-white/30 p-8 md:p-12 lg:p-16 border-r border-gs-slate-gray/10"
+      >
+        <div class="flex flex-col gap-gs-8">
+          <div class="flex flex-col gap-gs-2">
+            <span
+              class="text-gs-sm font-bold text-gs-institutional-green uppercase tracking-[0.1em]"
+            >
+              {contactT.companyInfo}
+            </span>
+            <h2
+              class="text-gs-h2 font-extrabold text-[#064E3B] font-gs-primary leading-tight"
+            >
+              {BUSINESS.name}
+            </h2>
+            <p class="text-gs-base text-gs-slate-gray leading-relaxed">
+              {contactT.subtitle}
+            </p>
+          </div>
 
-          <div class="cs-divider"></div>
+          <div class="h-px bg-gs-slate-gray/10 w-full"></div>
 
-          <div class="cs-info-list">
+          <div class="flex flex-col gap-gs-8">
             <!-- Address -->
-            <div class="cs-info-item">
-              <div class="cs-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
-                  <path d="M12 13.43a3.12 3.12 0 1 0 0-6.24 3.12 3.12 0 0 0 0 6.24Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/>
-                  <path d="M22 12c0 7-9 11-10 11S2 19 2 12a10 10 0 0 1 20 0Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="flex items-start gap-gs-4 group">
+              <div
+                class="w-14 h-14 bg-gs-institutional-green/5 text-gs-institutional-green rounded-full flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-gs-institutional-green group-hover:text-white"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 13.43a3.12 3.12 0 1 0 0-6.24 3.12 3.12 0 0 0 0 6.24Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-miterlimit="10"></path>
+                  <path
+                    d="M22 12c0 7-9 11-10 11S2 19 2 12a10 10 0 0 1 20 0Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-miterlimit="10"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
                 </svg>
               </div>
-              <div class="cs-info-content">
-                <span class="cs-info-label">{contactT.address}</span>
-                <a class="cs-info-link" href={BUSINESS.address.mapLink} target="_blank" rel="noopener noreferrer">
-                  {contactT.addressLines}, {contactT.cityName}, {contactT.country} {BUSINESS.address.zip}
+              <div class="flex flex-col gap-gs-1">
+                <span
+                  class="text-xs font-bold text-gs-slate-gray uppercase tracking-widest"
+                  >{contactT.address}</span
+                >
+                <a
+                  class="text-gs-base font-bold text-[#064E3B] hover:text-gs-institutional-green transition-colors no-underline"
+                  href={BUSINESS.address.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {contactT.addressLines}, {contactT.cityName}, {
+                    contactT.country
+                  }
+                  {BUSINESS.address.zip}
                 </a>
               </div>
             </div>
 
             <!-- Phone -->
-            <div class="cs-info-item">
-              <div class="cs-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
-                  <path d="M21.97 18.33a2.18 2.18 0 0 1-2.18 2.18 8.44 8.44 0 0 1-5-1.63 8.35 8.35 0 0 1-3.18-3.18 8.44 8.44 0 0 1-1.63-5 2.18 2.18 0 0 1 2.18-2.18c.56 0 1.01-.28 1.25-.79l1-2a2.3 2.3 0 0 0-.27-2.73 4.25 4.25 0 0 0-3-.76A4.55 4.55 0 0 0 2 6.56a16.66 16.66 0 0 0 15.44 15.44 4.55 4.55 0 0 0 4.39-4.57 4.25 4.25 0 0 0-.76-3 2.3 2.3 0 0 0-2.73-.27l-2 1c-.51.24-.79.69-.79 1.25Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="flex items-start gap-gs-4 group">
+              <div
+                class="w-14 h-14 bg-gs-institutional-green/5 text-gs-institutional-green rounded-full flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-gs-institutional-green group-hover:text-white"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21.97 18.33a2.18 2.18 0 0 1-2.18 2.18 8.44 8.44 0 0 1-5-1.63 8.35 8.35 0 0 1-3.18-3.18 8.44 8.44 0 0 1-1.63-5 2.18 2.18 0 0 1 2.18-2.18c.56 0 1.01-.28 1.25-.79l1-2a2.3 2.3 0 0 0-.27-2.73 4.25 4.25 0 0 0-3-.76A4.55 4.55 0 0 0 2 6.56a16.66 16.66 0 0 0 15.44 15.44 4.55 4.55 0 0 0 4.39-4.57 4.25 4.25 0 0 0-.76-3 2.3 2.3 0 0 0-2.73-.27l-2 1c-.51.24-.79.69-.79 1.25Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
                 </svg>
               </div>
-              <div class="cs-info-content">
-                <span class="cs-info-label">{contactT.phone}</span>
-                <a class="cs-info-link" href={`tel:${BUSINESS.phoneForTel}`}>
+              <div class="flex flex-col gap-gs-1">
+                <span
+                  class="text-xs font-bold text-gs-slate-gray uppercase tracking-widest"
+                  >{contactT.phone}</span
+                >
+                <a
+                  class="text-gs-lg font-bold text-[#064E3B] hover:text-gs-institutional-green transition-colors no-underline"
+                  href={`tel:${BUSINESS.phoneForTel}`}
+                >
                   {BUSINESS.phoneFormatted}
                 </a>
               </div>
             </div>
 
             <!-- Email -->
-            <div class="cs-info-item">
-               <div class="cs-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
-                  <path d="M17 20.5H7A5.5 5.5 0 0 1 1.5 15V9A5.5 5.5 0 0 1 7 3.5h10A5.5 5.5 0 0 1 22.5 9v6a5.5 5.5 0 0 1-5.5 5.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="m6 9 5.2 3.9a1.5 1.5 0 0 0 1.6 0L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="flex items-start gap-gs-4 group">
+              <div
+                class="w-14 h-14 bg-gs-institutional-green/5 text-gs-institutional-green rounded-full flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-gs-institutional-green group-hover:text-white"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17 20.5H7A5.5 5.5 0 0 1 1.5 15V9A5.5 5.5 0 0 1 7 3.5h10A5.5 5.5 0 0 1 22.5 9v6a5.5 5.5 0 0 1-5.5 5.5Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="m6 9 5.2 3.9a1.5 1.5 0 0 0 1.6 0L18 9"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
                 </svg>
-               </div>
-               <div class="cs-info-content">
-                <span class="cs-info-label">{contactT.email}</span>
-                <a class="cs-info-link" href={`mailto:${BUSINESS.email}`}>
+              </div>
+              <div class="flex flex-col gap-gs-1">
+                <span
+                  class="text-xs font-bold text-gs-slate-gray uppercase tracking-widest"
+                  >{contactT.email}</span
+                >
+                <a
+                  class="text-gs-base font-bold text-[#064E3B] hover:text-gs-institutional-green transition-colors no-underline"
+                  href={`mailto:${BUSINESS.email}`}
+                >
                   {BUSINESS.email}
                 </a>
-               </div>
+              </div>
             </div>
 
             <!-- Business Hours -->
-            <div class="cs-info-item">
-              <div class="cs-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
-                   <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                   <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="flex items-start gap-gs-4">
+              <div
+                class="w-14 h-14 bg-gs-institutional-green/5 text-gs-institutional-green rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M12 6v6l4 2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
                 </svg>
               </div>
-              <div class="cs-info-content">
-                <span class="cs-info-label">{contactT.businessHours}</span>
-                <span class="cs-info-value">
+              <div class="flex flex-col gap-gs-1">
+                <span
+                  class="text-xs font-bold text-gs-slate-gray uppercase tracking-widest"
+                  >{contactT.businessHours}</span
+                >
+                <span
+                  class="text-gs-base font-semibold text-[#064E3B] leading-tight"
+                >
                   {contactT.workingDays}<br />
-                  <span class="cs-highlight">{BUSINESS.businessHours.hours}</span>
-                </span>
+                  <span
+                    class="text-gs-institutional-green font-gs-mono font-bold"
+                    >{BUSINESS.businessHours.hours}</span
+                  >
                 </span>
               </div>
             </div>
-            
-             <!-- Socials -->
-            <div class="cs-info-item">
-              <div class="cs-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="cs-icon">
-                  <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M8.59 13.51L15.42 17.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- Socials -->
+            <div class="flex items-start gap-gs-4">
+              <div
+                class="w-14 h-14 bg-gs-institutional-green/5 text-gs-institutional-green rounded-full flex items-center justify-center flex-shrink-0"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M8.59 13.51L15.42 17.49"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M15.41 6.51L8.59 10.49"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
                 </svg>
               </div>
-              <div class="cs-info-content">
-                <span class="cs-info-label">{contactT.followUs || "Follow Us"}</span>
-                <SocialLinks className="contact-socials" iconSize={32} />
+              <div class="flex flex-col gap-gs-2">
+                <span
+                  class="text-xs font-bold text-gs-slate-gray uppercase tracking-widest"
+                  >{contactT.followUs || "Follow Us"}</span
+                >
+                <SocialLinks className="flex gap-gs-4" iconSize={28} />
               </div>
             </div>
-            
           </div>
         </div>
-			</div>
+      </div>
 
-			<!-- Right Column: Contact Form -->
-			<div class="cs-form-column">
-				<ContactForm lang={lang} />
-			</div>
-		</div>
-	</section>
+      <!-- Right Column: Contact Form -->
+      <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+        <ContactForm lang={lang} />
+      </div>
+    </div>
+  </section>
 </BaseLayout>
-
-<style lang="less">
-	/* Contact Page - Styled Layout */
-
-	/* Mobile - 360px */
-	@media only screen and (min-width: 0em) {
-		#cs-contact {
-			padding: var(--sectionPadding);
-      background-color: var(--gs-executive-white);
-
-			.cs-container {
-				width: 100%;
-				max-width: (1280/16rem);
-				margin: auto;
-				display: flex;
-				flex-direction: column;
-				gap: (32/16rem);
-			}
-
-			.cs-info-column {
-				width: 100%;
-			}
-
-      /* Card Styling matching MachineryCard */
-      .cs-info-card {
-        background-color: #fff;
-        border: 1px solid var(--gs-border);
-        border-radius: 12px;
-        padding: clamp(1.5rem, 5vw, 2.5rem);
-        /* Subtle shadow */
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
-        height: 100%;
-      }
-
-			.cs-topper {
-				font-size: var(--gs-text-sm);
-				font-weight: 700;
-				line-height: 1.2em;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: var(--primary);
-				margin-bottom: (8/16rem);
-				display: block;
-			}
-
-			.cs-title {
-				font-size: var(--gs-text-h3);
-				font-weight: 900;
-				line-height: 1.2;
-				color: var(--headerColor);
-				margin: 0 0 (12/16rem) 0;
-        font-family: var(--gs-font-primary);
-			}
-
-			.cs-text {
-				font-size: var(--bodyFontSize);
-				line-height: 1.5em;
-				color: var(--bodyTextColor);
-				margin: 0 0 (24/16rem) 0;
-			}
-
-      .cs-divider {
-        height: 1px;
-        width: 100%;
-        background-color: var(--gs-border);
-        margin-bottom: (32/16rem);
-      }
-
-			.cs-info-list {
-				display: flex;
-				flex-direction: column;
-				gap: (28/16rem);
-			}
-
-			.cs-info-item {
-				display: flex;
-				align-items: flex-start;
-				gap: (16/16rem);
-			}
-
-      .cs-icon-wrapper {
-        width: (48/16rem);
-        height: (48/16rem);
-        background-color: rgba(6, 78, 59, 0.05); /* Institutional green tint */
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-shrink: 0;
-        color: var(--gs-institutional-green);
-        transition: background-color 0.3s, color 0.3s;
-      }
-
-      .cs-info-item:hover .cs-icon-wrapper {
-        background-color: var(--gs-institutional-green);
-        color: #fff;
-      }
-
-      .cs-icon {
-        width: (24/16rem);
-        height: (24/16rem);
-      }
-
-      .cs-info-content {
-        display: flex;
-        flex-direction: column;
-        gap: (4/16rem);
-      }
-
-			.cs-info-label {
-				font-size: (12/16rem);
-				font-weight: 700;
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				color: var(--gs-text-secondary);
-			}
-
-			.cs-info-link,
-			.cs-info-value {
-				font-size: (16/16rem);
-				line-height: 1.5;
-				color: var(--headerColor);
-				text-decoration: none;
-				transition: color 0.3s;
-        font-weight: 600;
-			}
-
-			.cs-info-link:hover {
-				color: var(--primary);
-			}
-
-      .cs-highlight {
-        color: var(--gs-institutional-green);
-        font-family: var(--gs-font-mono);
-      }
-
-      .cs-form-column {
-				width: 100%;
-        /* Form background matching card */
-         background-color: #fff;
-        border: 1px solid var(--gs-border);
-        border-radius: 12px;
-        padding: clamp(1.5rem, 5vw, 3rem);
-        box-shadow: 0 20px 40px rgba(0, 78, 59, 0.05); /* Softer matching shadow */
-			}
-		}
-	}
-
-	/* Tablet/Desktop - 1024px */
-	@media only screen and (min-width: 64em) {
-		#cs-contact {
-			.cs-container {
-				flex-direction: row;
-				align-items: stretch; /* Match heights */
-				gap: (30/16rem);
-			}
-
-			.cs-info-column {
-				width: 35%;
-				max-width: (400/16rem);
-				flex: none;
-			}
-      
-      .cs-info-card {
-        height: 100%;
-        position: sticky;
-        top: (100/16rem);
-      }
-
-			.cs-form-column {
-				flex: 1;
-			}
-		}
-	}
-  
-  /* Larger Desktop */
-  @media only screen and (min-width: 81.25em) {
-    #cs-contact .cs-info-column {
-       width: 30%;
-       max-width: (450/16rem);
-    }
-  }
-
-	/* Dark Mode */
-	@media only screen and (min-width: 0em) {
-		body.dark-mode {
-			#cs-contact {
-        background-color: var(--dark);
-
-        .cs-info-card,
-        .cs-form-column {
-          background-color: var(--medium);
-          border-color: rgba(255,255,255,0.1);
-        }
-
-				.cs-title,
-				.cs-info-value,
-        .cs-info-link {
-					color: var(--bodyTextColorWhite);
-				}
-        
-        .cs-divider {
-          background-color: rgba(255,255,255,0.1);
-        }
-
-				.cs-topper,
-				.cs-info-label {
-					color: var(--primaryLight);
-				}
-
-        .cs-text {
-          color: var(--bodyTextColorWhite);
-          opacity: 0.8;
-        }
-
-				.cs-info-link:hover {
-					color: var(--primaryLight);
-				}
-        
-        .cs-icon-wrapper {
-          background-color: rgba(255,255,255,0.05);
-          color: var(--primaryLight);
-        }
-        
-        .cs-info-item:hover .cs-icon-wrapper {
-           background-color: var(--primaryLight);
-           color: var(--dark);
-        }
-        
-			}
-		}
-	}
-</style>

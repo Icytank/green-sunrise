@@ -1,5 +1,4 @@
 ---
-
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MachineryCard from "../../components/MachineryCard.astro";
@@ -10,10 +9,7 @@ import { t } from "../../utils/i18n-helpers";
 
 export const prerender = true;
 export async function getStaticPaths() {
-  return [
-    { params: { lang: "bg" } },
-    { params: { lang: "en" } },
-  ];
+  return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
 
 const { lang } = Astro.params;
@@ -24,43 +20,47 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
 });
 ---
 
-<BaseLayout 
-  lang={lang}
-  title={t('services.pageTitle', lang as 'bg' | 'en')}
-  description={t('services.pageDescription', lang as 'bg' | 'en')}
+<BaseLayout
+  lang={lang as "bg" | "en"}
+  title={t("services.pageTitle", lang as "bg" | "en")}
+  description={t("services.pageDescription", lang as "bg" | "en")}
 >
-  <main class="services-page">
+  <main class="bg-gs-executive-white min-h-screen">
     <!-- 1. Services List -->
     <ServiceList lang={lang as "bg" | "en"} />
 
     <!-- 2. Machinery Section -->
-    <section class="machinery-section">
-      <div class="container">
+    <section class="py-gs-section-padding-y bg-white px-gs-2">
+      <div class="w-full max-w-[1200px] mx-auto px-4">
         <SectionHeader
-            label={t("machinery.machineryTitle", lang as 'bg' | 'en')}
-            title={t("machinery.ourMachinery", lang as 'bg' | 'en')}
-            description={t("machinery.machinerySubtitle", lang as 'bg' | 'en')}
-            align="center"
+          label={t("machinery.machineryTitle", lang as "bg" | "en")}
+          title={t("machinery.ourMachinery", lang as "bg" | "en")}
+          description={t("machinery.machinerySubtitle", lang as "bg" | "en")}
+          align="center"
         />
 
-        <div class="machinery-grid">
-          {allMachinery.map((machine) => {
-            // Extract slug prioritized by custom_slug
-            const slug = machine.data.custom_slug || machine.id.split("/").slice(1).join("/");
-            return (
-              <div class="machinery-wrapper">
-                <MachineryCard
-                  title={machine.data.title}
-                  model={machine.data.model}
-                  weight={machine.data.weight}
-                  image={machine.data.heroImage}
-                  slug={slug}
-                  lang={lang as "bg" | "en"}
-                  isOwned={machine.data.isOwned}
-                />
-              </div>
-            );
-          })}
+        <div class="flex flex-wrap justify-center text-center gap-gs-6">
+          {
+            allMachinery.map((machine) => {
+              // Extract slug prioritized by custom_slug
+              const slug =
+                machine.data.custom_slug ||
+                machine.id.split("/").slice(1).join("/");
+              return (
+                <div class="w-full max-w-[350px] flex-1 basis-[320px]">
+                  <MachineryCard
+                    title={machine.data.title}
+                    model={machine.data.model}
+                    weight={machine.data.weight}
+                    image={machine.data.heroImage}
+                    slug={slug}
+                    lang={lang as "bg" | "en"}
+                    isOwned={machine.data.isOwned}
+                  />
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     </section>
@@ -69,55 +69,3 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
     <WhyWorkWithUs lang={lang as "bg" | "en"} />
   </main>
 </BaseLayout>
-
-<style>
-  .services-page {
-    /* padding handled by components now */
-    background-color: var(--gs-executive-white);
-    min-height: 100vh;
-  }
-
-  .machinery-section {
-    padding: var(--gs-section-padding);
-    background-color: #fff;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--gs-space-2);
-  }
-
-  .page-header {
-    text-align: center;
-    margin-bottom: var(--gs-space-10);
-  }
-
-  .font-display {
-    font-size: var(--gs-text-h1);
-    color: var(--gs-institutional-green);
-    margin-bottom: var(--gs-space-2);
-    font-family: var(--gs-font-primary);
-  }
-
-  .subtitle {
-    font-size: var(--gs-text-h5);
-    color: var(--gs-slate-gray);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  .machinery-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
-    gap: var(--gs-space-6);
-  }
-
-  .machinery-wrapper {
-    width: 100%;
-    max-width: 350px;
-    flex: 1 1 320px;
-  }
-</style>

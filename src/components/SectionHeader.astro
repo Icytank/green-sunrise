@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   align?: "left" | "center" | "right";
   withStamp?: boolean;
+  titleColor?: string;
 }
 
 const {
@@ -15,94 +16,47 @@ const {
   description,
   align = "left",
   withStamp = true,
+  titleColor = "text-gs-institutional-green",
 } = Astro.props;
+
+const alignmentClasses = {
+  left: "items-start text-left",
+  center: "items-center text-center",
+  right: "items-end text-right",
+};
 ---
 
 <div
   class:list={[
-    "cs-section-header",
-    { "text-center": align === "center", "text-right": align === "right" },
+    "w-full mb-gs-4 relative flex flex-col gap-gs-2",
+    alignmentClasses[align],
   ]}
 >
   {
     withStamp && (
-      <div class="cs-stamp-wrapper">
+      <div class="absolute -top-[20px] right-0 z-[-1] opacity-10 rotate-[15deg] md:right-[-40px] md:opacity-15">
         <GSStamp size={60} />
       </div>
     )
   }
-  <span class="cs-topper">{label}</span>
-  <h2 class="cs-title">{title}</h2>
-  {description && <p class="cs-text">{description}</p>}
+  <span
+    class="text-gs-sm font-bold uppercase tracking-widest text-gs-secondary block mb-1"
+    >{label}</span
+  >
+  <h2
+    class:list={[
+      "text-[clamp(1.9375rem,3.9vw,3.0625rem)] font-black leading-tight m-0 max-w-[800px]",
+      titleColor,
+    ]}
+  >
+    {title}
+  </h2>
+  {
+    description && (
+      <p class="text-gs-base leading-relaxed text-gs-slate-gray max-w-[650px] m-0">
+        {description}
+      </p>
+    )
+  }
   <slot />
 </div>
-
-<style lang="less">
-  .cs-section-header {
-    width: 100%;
-    margin-bottom: (32/16rem);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: (16/16rem);
-
-    &.text-center {
-      align-items: center;
-      text-align: center;
-
-      .cs-text {
-        text-align: center;
-      }
-    }
-
-    &.text-right {
-      align-items: flex-end;
-      text-align: right;
-
-      .cs-text {
-        text-align: right;
-      }
-    }
-  }
-
-  .cs-stamp-wrapper {
-    position: absolute;
-    top: -20px;
-    right: 0;
-    z-index: -1;
-    opacity: 0.1;
-    transform: rotate(15deg);
-
-    @media only screen and (min-width: 48rem) {
-      right: -40px;
-      opacity: 0.15;
-    }
-  }
-
-  .cs-topper {
-    font-size: var(--gs-text-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gs-secondary);
-    display: block;
-    margin-bottom: (4/16rem);
-  }
-
-  .cs-title {
-    font-size: var(--gs-header-font-size);
-    font-weight: 900;
-    line-height: 1.2em;
-    margin: 0;
-    color: var(--gs-header-color);
-    max-width: (800/16rem);
-  }
-
-  .cs-text {
-    font-size: var(--gs-body-font-size);
-    line-height: 1.5em;
-    color: var(--gs-body-text-color);
-    max-width: (650/16rem);
-    margin: 0;
-  }
-</style>

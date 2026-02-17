@@ -42,9 +42,14 @@ const t = translations[lang];
 ---
 
 <!-- Turnstile Script -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer
+></script>
 
-<form id="cs-form" name="contact" method="POST" class="cs-form" 
+<form
+  id="cs-form"
+  name="contact"
+  method="POST"
+  class="flex flex-wrap gap-y-gs-6 gap-x-gs-4"
   data-sending={t.sending}
   data-success={t.success}
   data-error={t.error}
@@ -53,90 +58,179 @@ const t = translations[lang];
   <input type="hidden" name="form-name" value="contact" />
   <input type="hidden" name="lang" value={lang} />
   <p class="hidden">
-    <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+    <label
+      >Don’t fill this out if you’re human: <input name="bot-field" /></label
+    >
   </p>
 
-  <label class="cs-label">
+  <label
+    class="flex flex-col gap-gs-2 w-full sm:w-[calc(50%-16px)] font-bold text-gs-slate-gray uppercase tracking-widest text-[10px] sm:text-xs"
+  >
     {t.name}
-    <input required type="text" name="name" placeholder={t.name} />
+    <input
+      required
+      type="text"
+      name="name"
+      placeholder={t.name}
+      class="w-full bg-[#f9fbfb] border border-gs-slate-gray/15 rounded-xl h-16 px-gs-5 text-gs-text-primary focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B] outline-none transition-all placeholder:text-gs-slate-gray/30 font-medium"
+    />
   </label>
 
-  <label class="cs-label">
+  <label
+    class="flex flex-col gap-gs-2 w-full sm:w-[calc(50%-16px)] font-bold text-gs-slate-gray uppercase tracking-widest text-[10px] sm:text-xs"
+  >
     {t.email}
-    <input required type="email" name="email" placeholder={t.email} />
+    <input
+      required
+      type="email"
+      name="email"
+      placeholder={t.email}
+      class="w-full bg-[#f9fbfb] border border-gs-slate-gray/15 rounded-xl h-16 px-gs-5 text-gs-text-primary focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B] outline-none transition-all placeholder:text-gs-slate-gray/30 font-medium"
+    />
   </label>
 
-  <label class="cs-label">
+  <label
+    class="flex flex-col gap-gs-2 w-full sm:w-[calc(50%-16px)] font-bold text-gs-slate-gray uppercase tracking-widest text-[10px] sm:text-xs"
+  >
     {t.phone}
-    <input type="tel" name="phone" placeholder={t.phone} />
+    <input
+      type="tel"
+      name="phone"
+      placeholder={t.phone}
+      class="w-full bg-[#f9fbfb] border border-gs-slate-gray/15 rounded-xl h-16 px-gs-5 text-gs-text-primary focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B] outline-none transition-all placeholder:text-gs-slate-gray/30 font-medium"
+    />
   </label>
 
-  <label class="cs-label">
+  <label
+    class="flex flex-col gap-gs-2 w-full sm:w-[calc(50%-16px)] font-bold text-gs-slate-gray uppercase tracking-widest text-[10px] sm:text-xs"
+  >
     {t.company}
-    <input required type="text" name="company" placeholder={t.company} />
+    <input
+      required
+      type="text"
+      name="company"
+      placeholder={t.company}
+      class="w-full bg-[#f9fbfb] border border-gs-slate-gray/15 rounded-xl h-16 px-gs-5 text-gs-text-primary focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B] outline-none transition-all placeholder:text-gs-slate-gray/30 font-medium"
+    />
   </label>
 
-  <fieldset class="cs-fieldset">
-    <legend class="cs-legend">{t.projectType}</legend>
-    <div class="cs-radio-group">
-      <label class="cs-radio-label">
-        <input required type="radio" name="projectType" value="Utility" />
-        <span class="cs-radio-visual"></span>
-        <span class="cs-radio-text">{t.typeUtility}</span>
+  <fieldset
+    class="w-full border border-gs-slate-gray/15 rounded-xl p-8 bg-[#f9fbfb]/50"
+  >
+    <legend
+      class="px-4 text-[10px] sm:text-xs font-bold text-gs-slate-gray uppercase tracking-widest bg-white rounded-full border border-gs-slate-gray/15"
+      >{t.projectType}</legend
+    >
+    <div class="flex flex-col md:flex-row gap-8">
+      <label class="flex items-center gap-4 cursor-pointer group">
+        <div class="relative flex items-center justify-center">
+          <input
+            required
+            type="radio"
+            name="projectType"
+            value="Utility"
+            class="peer appearance-none w-6 h-6 border-2 border-gs-slate-gray/30 rounded-md checked:bg-[#064E3B] checked:border-[#064E3B] transition-all"
+          />
+          <div
+            class="radio-visual peer-checked:opacity-100 opacity-0 absolute pointer-events-none text-white font-bold text-sm"
+          >
+            ✓
+          </div>
+        </div>
+        <span
+          class="text-gs-base font-bold text-[#064E3B] group-hover:text-gs-institutional-green transition-colors"
+          >{t.typeUtility}</span
+        >
       </label>
-      <label class="cs-radio-label">
-        <input required type="radio" name="projectType" value="Roof-top" />
-        <span class="cs-radio-visual"></span>
-        <span class="cs-radio-text">{t.typeCommercial}</span>
+      <label class="flex items-center gap-4 cursor-pointer group">
+        <div class="relative flex items-center justify-center">
+          <input
+            required
+            type="radio"
+            name="projectType"
+            value="Roof-top"
+            class="peer appearance-none w-6 h-6 border-2 border-gs-slate-gray/30 rounded-md checked:bg-[#064E3B] checked:border-[#064E3B] transition-all"
+          />
+          <div
+            class="radio-visual peer-checked:opacity-100 opacity-0 absolute pointer-events-none text-white font-bold text-sm"
+          >
+            ✓
+          </div>
+        </div>
+        <span
+          class="text-gs-base font-bold text-[#064E3B] group-hover:text-gs-institutional-green transition-colors"
+          >{t.typeCommercial}</span
+        >
       </label>
     </div>
   </fieldset>
 
-  <label class="cs-label cs-label-message">
+  <label
+    class="flex flex-col gap-gs-3 w-full font-bold text-gs-slate-gray uppercase tracking-widest text-[10px] sm:text-xs"
+  >
     {t.message}
-    <textarea required name="message" placeholder={t.message}></textarea>
+    <textarea
+      required
+      name="message"
+      placeholder={t.message}
+      class="w-full bg-[#f9fbfb] border border-gs-slate-gray/15 rounded-xl min-h-[160px] p-gs-6 text-gs-text-primary focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B] outline-none transition-all placeholder:text-gs-slate-gray/30 font-medium resize-y"
+    ></textarea>
   </label>
 
-  <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-error-callback="onTurnstileError"></div>
+  <div
+    class="cf-turnstile mt-2"
+    data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+    data-error-callback="onTurnstileError"
+  >
+  </div>
 
-  <button class="cs-button-solid" type="submit">{t.submit}</button>
+  <button
+    class="w-full bg-[#064E3B] text-white py-gs-6 px-gs-10 rounded-2xl font-bold text-gs-lg shadow-xl shadow-[#064E3B]/20 transition-all duration-300 hover:bg-gs-institutional-green-dark hover:-translate-y-1 hover:shadow-2xl disabled:opacity-70 disabled:cursor-wait"
+    type="submit"
+  >
+    {t.submit}
+  </button>
 
-  <div class="cs-status-message" aria-live="polite"></div>
+  <div class="w-full mt-gs-6 font-bold text-center" aria-live="polite">
+    <div id="status-message" class="text-gs-base"></div>
+  </div>
 </form>
 
 <script>
   import { handleSubmit } from "./ContactFormLogic";
 
   const form = document.getElementById("cs-form") as HTMLFormElement;
-  const statusMessage = form?.querySelector(".cs-status-message") as HTMLElement;
-  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const statusMessage = form?.querySelector("#status-message") as HTMLElement;
+  const submitBtn = form?.querySelector(
+    'button[type="submit"]',
+  ) as HTMLButtonElement;
 
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
+
       if (submitBtn) {
         submitBtn.disabled = true;
         const originalText = submitBtn.innerText;
-        submitBtn.innerText = form.getAttribute('data-sending') || "...";
-      
+        submitBtn.innerText = form.getAttribute("data-sending") || "...";
+
         const formData = new FormData(form);
         const result = await handleSubmit(formData);
 
         if (result.success) {
           form.reset();
           if (statusMessage) {
-              statusMessage.innerText = form.getAttribute('data-success') || "Success";
-              statusMessage.classList.add("success");
-              statusMessage.classList.remove("error");
+            statusMessage.innerText =
+              form.getAttribute("data-success") || "Success";
+            statusMessage.className = "text-[#064E3B] text-gs-lg";
           }
-           submitBtn.innerText = originalText;
-           submitBtn.disabled = false;
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
         } else {
-           if (statusMessage) {
-              statusMessage.innerText = form.getAttribute('data-error') || "Error";
-              statusMessage.classList.add("error");
-              statusMessage.classList.remove("success");
+          if (statusMessage) {
+            statusMessage.innerText =
+              form.getAttribute("data-error") || "Error";
+            statusMessage.className = "text-gs-secondary text-gs-lg";
           }
           submitBtn.innerText = originalText;
           submitBtn.disabled = false;
@@ -144,211 +238,21 @@ const t = translations[lang];
       }
     });
 
-    // Turnstile Error Callback (must be global or attached to window as widget looks for it)
-    (window as any).onTurnstileError = function() {
-        if (statusMessage) {
-            statusMessage.innerText = form.getAttribute('data-error') || "Security check failed. Please refresh.";
-            statusMessage.classList.add("error");
-            statusMessage.classList.remove("success");
-            if (submitBtn) submitBtn.disabled = true;
-        }
+    (window as any).onTurnstileError = function () {
+      if (statusMessage) {
+        statusMessage.innerText =
+          form.getAttribute("data-error") ||
+          "Security check failed. Please refresh.";
+        statusMessage.className = "text-gs-secondary text-gs-lg";
+        if (submitBtn) submitBtn.disabled = true;
+      }
     };
-
   }
 </script>
 
 <style>
-  /* Local Component Styles */
-  .hidden {
-      display: none;
-  }
-
-  .cs-form {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    column-gap: 1rem; /* 16px */
-    row-gap: 1rem;
-  }
-
-  .cs-label {
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.5em;
-    color: var(--gs-text-primary);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  /* Desktop: 2 columns */
-  @media only screen and (min-width: 43.75em) {
-      .cs-label {
-          width: 48%; /* Fallback */
-          width: calc(50% - 0.625rem);
-      }
-      .cs-fieldset {
-          width: 100%;
-      }
-  }
-
-  .cs-label-message {
-    width: 100% !important;
-  }
-
-  input,
-  textarea {
-    font-size: 1rem;
-    width: 100%;
-    height: 4rem; /* 64px */
-    margin-top: 0.25rem;
-    box-sizing: border-box;
-    padding-left: 1.25rem;
-    border: 1px solid #b4b2c7;
-    border-radius: 0.5rem;
-    transition: border 0.3s;
-    background: #fff;
-  }
-
-  input:hover,
-  textarea:hover {
-    border: 1px solid var(--gs-institutional-green);
-  }
-
-  textarea {
-    font-family: inherit;
-    min-height: 7.5rem; /* 120px */
-    padding-top: 1.25rem;
-  }
-
-  .cs-button-solid {
-    width: 100%;
-    border: none;
-    background-color: var(--gs-institutional-green);
-    color: #fff;
-    padding: 0 2rem;
-    height: 3.5rem;
-    border-radius: 0.5rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .cs-button-solid:hover {
-      background-color: var(--gs-success-emerald);
-  }
-  
-  .cs-button-solid:disabled {
-      opacity: 0.7;
-      cursor: wait;
-  }
-
-  /* Fieldset for Radio Buttons */
-  .cs-fieldset {
-      border: 1px solid #b4b2c7;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      margin: 0;
-      width: 100%;
-      box-sizing: border-box;
-  }
-
-  .cs-legend {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--gs-text-primary);
-      padding: 0 0.5rem;
-  }
-
-  .cs-radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-  }
-  
-  @media only screen and (min-width: 43.75em) {
-      .cs-radio-group {
-          flex-direction: row;
-          gap: 2rem;
-      }
-  }
-
-  .cs-radio-label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 400;
-      cursor: pointer;
-      position: relative;
-  }
-
-  /* Custom Radio Styling */
-  .cs-radio-label input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-  }
-
-  /* Create the custom radio circle */
-  .cs-radio-label .cs-radio-visual {
-      height: 1.25rem; /* 20px */
-      width: 1.25rem;
-      background-color: #fff;
-      border: 2px solid var(--gs-slate-gray); /* Default gray border */
-      border-radius: 50%;
-      display: inline-block;
-      position: relative;
-      transition: all 0.2s ease-in-out;
-  }
-
-  /* Hover state */
-  .cs-radio-label:hover .cs-radio-visual {
-      border-color: var(--gs-institutional-green);
-  }
-
-  /* Checked state border */
-  .cs-radio-label input[type="radio"]:checked ~ .cs-radio-visual {
-      border-color: var(--gs-institutional-green);
-      background-color: #fff;
-  }
-
-  /* Checked indicator dot */
-  .cs-radio-label input[type="radio"]:checked ~ .cs-radio-visual::after {
-      content: "";
-      position: absolute;
-      display: block;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 0.625rem; /* 10px */
-      height: 0.625rem;
-      border-radius: 50%;
-      background: var(--gs-institutional-green);
-  }
-  
-  .cs-radio-text {
-      font-size: 1rem;
-      color: var(--gs-text-primary);
-  }
-
-  .cs-status-message {
-      width: 100%;
-      margin-top: 1rem;
-      font-weight: 700;
-      text-align: center;
-  }
-  
-  .cs-status-message.success {
-      color: var(--gs-institutional-green, #2ecc71);
-  }
-  
-  .cs-status-message.error {
-      color: var(--secondary, #e74c3c);
+  /* Custom Radio Overrides - Ensure the ✓ is visible */
+  .radio-visual {
+    pointer-events: none;
   }
 </style>

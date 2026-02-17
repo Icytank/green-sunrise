@@ -8,92 +8,21 @@ interface Props {
 
 const { href, variant = "primary", class: className, ...rest } = Astro.props;
 
-const variantClass = variant === "primary" ? "cs-button-solid" : variant === "outline" ? "cs-button-outline" : "cs-button-transparent";
+const baseClasses =
+  "inline-block w-auto h-[50px] px-[30px] text-[16px] font-bold leading-[50px] text-center uppercase no-underline transition-all duration-300 relative z-1 box-border";
+
+const variantClasses = {
+  primary:
+    "text-gs-executive-white bg-gs-institutional-green hover:bg-gs-success-emerald hover:-translate-y-0.5",
+  outline:
+    "text-gs-institutional-green bg-transparent border-2 border-gs-institutional-green hover:bg-gs-institutional-green hover:text-gs-executive-white",
+  secondary:
+    "text-gs-executive-white bg-transparent border-2 border-gs-executive-white hover:bg-gs-executive-white hover:text-gs-institutional-green",
+};
+
+const classes = [baseClasses, variantClasses[variant], className];
 ---
 
-<a href={href} class:list={[variantClass, className]} {...rest}>
+<a href={href} class:list={classes} {...rest}>
   <slot />
 </a>
-
-<style lang="less">
-  /* Primary variant - Solid button */
-  .cs-button-solid {
-    font-size: (16/16rem);
-    font-weight: bold;
-    line-height: (50/16em);
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    width: auto;
-    height: (50/16rem);
-    padding: 0 (30/16rem);
-    
-    color: var(--gs-executive-white);
-    background-color: var(--gs-primary);
-    border: none;
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    transition: background-color 0.3s, transform 0.2s;
-    box-sizing: border-box;
-
-    &:hover {
-      background-color: var(--gs-success-emerald);
-      transform: translateY(-2px);
-    }
-  }
-
-  /* Outline variant - Dark Border/Text for Light Backgrounds */
-  .cs-button-outline {
-    font-size: (16/16rem);
-    font-weight: bold;
-    line-height: (50/16em);
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    width: auto;
-    height: (50/16rem);
-    padding: 0 (30/16rem);
-    
-    color: var(--gs-primary);
-    background-color: transparent;
-    border: 2px solid var(--gs-primary);
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s, background-color 0.3s;
-    box-sizing: border-box;
-
-    &:hover {
-      background-color: var(--gs-primary);
-      color: var(--gs-executive-white);
-    }
-  }
-
-  /* Secondary variant - Transparent with Border */
-  .cs-button-transparent {
-    font-size: (16/16rem);
-    font-weight: bold;
-    line-height: (50/16em);
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    width: auto;
-    height: (50/16rem);
-    padding: 0 (30/16rem);
-    
-    color: var(--gs-executive-white);
-    background-color: transparent;
-    border: 2px solid var(--gs-executive-white);
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s, background-color 0.3s;
-    box-sizing: border-box;
-
-    &:hover {
-      background-color: var(--gs-executive-white);
-      color: var(--gs-primary);
-    }
-  }
-</style>

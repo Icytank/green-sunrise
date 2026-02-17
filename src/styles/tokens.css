@@ -101,9 +101,10 @@ body.dark-mode {
     --gs-border: #334155;
     /* Darker border */
 }
+
 /* Responsive Overrides for Tokens */
 @media only screen and (min-width: 64rem) {
     :root {
-        --gs-header-height: 80px;
+        --gs-header-height: 88px;
     }
 }

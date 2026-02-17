@@ -79,8 +79,8 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	<HomeAdvantages lang={lang} />
 
 	<!-- PROJECTS SECTION -->
-	<section id="projects" style="padding: var(--gs-section-padding) 0;">
-		<div class="cs-container">
+	<section id="projects" class="py-gs-section-padding-y px-4">
+		<div class="w-full max-w-[1280px] mx-auto">
 			<SectionHeader
 				label={translate("projectsLabel")}
 				title={translate("projectsTitle")}
@@ -88,10 +88,12 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				align="center"
 				withStamp={false}
 			/>
-			<ul class="cs-card-group">
+			<ul
+				class="p-0 m-0 list-none flex flex-wrap justify-center gap-gs-4"
+			>
 				{
 					projectsPreview.map((item) => (
-						<li class="cs-item">
+						<li class="w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)]">
 							<ProjectCard
 								slug={
 									item.data.custom_slug ||
@@ -107,7 +109,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 					))
 				}
 			</ul>
-			<div style="margin-top: var(--gs-space-4); text-align: center;">
+			<div class="mt-gs-4 text-center">
 				<Button href={`/${lang}/projects`} variant="outline"
 					>{translate("viewAll")}</Button
 				>
@@ -116,8 +118,8 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	</section>
 
 	<!-- MACHINERY SECTION -->
-	<section id="machinery" style="padding: var(--gs-section-padding) 0;">
-		<div class="cs-container">
+	<section id="machinery" class="py-gs-section-padding-y px-4">
+		<div class="w-full max-w-[1280px] mx-auto">
 			<SectionHeader
 				label={translate("machineryLabel")}
 				title={translate("machineryTitle")}
@@ -125,10 +127,12 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				align="center"
 				withStamp={false}
 			/>
-			<ul class="cs-card-group">
+			<ul
+				class="p-0 m-0 list-none flex flex-wrap justify-center gap-gs-4"
+			>
 				{
 					machineryPreview.map((item) => (
-						<li class="cs-item">
+						<li class="w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)]">
 							<MachineryCard
 								slug={
 									item.data.custom_slug ||
@@ -145,7 +149,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 					))
 				}
 			</ul>
-			<div style="margin-top: var(--gs-space-4); text-align: center;">
+			<div class="mt-gs-4 text-center">
 				<Button href={`/${lang}/machinery`} variant="outline"
 					>{translate("viewAll")}</Button
 				>
@@ -156,10 +160,10 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 	<!-- TEAM SECTION -->
 	<section
 		id="team"
-		style="padding: var(--gs-section-padding) 0; background-color: var(--gs-surface-secondary); text-align: center;"
+		class="py-gs-section-padding-y px-4 bg-gs-surface-secondary text-center"
 	>
 		<!-- Centered align for Team -->
-		<div class="cs-container">
+		<div class="w-full max-w-[1280px] mx-auto">
 			<SectionHeader
 				label={translate("teamLabel")}
 				title={translate("teamTitle")}
@@ -167,20 +171,20 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				align="center"
 				withStamp={false}
 			/>
-			<ul class="cs-card-group-4">
+			<ul
+				class="p-0 m-0 list-none flex flex-wrap justify-center gap-gs-4"
+			>
 				<!-- 4 cols for team -->
 				{
 					teamPreview.map((item) => (
-						<li class="cs-item">
+						<li class="w-full sm:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-3*var(--spacing-gs-4))/4)]">
 							<TeamMember lang={lang} {...item.data} />
 						</li>
 					))
 				}
 			</ul>
 			<!-- View All Team? Maybe just About Us link -->
-			<div
-				style="margin-top: var(--gs-space-4); text-align: center; padding-bottom: 2rem;"
-			>
+			<div class="mt-gs-4 text-center pb-8">
 				<Button href={`/${lang}/about`} variant="outline"
 					>{translate("viewAll")}</Button
 				>
@@ -192,58 +196,3 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 
 	<TrustedPartnerBanner lang={lang} />
 </BaseLayout>
-
-<style lang="less">
-	/* Grid Layouts to match 8px grid (var(--gs-space-2) seems small for gap, usually 1rem or 1.5rem) */
-	/* Using --gs-space-4 for gap ~ 2rem/32px? Need to check tokens but assuming standard spacing */
-
-	.cs-container {
-		width: 100%;
-		max-width: (1280/16rem);
-		margin: auto;
-		padding: 0 1rem;
-	}
-
-	.cs-card-group,
-	.cs-card-group-4 {
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: var(--gs-space-4);
-	}
-
-	.cs-card-group {
-		.cs-item {
-			width: 100%;
-
-			@media only screen and (min-width: 48rem) {
-				/* 2 columns: (100% - 1*gap) / 2 */
-				width: calc((100% - var(--gs-space-4)) / 2);
-			}
-
-			@media only screen and (min-width: 64rem) {
-				/* 3 columns: (100% - 2*gap) / 3 */
-				width: calc((100% - (2 * var(--gs-space-4))) / 3);
-			}
-		}
-	}
-
-	.cs-card-group-4 {
-		.cs-item {
-			width: 100%;
-
-			@media only screen and (min-width: 30rem) {
-				/* 2 columns: (100% - 1*gap) / 2 */
-				width: calc((100% - var(--gs-space-4)) / 2);
-			}
-
-			@media only screen and (min-width: 64rem) {
-				/* 4 columns: (100% - 3*gap) / 4 */
-				width: calc((100% - (3 * var(--gs-space-4))) / 4);
-			}
-		}
-	}
-</style>

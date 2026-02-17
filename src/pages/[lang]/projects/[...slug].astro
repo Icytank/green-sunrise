@@ -213,9 +213,9 @@ const { value: capacityValue, unit: capacityUnitLabel } =
         }
       </div>
 
-      <div class="max-w-[1400px] mx-auto px-gs-4">
+      <div class="max-w-[1400px] mx-auto px-0 md:px-gs-4">
         <div
-          class="mt-[-40px] md:mt-[-110px] relative z-30 bg-gs-executive-white p-gs-6 md:p-gs-10 rounded-xl shadow-2xl max-w-[800px] mx-auto flex flex-col items-start text-left"
+          class="mt-[-40px] md:mt-[-110px] relative z-30 bg-gs-executive-white p-gs-6 md:p-gs-10 rounded-none md:rounded-xl shadow-2xl max-w-[800px] mx-auto flex flex-col items-start text-left"
         >
           <div
             class="inline-flex items-baseline gap-gs-1 bg-gs-institutional-green text-white px-gs-4 py-gs-2 rounded-md mb-gs-4 font-gs-mono"
@@ -237,11 +237,11 @@ const { value: capacityValue, unit: capacityUnitLabel } =
 
     <!-- Main Content Grid -->
     <div
-      class="max-w-[1400px] mx-auto px-gs-4 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16 mt-24 pb-gs-12"
+      class="max-w-[1400px] mx-auto px-0 md:px-gs-4 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-16 mt-24 pb-gs-12"
     >
       <!-- Main Narrative -->
       <main
-        class="bg-gs-executive-white border border-gs-slate-gray/10 rounded-xl p-gs-6 md:p-16 shadow-sm"
+        class="bg-gs-executive-white border-y md:border border-gs-slate-gray/10 rounded-none md:rounded-xl p-gs-6 md:p-16 shadow-sm"
       >
         <div
           class="prose max-w-none text-gs-base text-gs-text-primary leading-[2]
@@ -269,7 +269,7 @@ const { value: capacityValue, unit: capacityUnitLabel } =
 
         <a
           href={`/${lang}/contact`}
-          class="block w-full text-center bg-gs-institutional-green text-white p-gs-5 rounded-xl font-bold no-underline transition-all duration-300 hover:bg-gs-institutional-green-dark hover:-translate-y-1 hover:shadow-2xl"
+          class="block w-full text-center bg-gs-institutional-green text-white p-gs-5 rounded-none md:rounded-xl font-bold no-underline transition-all duration-300 hover:bg-gs-institutional-green-dark hover:-translate-y-1 hover:shadow-2xl"
         >
           {labels.requestPartnership} →
         </a>
@@ -527,11 +527,20 @@ const { value: capacityValue, unit: capacityUnitLabel } =
   .prose h2 {
     color: #064e3b !important;
     border-left: 5px solid #064e3b !important;
-    padding-left: 2rem !important;
+    padding-left: 1rem !important;
     margin-top: 6rem !important;
     margin-bottom: 3rem !important;
-    line-height: 1.1 !important;
-    font-size: 2.25rem !important; /* text-gs-h2 equivalent */
+    line-height: 1.2 !important;
+    font-size: 1.75rem !important;
+    overflow-wrap: break-word !important;
+  }
+
+  @media (min-width: 768px) {
+    .prose h2 {
+      padding-left: 2rem !important;
+      font-size: 2.25rem !important; /* text-gs-h2 equivalent */
+      line-height: 1.1 !important;
+    }
   }
 
   .prose h2:first-child {
@@ -559,17 +568,24 @@ const { value: capacityValue, unit: capacityUnitLabel } =
     position: relative !important;
     padding-left: 2.5rem !important;
     margin-bottom: 1.5rem !important;
-    display: flex !important;
-    align-items: center !important;
+    display: block !important;
     font-weight: 500 !important;
+    line-height: 1.5 !important;
+  }
+
+  @media (min-width: 768px) {
+    .prose li {
+      display: flex !important;
+      align-items: center !important;
+      line-height: normal !important;
+    }
   }
 
   .prose li::before {
     content: "✓" !important;
     position: absolute !important;
     left: 0 !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+    top: 0.25rem !important;
     width: 1.75rem !important;
     height: 1.75rem !important;
     background-color: #014e3b !important; /* Deep Green */

@@ -12,17 +12,19 @@ const title = t("about.intro.title" as TranslationKey, lang);
 const text = t("about.intro.text" as TranslationKey, lang);
 ---
 
-<section
-    id="about-intro"
-    class="py-gs-section-padding-y pb-[clamp(3rem,6vw,6rem)]"
->
-    <div class="w-full max-w-[1280px] mx-auto">
-        <SectionHeader
-            label={t("about.intro.label" as TranslationKey, lang)}
-            title={title}
-            description={text}
-            align="center"
-            withStamp={false}
-        />
+<section id="about-intro" class="pb-[clamp(3rem,6vw,6rem)]">
+    <!-- Container with negative margin to pull card over hero -->
+    <div class="w-full max-w-[1280px] mx-auto px-0 md:px-gs-4">
+        <div
+            class="mt-[-40px] md:mt-[-80px] relative z-20 bg-gs-executive-white p-gs-6 md:p-16 rounded-none md:rounded-2xl shadow-xl border border-gs-slate-gray/10"
+        >
+            <SectionHeader
+                label={t("about.intro.label" as TranslationKey, lang)}
+                title={title}
+                description={text}
+                align="center"
+                withStamp={false}
+            />
+        </div>
     </div>
 </section>

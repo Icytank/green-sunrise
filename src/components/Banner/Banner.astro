@@ -9,7 +9,7 @@ import { Picture } from "astro:assets";
 import type { GetImageResult } from "astro";
 
 interface Props {
-	title: string; // heading text
+	title?: string; // heading text
 	image: GetImageResult; // pre-optimized image from getImage()
 	imagePosition?: string; // object-position value (e.g. "top", "center", "0% 20%")
 }
@@ -21,12 +21,16 @@ const { title, image, imagePosition = "center" } = Astro.props;
 	id="int-hero"
 	class="relative z-1 flex min-h-[30vh] flex-col items-center justify-center pt-[3.125rem] lg:min-h-[18.75rem] lg:pt-[11.25rem] lg:pb-10"
 >
-	<h1
-		id="home-h"
-		class="relative mx-auto mt-[4.375rem] mb-[1.875rem] w-[96%] max-w-[31.25rem] text-center text-[var(--headerFontSize)] font-bold text-white"
-	>
-		{title}
-	</h1>
+	{
+		title && (
+			<h1
+				id="home-h"
+				class="relative mx-auto mt-[4.375rem] mb-[1.875rem] w-[96%] max-w-[31.25rem] text-center text-[var(--headerFontSize)] font-bold text-white"
+			>
+				{title}
+			</h1>
+		)
+	}
 
 	{/* Overlay */}
 	<div class="absolute inset-0 -z-10 bg-black/70" aria-hidden="true"></div>

@@ -35,11 +35,7 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 	description={t("about.intro.pageDescription" as any, lang)}
 	heroImage={optimizedImage}
 >
-	<Banner
-		title={lang === "bg" ? "За нас" : "About Us"}
-		image={optimizedImage}
-		imagePosition="center 42%"
-	/>
+	<Banner image={optimizedImage} imagePosition="center 42%" />
 
 	<AboutIntro lang={lang} />
 	<AboutMission lang={lang} />

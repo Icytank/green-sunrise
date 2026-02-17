@@ -24,6 +24,7 @@ const allMachinery = await getCollection("machinery", ({ id }) => {
   lang={lang as "bg" | "en"}
   title={t("services.pageTitle", lang as "bg" | "en")}
   description={t("services.pageDescription", lang as "bg" | "en")}
+  removeBottomPadding={true}
 >
   <main class="bg-gs-executive-white min-h-screen">
     <!-- 1. Services List -->

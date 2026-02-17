@@ -30,6 +30,7 @@ interface Props {
 	heroImage?: HeroImage; // optional - passing a heroImage to BaseLayout will 1. preload the image and 2. use the image for og socials tags in the <head>
 	ogType?: string;
 	alternateLinks?: { lang: string; href: string }[];
+	removeBottomPadding?: boolean;
 }
 
 const {
@@ -39,6 +40,7 @@ const {
 	lang = "bg",
 	ogType,
 	alternateLinks,
+	removeBottomPadding = false,
 } = Astro.props as Props;
 
 // Smart default for alternate links if not provided (assumes symmetric URL structure)
@@ -140,7 +142,10 @@ if (!finalAlternateLinks) {
 		<DynamicHeader lang={lang} />
 		<main
 			id="main"
-			class="relative z-1 isolation-auto pt-gs-header-height pb-gs-8 md:pb-gs-12"
+			class:list={[
+				"relative z-1 isolation-auto pt-gs-header-height",
+				!removeBottomPadding && "pb-gs-8 md:pb-gs-12",
+			]}
 		>
 			<slot />
 		</main>

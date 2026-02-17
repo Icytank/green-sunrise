@@ -62,7 +62,7 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gs-6 mb-[120px]"
       >
         {
-          sortedProjects.map((project) => {
+          sortedProjects.map((project, index) => {
             const slug =
               project.data.custom_slug ||
               project.id.split("/").slice(1).join("/").replace(/\.md$/, "");
@@ -76,6 +76,7 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
                 slug={slug}
                 lang={lang as "bg" | "en"}
                 isVerified={project.data.isVerified}
+                animationDelay={(index % 4) * 100}
               />
             );
           })
@@ -85,6 +86,7 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
       <div class="text-center mb-gs-8">
         <h2
           class="text-gs-h2 text-gs-institutional-green font-bold m-0 font-gs-primary"
+          data-aos="fade-up"
         >
           {t("projects.approachTitle" as TranslationKey, lang as "bg" | "en")}
         </h2>

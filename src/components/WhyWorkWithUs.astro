@@ -31,14 +31,19 @@ const reasons = [
                 description=""
                 align="left"
                 titleColor="text-white"
+                data-aos="fade-up"
             />
 
             <ul
                 class="m-0 mt-gs-6 p-0 list-none grid grid-cols-1 md:grid-cols-2 gap-gs-6"
             >
                 {
-                    reasons.map((r) => (
-                        <li class="flex gap-gs-4 items-start">
+                    reasons.map((r, index) => (
+                        <li
+                            class="flex gap-gs-4 items-start"
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                        >
                             <span class="text-[1.5rem] font-bold text-gs-success-emerald bg-white/10 w-8 h-8 rounded-full flex items-center justify-center shrink-0">
                                 ✓
                             </span>

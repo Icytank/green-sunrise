@@ -30,14 +30,20 @@ const services = [
             title={t("services.title" as TranslationKey, lang)}
             description=""
             align="left"
+            data-aos="fade-up"
         />
 
         <div
             class="w-full p-0 m-0 grid grid-cols-12 gap-gs-4 lg:flex lg:flex-wrap lg:justify-center"
         >
             {
-                services.map((s) => (
-                    <div class="col-span-12 md:col-span-6 lg:w-[calc(33.33%-var(--spacing-gs-4))] lg:max-w-[400px]">
+                services.map((s, index) => (
+                    <div
+                        class="col-span-12 md:col-span-6 lg:w-[calc(33.33%-var(--spacing-gs-4))] lg:max-w-[400px]"
+                        data-aos="fade-up"
+                        data-aos-delay={index * 100}
+                        data-aos-anchor-placement="center-bottom"
+                    >
                         <IconCard
                             icon={s.icon}
                             title={tr(`${s.key}.title`)}

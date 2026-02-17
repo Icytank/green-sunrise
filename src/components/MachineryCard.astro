@@ -12,9 +12,19 @@ interface Props {
   slug: string;
   lang: "bg" | "en";
   isOwned?: boolean;
+  animationDelay?: number;
 }
 
-const { title, model, weight, image, slug, lang, isOwned = true } = Astro.props;
+const {
+  title,
+  model,
+  weight,
+  image,
+  slug,
+  lang,
+  isOwned = true,
+  animationDelay = 0,
+} = Astro.props;
 const url = getMachineryUrl(slug, lang);
 const formattedWeight = formatSpecValue(weight, "");
 const ownedBadgeLabel = t("machinery.ownedBadge", lang);
@@ -25,6 +35,9 @@ const ownershipDeclaration = t("machinery.ownershipDeclaration", lang);
   href={url}
   class="group flex flex-col bg-gs-executive-white border border-gs-slate-gray/20 rounded-xl overflow-hidden no-underline text-gs-text-primary transition-all duration-400 ease-[cubic-bezier(0.165,0.84,0.44,1)] h-full relative hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,78,59,0.12)] hover:border-gs-institutional-green focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gs-institutional-green"
   aria-label={`${title} - ${model}`}
+  data-aos="fade-up"
+  data-aos-delay={animationDelay}
+  data-aos-anchor-placement="center-bottom"
 >
   <div class="relative w-full aspect-[4/3] overflow-hidden bg-gs-slate-gray">
     <Image

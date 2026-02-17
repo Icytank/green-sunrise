@@ -34,13 +34,19 @@ const advantages = [
       title={translate("title")}
       description=""
       align="center"
+      data-aos="fade-up"
     />
 
     <!-- Grid -->
     <ul class="w-full m-0 p-0 flex flex-wrap justify-center gap-gs-4 list-none">
       {
-        advantages.map((adv) => (
-          <li class="list-none w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)] lg:max-w-[400px]">
+        advantages.map((adv, index) => (
+          <li
+            class="list-none w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)] lg:max-w-[400px]"
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
+            data-aos-anchor-placement="center-bottom"
+          >
             <IconCard
               icon={adv.icon}
               title={translate(`${adv.key}.title`)}

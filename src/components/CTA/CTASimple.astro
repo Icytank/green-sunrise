@@ -24,17 +24,22 @@ const { lang } = Astro.props;
 	<div class="relative z-10 text-center px-4 xl:w-[90.0625%] xl:mx-auto">
 		<h2
 			class="text-[clamp(2.25rem,9vw,3rem)] font-black leading-tight text-center mb-9 text-white relative"
+			data-aos="fade-up"
 		>
 			{t("cta.title", lang)}
 		</h2>
 		<p
 			class="text-center w-[96%] max-w-[598px] mx-auto mb-9 text-white leading-relaxed"
+			data-aos="fade-up"
+			data-aos-delay="200"
 		>
 			{t("cta.description", lang)}
 		</p>
 		<a
 			href={`/${lang}/contact/`}
 			class="inline-block px-8 py-4 bg-gs-institutional-green text-white text-[16px] font-bold no-underline uppercase tracking-widest rounded transition-all duration-300 hover:bg-gs-success-emerald hover:-translate-y-[2px]"
+			data-aos="fade-up"
+			data-aos-delay="400"
 		>
 			{t("cta.button", lang)}
 		</a>

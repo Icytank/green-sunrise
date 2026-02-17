@@ -59,7 +59,7 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 			/>
 			<div class="flex flex-wrap justify-center gap-gs-4 md:gap-gs-6">
 				{
-					teamMembers.map((member) => (
+					teamMembers.map((member, index) => (
 						<div class="w-full max-w-[350px] flex-1 basis-[280px]">
 							<TeamMember
 								name={member.data.name}
@@ -69,6 +69,7 @@ const teamMembers = await getCollection("teams", ({ id }) => {
 								verified={member.data.verified}
 								avatar={member.data.avatar}
 								lang={lang}
+								animationDelay={index * 100}
 							/>
 						</div>
 					))

@@ -128,6 +128,22 @@ if (!finalAlternateLinks) {
 
 		<!-- Sitewide Scripts -->
 		<script src="@utils/nav.ts"></script>
+		<script>
+			import { initAOS } from "@utils/aos";
+
+			// Initialize AOS on every page load
+			document.addEventListener("astro:page-load", () => {
+				initAOS();
+			});
+
+			// Fix for View Transitions: Remove AOS classes before swap to force re-animation
+			document.addEventListener("astro:after-swap", () => {
+				const elements = document.querySelectorAll("[data-aos]");
+				elements.forEach((el) => {
+					el.classList.remove("aos-animate");
+				});
+			});
+		</script>
 	</head>
 	<body
 		class="m-0 p-0 font-gs-primary bg-gs-executive-white text-gs-text-primary overflow-x-hidden antialiased selection:bg-gs-institutional-green selection:text-white"

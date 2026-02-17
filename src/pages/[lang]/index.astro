@@ -68,15 +68,15 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 ---
 
 <BaseLayout
-	lang={lang}
+	lang={lang as "bg" | "en"}
 	title={translate("pageTitle")}
 	description={translate("pageDescription")}
 	heroImage={optimizedHeroImage}
 >
-	<HomeHero lang={lang} heroImage={heroImage} />
+	<HomeHero lang={lang as "bg" | "en"} heroImage={heroImage} />
 
 	<!-- ADVANTAGES SECTION -->
-	<HomeAdvantages lang={lang} />
+	<HomeAdvantages lang={lang as "bg" | "en"} />
 
 	<!-- PROJECTS SECTION -->
 	<section id="projects" class="py-gs-section-padding-y px-4">
@@ -92,7 +92,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				class="p-0 m-0 list-none flex flex-wrap justify-center gap-gs-4"
 			>
 				{
-					projectsPreview.map((item) => (
+					projectsPreview.map((item, index) => (
 						<li class="w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)]">
 							<ProjectCard
 								slug={
@@ -102,8 +102,9 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 										.pop()!
 										.replace(/\.[^/.]+$/, "")
 								}
-								lang={lang}
+								lang={lang as "bg" | "en"}
 								{...item.data}
+								animationDelay={index * 100}
 							/>
 						</li>
 					))
@@ -131,7 +132,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 				class="p-0 m-0 list-none flex flex-wrap justify-center gap-gs-4"
 			>
 				{
-					machineryPreview.map((item) => (
+					machineryPreview.map((item, index) => (
 						<li class="w-full md:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-2*var(--spacing-gs-4))/3)]">
 							<MachineryCard
 								slug={
@@ -141,9 +142,10 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 										.pop()!
 										.replace(/\.[^/.]+$/, "")
 								}
-								lang={lang}
+								lang={lang as "bg" | "en"}
 								{...item.data}
 								image={item.data.heroImage}
+								animationDelay={index * 100}
 							/>
 						</li>
 					))
@@ -176,9 +178,13 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 			>
 				<!-- 4 cols for team -->
 				{
-					teamPreview.map((item) => (
+					teamPreview.map((item, index) => (
 						<li class="w-full sm:w-[calc((100%-var(--spacing-gs-4))/2)] lg:w-[calc((100%-3*var(--spacing-gs-4))/4)]">
-							<TeamMember lang={lang} {...item.data} />
+							<TeamMember
+								lang={lang as "bg" | "en"}
+								{...item.data}
+								animationDelay={index * 100}
+							/>
 						</li>
 					))
 				}
@@ -192,7 +198,7 @@ const translate = (key: string) => t(`home.${key}` as any, lang);
 		</div>
 	</section>
 
-	<CTASimple lang={lang} />
+	<CTASimple lang={lang as "bg" | "en"} />
 
-	<TrustedPartnerBanner lang={lang} />
+	<TrustedPartnerBanner lang={lang as "bg" | "en"} />
 </BaseLayout>

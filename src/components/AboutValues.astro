@@ -36,8 +36,13 @@ const values = [
             class="w-full p-0 m-0 list-none grid grid-cols-12 gap-gs-4 lg:flex lg:flex-wrap lg:justify-center"
         >
             {
-                values.map((v) => (
-                    <li class="col-span-12 md:col-span-6 lg:w-[calc(33.33%-var(--spacing-gs-4))] lg:max-w-[400px]">
+                values.map((v, index) => (
+                    <li
+                        class="col-span-12 md:col-span-6 lg:w-[calc(33.33%-var(--spacing-gs-4))] lg:max-w-[400px]"
+                        data-aos="fade-up"
+                        data-aos-delay={index * 100}
+                        data-aos-anchor-placement="center-bottom"
+                    >
                         <IconCard
                             icon={v.icon}
                             title={tr(`list.${v.key}.title`)}

@@ -79,7 +79,7 @@ const currentPath = Astro.url.pathname;
         <!-- Desktop Right Section -->
         <div class="flex items-center lg:gap-6 xl:gap-10">
             <!--Navigation List-->
-            <nav class="cs-nav flex items-center" aria-label="main navigation">
+            <nav class="cs-nav flex items-center order-2 lg:order-none" aria-label="main navigation">
                 <!--Mobile Nav Toggle-->
                 <button
                     class="cs-toggle group relative z-[102] ml-auto flex h-[clamp(2.75rem,6vw,3rem)] w-[clamp(2.75rem,6vw,3rem)] items-center justify-center border-none bg-transparent lg:hidden"
@@ -202,7 +202,7 @@ const currentPath = Astro.url.pathname;
             </nav>
 
             <!-- Language Switcher -->
-            <div class="header-lang-switcher hidden lg:flex font-gs-primary font-bold text-sm text-gs-slate-gray">
+            <div class="header-lang-switcher flex order-1 mr-4 lg:flex lg:order-none lg:mr-0 font-gs-primary font-bold text-sm text-gs-slate-gray">
                 <LanguageSwitcher />
             </div>
 

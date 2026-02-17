@@ -22,24 +22,23 @@ const steps = [
 
 <section id="methodology" class="pb-gs-section-padding-y bg-gs-executive-white">
     <div class="w-full max-w-[1280px] mx-auto flex flex-col gap-gs-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gs-6">
+        <ul
+            class="w-full m-0 p-0 flex flex-wrap justify-center gap-gs-6 list-none"
+        >
             {
                 steps.map((step, index) => (
-                    <IconCard
-                        icon={step.icon}
-                        title={tr(`${step.key}.title`)}
-                        description={tr(`${step.key}.desc`)}
-                        class="relative"
-                    >
-                        <span
-                            slot="header-extras"
-                            class="absolute top-gs-3 right-gs-3 bg-gs-institutional-green text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white shadow-sm"
+                    <li class="list-none w-full md:w-[calc((100%-var(--spacing-gs-6))/2)] lg:w-[calc((100%-2*var(--spacing-gs-6))/3)] lg:max-w-[400px]">
+                        <IconCard
+                            icon={step.icon}
+                            title={tr(`${step.key}.title`)}
+                            description={tr(`${step.key}.desc`)}
+                            class="relative h-full"
                         >
-                            {index + 1}
-                        </span>
-                    </IconCard>
+                            <!-- Number removed as per request -->
+                        </IconCard>
+                    </li>
                 ))
             }
-        </div>
+        </ul>
     </div>
 </section>

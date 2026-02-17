@@ -37,7 +37,7 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
 >
   <main class="min-h-screen bg-gs-executive-white py-gs-section-padding-y">
     <section class="max-w-[1400px] mx-auto px-gs-2 md:px-gs-4">
-      <header class="text-center mb-gs-10">
+      <header class="text-center mb-[120px]">
         <h1
           class="text-gs-h1 text-gs-institutional-green font-bold mb-gs-3 font-gs-primary"
         >
@@ -59,7 +59,7 @@ const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
       <ProjectFilters lang={lang as "bg" | "en"} terrainTypes={terrainTypes} />
 
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gs-6 mb-gs-12"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gs-6 mb-[120px]"
       >
         {
           sortedProjects.map((project) => {

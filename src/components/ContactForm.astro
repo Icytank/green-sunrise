@@ -42,8 +42,11 @@ const t = translations[lang];
 ---
 
 <!-- Turnstile Script -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer
-></script>
+<script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer
+  is:inline></script>
 
 <form
   id="cs-form"
@@ -199,90 +202,56 @@ const t = translations[lang];
 <script>
   import { handleSubmit } from "./ContactFormLogic";
 
-  const initTurnstile = () => {
-    const form = document.getElementById("cs-form") as HTMLFormElement;
-    const statusMessage = form?.querySelector("#status-message") as HTMLElement;
-    const submitBtn = form?.querySelector(
-      'button[type="submit"]',
-    ) as HTMLButtonElement;
-    const turnstileContainer = form?.querySelector(
-      ".cf-turnstile",
-    ) as HTMLElement;
+  const form = document.getElementById("cs-form") as HTMLFormElement;
+  const statusMessage = form?.querySelector("#status-message") as HTMLElement;
+  const submitBtn = form?.querySelector(
+    'button[type="submit"]',
+  ) as HTMLButtonElement;
 
-    if (form) {
-      // Re-initialize Turnstile if needed (for View Transitions)
-      if ((window as any).turnstile && turnstileContainer) {
-        // If the element is empty, we render.
-        // Note: The script tag in HTML body might trigger auto-render on first load.
-        // But on navigation, we need to handle it.
-        // Check if it's already rendered? Turnstile replaces the content?
-        // Simplest is to just call render if waiting.
-        try {
-          (window as any).turnstile.render(turnstileContainer, {
-            sitekey: turnstileContainer.dataset.sitekey,
-            callback: function (token: string) {
-              // optional: handle success
-            },
-            "error-callback": function () {
-              (window as any).onTurnstileError();
-            },
-          });
-        } catch (e) {
-          // It might throw if already rendered or verifying.
-          // We can ignore or handle gracefully.
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = form.getAttribute("data-sending") || "...";
+
+        const formData = new FormData(form);
+        const result = await handleSubmit(formData);
+
+        if (result.success) {
+          form.reset();
+          if ((window as any).turnstile) (window as any).turnstile.reset();
+          if (statusMessage) {
+            statusMessage.innerText =
+              form.getAttribute("data-success") || "Success";
+            statusMessage.className = "text-[#064E3B] text-gs-lg";
+          }
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+        } else {
+          if (statusMessage) {
+            statusMessage.innerText =
+              form.getAttribute("data-error") || "Error";
+            statusMessage.className = "text-gs-secondary text-gs-lg";
+          }
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
         }
       }
+    });
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          const originalText = submitBtn.innerText;
-          submitBtn.innerText = form.getAttribute("data-sending") || "...";
-
-          const formData = new FormData(form);
-          const result = await handleSubmit(formData);
-
-          if (result.success) {
-            form.reset();
-            if ((window as any).turnstile) (window as any).turnstile.reset(); // Reset widget
-            if (statusMessage) {
-              statusMessage.innerText =
-                form.getAttribute("data-success") || "Success";
-              statusMessage.className = "text-[#064E3B] text-gs-lg";
-            }
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-          } else {
-            if (statusMessage) {
-              statusMessage.innerText =
-                form.getAttribute("data-error") || "Error";
-              statusMessage.className = "text-gs-secondary text-gs-lg";
-            }
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-          }
-        }
-      });
-
-      (window as any).onTurnstileError = function () {
-        if (statusMessage) {
-          statusMessage.innerText =
-            form.getAttribute("data-error") ||
-            "Security check failed. Please refresh.";
-          statusMessage.className = "text-gs-secondary text-gs-lg";
-          if (submitBtn) submitBtn.disabled = true;
-        }
-      };
-    }
-  };
-
-  // Run on initial load
-  initTurnstile();
-
-  // Run on View Transition navigation
-  document.addEventListener("astro:page-load", initTurnstile);
+    (window as any).onTurnstileError = function () {
+      if (statusMessage) {
+        statusMessage.innerText =
+          form.getAttribute("data-error") ||
+          "Security check failed. Please refresh.";
+        statusMessage.className = "text-gs-secondary text-gs-lg";
+        if (submitBtn) submitBtn.disabled = true;
+      }
+    };
+  }
 </script>
 
 <style>

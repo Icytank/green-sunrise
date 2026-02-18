@@ -25,100 +25,52 @@ const optimizedImage = await getImage({ src: landingImage, format: "webp" });
 
 // Data
 const teamMembers = await getCollection("teams", ({ id }) => {
-    return id.startsWith(`${lang}/`);
+	return id.startsWith(`${lang}/`);
 });
 ---
 
-
-<BaseLayout 
-    lang={lang} 
-    title={t('about.intro.pageTitle' as any, lang)} 
-    description={t('about.intro.pageDescription' as any, lang)} 
-    heroImage={optimizedImage}
+<BaseLayout
+	lang={lang}
+	title={t("about.intro.pageTitle" as any, lang)}
+	description={t("about.intro.pageDescription" as any, lang)}
+	heroImage={optimizedImage}
 >
-	<Banner title={lang === 'bg' ? 'За нас' : 'About Us'} image={optimizedImage} imagePosition="center 42%" />
+	<Banner image={optimizedImage} imagePosition="center 42%" />
 
-    <AboutIntro lang={lang} />
-    <AboutMission lang={lang} />
-    <AboutValues lang={lang} />
+	<AboutIntro lang={lang} />
+	<AboutMission lang={lang} />
+	<AboutValues lang={lang} />
 
-	<section id="team" class="team-section">
-		<div class="container">
-			<SectionHeader 
-				label={t('team.label', lang)}
-				title={t('team.title', lang)}
-				description={t('team.subtitle', lang)}
+	<section
+		id="team"
+		class="py-gs-section-padding-y bg-gs-executive-white px-4"
+	>
+		<div class="w-full max-w-[1280px] mx-auto">
+			<SectionHeader
+				label={t("team.label", lang)}
+				title={t("team.title", lang)}
+				description={t("team.subtitle", lang)}
 				align="center"
 				withStamp={false}
 			/>
-			<div class="team-grid">
-				{teamMembers.map((member) => (
-					<div class="team-member-wrapper">
-						<TeamMember 
-							name={member.data.name}
-							role={member.data.role}
-							certifications={member.data.certifications}
-							yearsExperience={member.data.yearsExperience}
-							verified={member.data.verified}
-							avatar={member.data.avatar}
-							lang={lang}
-						/>
-					</div>
-				))}
+			<div class="flex flex-wrap justify-center gap-gs-4 md:gap-gs-6">
+				{
+					teamMembers.map((member, index) => (
+						<div class="w-full max-w-[350px] flex-1 basis-[280px]">
+							<TeamMember
+								name={member.data.name}
+								role={member.data.role}
+								certifications={member.data.certifications}
+								yearsExperience={member.data.yearsExperience}
+								verified={member.data.verified}
+								avatar={member.data.avatar}
+								lang={lang}
+								animationDelay={index * 100}
+							/>
+						</div>
+					))
+				}
 			</div>
 		</div>
 	</section>
 </BaseLayout>
-
-<style>
-	.team-section {
-		padding: var(--gs-section-padding);
-		background: var(--gs-background);
-	}
-
-	.container {
-		max-width: 1280px;
-		margin: 0 auto;
-		padding: 0 var(--gs-space-2);
-	}
-
-	.section-header {
-		text-align: center;
-		margin-bottom: var(--gs-space-6);
-	}
-
-	.section-title {
-		font-size: var(--gs-text-h2);
-		color: var(--gs-institutional-green);
-		margin-bottom: var(--gs-space-2);
-		font-weight: 800;
-	}
-
-	.section-subtitle {
-		font-size: var(--gs-text-base);
-		color: var(--gs-slate-gray);
-		max-width: 600px;
-		margin: 0 auto;
-		line-height: 1.6;
-	}
-
-	.team-grid {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		text-align: center;
-		gap: var(--gs-space-4);
-	}
-	
-	.team-member-wrapper {
-		width: 100%;
-		max-width: 350px; /* Nice card width */
-		flex: 1 1 280px; /* Responsive: grow/shrink, base width */
-	}
-
-	@media (min-width: 768px) {
-		.team-grid {
-			gap: var(--gs-space-6);
-		}
-	}
-</style>

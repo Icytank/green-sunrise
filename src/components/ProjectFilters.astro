@@ -2,7 +2,7 @@
 /**
  * PROJECT FILTERS COMPONENT
  * ========================
- * 
+ *
  * Client-side filtering for project gallery.
  * Zero-lag instant filtering without page reloads.
  */
@@ -25,7 +25,7 @@ const t = {
     smallScale: "100 - 500 kWp",
     mediumScale: "500 kWp - 1 MW",
     largeScale: "> 1 MW",
-    clearFilters: "Изчисти филтрите"
+    clearFilters: "Изчисти филтрите",
   },
   en: {
     allTerrain: "All Terrain",
@@ -36,29 +36,44 @@ const t = {
     smallScale: "100 - 500 kWp",
     mediumScale: "500 kWp - 1 MW",
     largeScale: "> 1 MW",
-    clearFilters: "Clear Filters"
-  }
+    clearFilters: "Clear Filters",
+  },
 };
 
 const labels = t[lang];
 ---
 
-<div class="project-filters" id="project-filters">
+<div
+  class="flex flex-wrap gap-gs-4 items-end mb-gs-8 p-gs-4 bg-gs-executive-white border border-gs-slate-gray/20 rounded-lg sm:flex-row flex-col sm:items-end items-stretch"
+  id="project-filters"
+>
   <!-- Terrain Filter -->
-  <div class="filter-group">
-    <label class="filter-label" for="terrain-filter">{labels.terrain}</label>
-    <select id="terrain-filter" class="filter-select" aria-label={labels.terrain}>
+  <div class="flex flex-col gap-gs-1 min-w-[160px] flex-1 sm:flex-none">
+    <label
+      class="text-gs-xs uppercase tracking-widest text-gs-slate-gray font-bold"
+      for="terrain-filter">{labels.terrain}</label
+    >
+    <select
+      id="terrain-filter"
+      class="p-gs-2 border border-gs-slate-gray/20 rounded-md bg-white text-gs-sm text-gs-text-primary cursor-pointer transition-all duration-200 hover:border-gs-institutional-green focus:outline-none focus:border-gs-institutional-green focus:ring-2 focus:ring-gs-institutional-green/15"
+      aria-label={labels.terrain}
+    >
       <option value="">{labels.allTerrain}</option>
-      {terrainTypes.map((type) => (
-        <option value={type}>{type}</option>
-      ))}
+      {terrainTypes.map((type) => <option value={type}>{type}</option>)}
     </select>
   </div>
 
   <!-- Capacity Filter -->
-  <div class="filter-group">
-    <label class="filter-label" for="capacity-filter">{labels.capacity}</label>
-    <select id="capacity-filter" class="filter-select font-mono" aria-label={labels.capacity}>
+  <div class="flex flex-col gap-gs-1 min-w-[160px] flex-1 sm:flex-none">
+    <label
+      class="text-gs-xs uppercase tracking-widest text-gs-slate-gray font-bold"
+      for="capacity-filter">{labels.capacity}</label
+    >
+    <select
+      id="capacity-filter"
+      class="p-gs-2 border border-gs-slate-gray/20 rounded-md bg-white text-gs-sm text-gs-text-primary cursor-pointer transition-all duration-200 hover:border-gs-institutional-green focus:outline-none focus:border-gs-institutional-green focus:ring-2 focus:ring-gs-institutional-green/15 font-gs-mono"
+      aria-label={labels.capacity}
+    >
       <option value="">{labels.allCapacity}</option>
       <option value="micro">{labels.microScale}</option>
       <option value="small">{labels.smallScale}</option>
@@ -68,17 +83,29 @@ const labels = t[lang];
   </div>
 
   <!-- Clear Filters -->
-  <button id="clear-filters" class="clear-btn" type="button" aria-label={labels.clearFilters}>
+  <button
+    id="clear-filters"
+    class="ml-auto px-gs-4 py-gs-2 border border-gs-slate-gray/20 rounded-md bg-transparent text-gs-sm text-gs-slate-gray cursor-pointer transition-all duration-200 hover:border-gs-institutional-green hover:text-gs-institutional-green disabled:opacity-50 disabled:cursor-not-allowed group"
+    type="button"
+    aria-label={labels.clearFilters}
+  >
     {labels.clearFilters}
   </button>
 </div>
 
 <script>
   function initFilters() {
-    const terrainFilter = document.getElementById('terrain-filter') as HTMLSelectElement;
-    const capacityFilter = document.getElementById('capacity-filter') as HTMLSelectElement;
-    const clearBtn = document.getElementById('clear-filters');
-    const projectCards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
+    const terrainFilter = document.getElementById(
+      "terrain-filter",
+    ) as HTMLSelectElement;
+    const capacityFilter = document.getElementById(
+      "capacity-filter",
+    ) as HTMLSelectElement;
+    const clearBtn = document.getElementById("clear-filters");
+    // Map project-card to a constant class for JS hook
+    const projectCards = document.querySelectorAll(
+      "a[data-terrain]",
+    ) as NodeListOf<HTMLElement>;
 
     if (!terrainFilter || !capacityFilter || !clearBtn) return;
 
@@ -87,158 +114,92 @@ const labels = t[lang];
       const capacity = capacityFilter.value;
 
       projectCards.forEach((card) => {
-        const cardTerrain = card.dataset.terrain || '';
-        const cardCapacity = parseFloat(card.dataset.capacity || '0');
+        const cardTerrain = card.dataset.terrain || "";
+        const cardCapacity = parseFloat(card.dataset.capacity || "0");
 
         let terrainMatch = !terrain || cardTerrain === terrain;
         let capacityMatch = true;
 
-        if (capacity === 'micro') {
+        if (capacity === "micro") {
           capacityMatch = cardCapacity < 0.1; // < 100 kWp
-        } else if (capacity === 'small') {
+        } else if (capacity === "small") {
           capacityMatch = cardCapacity >= 0.1 && cardCapacity < 0.5; // 100-500 kWp
-        } else if (capacity === 'medium') {
+        } else if (capacity === "medium") {
           capacityMatch = cardCapacity >= 0.5 && cardCapacity <= 1.0; // 500-1MW
-        } else if (capacity === 'large') {
+        } else if (capacity === "large") {
           capacityMatch = cardCapacity > 1.0; // > 1 MW
         }
 
         if (terrainMatch && capacityMatch) {
-          card.style.display = '';
-          card.style.opacity = '1';
-          card.style.transform = '';
+          card.style.display = "flex";
         } else {
-          card.style.display = 'none';
+          card.style.display = "none";
         }
       });
 
-      // Update active filter states
       updateActiveStates();
     }
 
     function updateActiveStates() {
-      const hasActiveFilter = terrainFilter.value || capacityFilter.value;
-      clearBtn!.classList.toggle('active', hasActiveFilter as unknown as boolean);
-      
-      terrainFilter.classList.toggle('filter-active', !!terrainFilter.value);
-      capacityFilter.classList.toggle('filter-active', !!capacityFilter.value);
+      const hasActiveFilter = !!(terrainFilter.value || capacityFilter.value);
+
+      if (hasActiveFilter) {
+        clearBtn!.classList.add(
+          "bg-gs-institutional-green",
+          "text-white",
+          "border-gs-institutional-green",
+        );
+        clearBtn!.classList.remove(
+          "bg-transparent",
+          "text-gs-slate-gray",
+          "border-gs-slate-gray/20",
+        );
+      } else {
+        clearBtn!.classList.remove(
+          "bg-gs-institutional-green",
+          "text-white",
+          "border-gs-institutional-green",
+        );
+        clearBtn!.classList.add(
+          "bg-transparent",
+          "text-gs-slate-gray",
+          "border-gs-slate-gray/20",
+        );
+      }
+
+      [terrainFilter, capacityFilter].forEach((select) => {
+        if (select.value) {
+          select.classList.add(
+            "border-gs-institutional-green",
+            "bg-gs-institutional-green/5",
+            "text-gs-institutional-green",
+            "font-bold",
+          );
+        } else {
+          select.classList.remove(
+            "border-gs-institutional-green",
+            "bg-gs-institutional-green/5",
+            "text-gs-institutional-green",
+            "font-bold",
+          );
+        }
+      });
     }
 
     function clearFilters() {
-      terrainFilter.value = '';
-      capacityFilter.value = '';
+      terrainFilter.value = "";
+      capacityFilter.value = "";
       filterProjects();
     }
 
-    // Event listeners
-    terrainFilter.addEventListener('change', filterProjects);
-    capacityFilter.addEventListener('change', filterProjects);
-    clearBtn.addEventListener('click', clearFilters);
+    terrainFilter.addEventListener("change", filterProjects);
+    capacityFilter.addEventListener("change", filterProjects);
+    clearBtn.addEventListener("click", clearFilters);
+
+    // Initial state
+    updateActiveStates();
   }
 
-  // Initialize on load and after Astro transitions
   initFilters();
-  document.addEventListener('astro:after-swap', initFilters);
+  document.addEventListener("astro:after-swap", initFilters);
 </script>
-
-<style>
-  .project-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gs-space-4);
-    align-items: flex-end;
-    margin-bottom: var(--gs-space-8);
-    padding: var(--gs-space-4);
-    background: var(--gs-executive-white);
-    border: 1px solid var(--gs-border);
-    border-radius: 8px;
-  }
-
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gs-space-1);
-    min-width: 160px;
-  }
-
-  .filter-label {
-    font-size: var(--gs-text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--gs-slate-gray);
-    font-weight: 600;
-  }
-
-  .filter-select {
-    padding: var(--gs-space-2) var(--gs-space-3);
-    border: 1px solid var(--gs-border);
-    border-radius: 6px;
-    background: white;
-    font-size: var(--gs-text-sm);
-    color: var(--gs-text-primary);
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .filter-select:hover {
-    border-color: var(--gs-institutional-green);
-  }
-
-  .filter-select:focus {
-    outline: none;
-    border-color: var(--gs-institutional-green);
-    box-shadow: 0 0 0 3px rgba(6, 78, 59, 0.15);
-  }
-
-  /* Active filter state (AC6) */
-  .filter-select.filter-active {
-    border-color: var(--gs-institutional-green);
-    background: rgba(6, 78, 59, 0.05);
-    color: var(--gs-institutional-green);
-    font-weight: 600;
-  }
-
-  .font-mono {
-    font-family: var(--gs-font-mono);
-  }
-
-  .clear-btn {
-    padding: var(--gs-space-2) var(--gs-space-4);
-    border: 1px solid var(--gs-border);
-    border-radius: 6px;
-    background: transparent;
-    font-size: var(--gs-text-sm);
-    color: var(--gs-slate-gray);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-left: auto;
-  }
-
-  .clear-btn:hover {
-    border-color: var(--gs-institutional-green);
-    color: var(--gs-institutional-green);
-  }
-
-  .clear-btn.active {
-    background: var(--gs-institutional-green);
-    color: white;
-    border-color: var(--gs-institutional-green);
-  }
-
-  /* Responsive */
-  @media (max-width: 640px) {
-    .project-filters {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .filter-group {
-      width: 100%;
-    }
-
-    .clear-btn {
-      margin-left: 0;
-      width: 100%;
-    }
-  }
-</style>

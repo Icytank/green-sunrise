@@ -8,7 +8,7 @@ import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
 export const prerender = true;
 export function getStaticPaths() {
-	return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
+  return [{ params: { lang: "bg" } }, { params: { lang: "en" } }];
 }
 
 const { lang } = Astro.params;
@@ -19,126 +19,80 @@ const allProjects = await getCollection("projects", ({ id }) => {
 });
 
 // Sort by capacity (highest first) for impact
-const sortedProjects = allProjects.sort((a, b) => b.data.capacityMW - a.data.capacityMW);
+const sortedProjects = allProjects.sort(
+  (a, b) => b.data.capacityMW - a.data.capacityMW,
+);
 
 // Extract unique terrain types for filter dropdown
-const terrainTypes = [...new Set(allProjects.map(p => p.data.terrainType))];
+const terrainTypes = [...new Set(allProjects.map((p) => p.data.terrainType))];
 ---
 
-<BaseLayout 
+<BaseLayout
   lang={lang}
-  title={t("projects.pageTitle" as TranslationKey, lang as 'bg' | 'en')}
-  description={t("projects.pageDescription" as TranslationKey, lang as 'bg' | 'en')}
+  title={t("projects.pageTitle" as TranslationKey, lang as "bg" | "en")}
+  description={t(
+    "projects.pageDescription" as TranslationKey,
+    lang as "bg" | "en",
+  )}
 >
-  <main class="projects-page">
-    <section class="container">
-      <header class="page-header">
-        <h1 class="font-display">{t("projects.title" as TranslationKey, lang as 'bg' | 'en')}</h1>
-        <p class="subtitle">{t("projects.methodology.intro" as TranslationKey, lang as 'bg' | 'en')}</p>
+  <main class="min-h-screen bg-gs-executive-white py-gs-section-padding-y">
+    <section class="max-w-[1400px] mx-auto px-gs-2 md:px-gs-4">
+      <header class="text-center mb-[120px]">
+        <h1
+          class="text-gs-h1 text-gs-institutional-green font-bold mb-gs-3 font-gs-primary"
+        >
+          {t("projects.title" as TranslationKey, lang as "bg" | "en")}
+        </h1>
+        <p
+          class="text-gs-h5 text-gs-slate-gray max-w-[700px] mx-auto leading-gs-leading-body"
+        >
+          {
+            t(
+              "projects.methodology.intro" as TranslationKey,
+              lang as "bg" | "en",
+            )
+          }
+        </p>
       </header>
 
       <!-- Project Filters -->
-      <ProjectFilters lang={lang as 'bg' | 'en'} terrainTypes={terrainTypes} />
+      <ProjectFilters lang={lang as "bg" | "en"} terrainTypes={terrainTypes} />
 
-      <div class="projects-grid">
-        {sortedProjects.map((project) => {
-          const slug = project.data.custom_slug || project.id.split("/").slice(1).join("/").replace(/\.md$/, '');
-          return (
-            <ProjectCard
-              title={project.data.title}
-              capacityMW={project.data.capacityMW}
-              location={project.data.location}
-              terrainType={project.data.terrainType}
-              heroImage={project.data.heroImage}
-              slug={slug}
-              lang={lang as "bg" | "en"}
-              isVerified={project.data.isVerified}
-            />
-          );
-        })}
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gs-6 mb-[120px]"
+      >
+        {
+          sortedProjects.map((project, index) => {
+            const slug =
+              project.data.custom_slug ||
+              project.id.split("/").slice(1).join("/").replace(/\.md$/, "");
+            return (
+              <ProjectCard
+                title={project.data.title}
+                capacityMW={project.data.capacityMW}
+                location={project.data.location}
+                terrainType={project.data.terrainType}
+                heroImage={project.data.heroImage}
+                slug={slug}
+                lang={lang as "bg" | "en"}
+                isVerified={project.data.isVerified}
+                animationDelay={(index % 4) * 100}
+              />
+            );
+          })
+        }
       </div>
 
-      <div class="approach-header">
-        <h2 class="font-display">{t("projects.approachTitle" as TranslationKey, lang as 'bg' | 'en')}</h2>
+      <div class="text-center mb-gs-8">
+        <h2
+          class="text-gs-h2 text-gs-institutional-green font-bold m-0 font-gs-primary"
+          data-aos="fade-up"
+        >
+          {t("projects.approachTitle" as TranslationKey, lang as "bg" | "en")}
+        </h2>
       </div>
 
-      <ProjectMethodology lang={lang as 'bg' | 'en'} />
+      <ProjectMethodology lang={lang as "bg" | "en"} />
     </section>
-
-
   </main>
 </BaseLayout>
-
-<style>
-  .projects-page {
-    padding: var(--gs-section-padding);
-    background-color: var(--gs-executive-white);
-    min-height: 100vh;
-  }
-
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--gs-space-4);
-  }
-
-  .page-header {
-    text-align: center;
-    margin-bottom: var(--gs-space-10);
-  }
-
-  .font-display {
-    font-size: var(--gs-text-h1);
-    color: var(--gs-institutional-green);
-    margin-bottom: var(--gs-space-3);
-    font-family: var(--gs-font-primary);
-  }
-
-  .subtitle {
-    font-size: var(--gs-text-h5);
-    color: var(--gs-slate-gray);
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* CSS Grid: 12-column responsive layout (AC2) */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--gs-space-6);
-    margin-bottom: var(--gs-space-12);
-  }
-
-  /* Tablet: 2 columns */
-  @media (min-width: 768px) {
-    .projects-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  /* Desktop: 3 columns */
-  @media (min-width: 1024px) {
-    .projects-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  /* 4K: 4 columns */
-  @media (min-width: 1920px) {
-    .projects-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .approach-header {
-    text-align: center;
-    margin-bottom: var(--gs-space-8);
-  }
-
-  .approach-header .font-display {
-    font-size: var(--gs-text-h2);
-    margin-bottom: 0;
-  }
-</style>
-

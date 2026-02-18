@@ -2,7 +2,7 @@
 import { t, type TranslationKey } from "src/utils/i18n-helpers";
 
 interface Props {
-  lang: "bg" | "en";
+    lang: "bg" | "en";
 }
 
 const { lang } = Astro.props;
@@ -11,60 +11,35 @@ const { lang } = Astro.props;
 const tr = (key: string) => t(`about.${key}` as TranslationKey, lang);
 ---
 
-<section id="mission-vision">
-    <div class="cs-container">
+<section id="mission-vision" class="px-gs-2 pb-gs-section-padding-y">
+    <div
+        class="w-full max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-gs-5"
+    >
         <!-- Mission -->
-        <div class="cs-card">
-            <h3 class="cs-h3">{tr("mission.title")}</h3>
-            <p class="cs-text">{tr("mission.text")}</p>
+        <div
+            class="bg-gs-executive-white p-8 sm:p-gs-6 pl-10 sm:pl-gs-5 rounded-lg border-l-4 border-gs-institutional-green shadow-sm"
+            data-aos="fade-up"
+        >
+            <h3 class="text-gs-h4 font-bold text-gs-institutional-green mb-4">
+                {tr("mission.title")}
+            </h3>
+            <p class="text-gs-base text-gs-secondary leading-relaxed m-0">
+                {tr("mission.text")}
+            </p>
         </div>
 
         <!-- Vision -->
-        <div class="cs-card">
-            <h3 class="cs-h3">{tr("vision.title")}</h3>
-            <p class="cs-text">{tr("vision.text")}</p>
+        <div
+            class="bg-gs-executive-white p-8 sm:p-gs-6 pl-10 sm:pl-gs-5 rounded-lg border-l-4 border-gs-institutional-green shadow-sm"
+            data-aos="fade-up"
+            data-aos-delay="200"
+        >
+            <h3 class="text-gs-h4 font-bold text-gs-institutional-green mb-4">
+                {tr("vision.title")}
+            </h3>
+            <p class="text-gs-base text-gs-secondary leading-relaxed m-0">
+                {tr("vision.text")}
+            </p>
         </div>
     </div>
 </section>
-
-<style lang="less">
-    #mission-vision {
-        padding: 0 var(--gs-space-2) var(--gs-section-padding) var(--gs-space-2);
-    }
-
-    .cs-container {
-        width: 100%;
-        max-width: (1024/16rem);
-        margin: auto;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--gs-space-6);
-
-        @media only screen and (min-width: 48rem) {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    .cs-card {
-        background-color: var(--gs-executive-white);
-        padding: var(--gs-space-6);
-        border-radius: 8px;
-        border-left: 4px solid var(--gs-institutional-green);
-        /* Subtle shadow */
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    }
-
-    .cs-h3 {
-        font-size: var(--gs-text-h4);
-        font-weight: 700;
-        color: var(--gs-institutional-green);
-        margin-bottom: var(--gs-space-2);
-    }
-
-    .cs-text {
-        font-size: var(--gs-text-base);
-        color: var(--gs-text-secondary);
-        line-height: var(--gs-leading-relaxed);
-        margin: 0;
-    }
-</style>

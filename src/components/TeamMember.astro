@@ -7,28 +7,43 @@ import { t } from "../utils/i18n-helpers";
 
 interface Props extends TeamMemberProps {
     avatar: ImageMetadata;
+    animationDelay?: number;
 }
 
-const { name, role, certifications, yearsExperience, verified, lang, avatar } =
-    Astro.props;
+const {
+    name,
+    role,
+    certifications,
+    yearsExperience,
+    verified,
+    lang,
+    avatar,
+    animationDelay = 0,
+} = Astro.props;
 
 const formattedExperience = formatExperience(yearsExperience);
 const filteredCertifications = processCertifications(certifications);
 ---
 
-<div class="team-member-card">
-    <div class="image-container">
+<div
+    class="bg-white border border-gs-slate-gray/20 p-4 sm:p-gs-3 flex flex-col gap-gs-3 h-full transition-all duration-300 relative hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(6,78,59,0.1)] hover:border-gs-institutional-green rounded-xl"
+    data-aos="fade-up"
+    data-aos-delay={animationDelay}
+>
+    <div
+        class="relative w-full aspect-square overflow-hidden bg-gs-slate-gray border border-gs-slate-gray/10 rounded-lg"
+    >
         <Image
             src={avatar}
             alt={name}
             width={400}
             height={400}
-            class="avatar"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
         {
             verified && (
                 <div
-                    class="stamp-overlay"
+                    class="absolute -top-[10px] -right-[10px] z-[2] -rotate-[5deg] drop-shadow-md"
                     title={t("team.verifiedProfile", lang)}
                     aria-label={t("team.verifiedProfile", lang)}
                 >
@@ -37,22 +52,36 @@ const filteredCertifications = processCertifications(certifications);
             )
         }
     </div>
-    <div class="info">
-        <h3 class="name">{name}</h3>
-        <p class="role">{role}</p>
-        <div class="experience">
-            <span class="exp-label">{t("team.experience", lang)}:</span>
-            <span class="exp-value"
+    <div class="flex flex-col gap-gs-1 text-left px-1">
+        <h3
+            class="text-gs-h5 font-bold text-gs-institutional-green m-0 leading-tight"
+        >
+            {name}
+        </h3>
+        <p
+            class="text-gs-xs font-bold text-gs-slate-gray uppercase tracking-[0.1em] m-0"
+        >
+            {role}
+        </p>
+        <div class="mt-gs-1 text-gs-sm flex gap-gs-1 items-center">
+            <span class="font-bold text-gs-text-primary"
+                >{t("team.experience", lang)}:</span
+            >
+            <span class="text-gs-slate-gray font-gs-mono"
                 >{formattedExperience} {t("team.yearsSuffix", lang)}</span
             >
         </div>
         {
             filteredCertifications.length > 0 && (
-                <div class="certifications">
-                    <h4 class="cert-title">{t("team.certifications", lang)}</h4>
-                    <ul class="cert-list">
+                <div class="mt-gs-2 pt-gs-2 border-t border-gs-slate-gray/20">
+                    <h4 class="text-gs-xs font-extrabold uppercase text-gs-institutional-green mb-gs-1 font-gs-primary">
+                        {t("team.certifications", lang)}
+                    </h4>
+                    <ul class="list-none p-0 m-0 flex flex-col gap-[6px]">
                         {filteredCertifications.map((cert) => (
-                            <li>{cert}</li>
+                            <li class="text-gs-xs leading-tight text-gs-text-primary relative pl-[14px] font-medium before:content-['•'] before:absolute before:left-0 before:text-gs-success-emerald before:font-bold">
+                                {cert}
+                            </li>
                         ))}
                     </ul>
                 </div>
@@ -60,129 +89,3 @@ const filteredCertifications = processCertifications(certifications);
         }
     </div>
 </div>
-
-<style>
-    .team-member-card {
-        background: var(--gs-executive-white);
-        border: 1px solid var(--gs-border);
-        padding: var(--gs-space-3);
-        display: flex;
-        flex-direction: column;
-        gap: var(--gs-space-3);
-        height: 100%;
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-        position: relative;
-    }
-
-    .team-member-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(6, 78, 59, 0.1);
-        border-color: var(--gs-institutional-green);
-    }
-
-    .image-container {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 1;
-        overflow: hidden;
-        background: var(--gs-slate-gray);
-        border: 1px solid var(--gs-border);
-    }
-
-    .avatar {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .stamp-overlay {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        z-index: 2;
-        transform: rotate(-5deg);
-    }
-
-    .info {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gs-space-1);
-    }
-
-    .name {
-        font-size: var(--gs-text-h5);
-        font-weight: 700;
-        color: var(--gs-institutional-green);
-        margin: 0;
-        line-height: 1.2;
-    }
-
-    .role {
-        font-size: var(--gs-text-xs);
-        font-weight: 700;
-        color: var(--gs-slate-gray);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin: 0;
-    }
-
-    .experience {
-        margin-top: var(--gs-space-1);
-        font-size: var(--gs-text-sm);
-        display: flex;
-        gap: var(--gs-space-1);
-    }
-
-    .exp-label {
-        font-weight: 700;
-        color: var(--gs-text-primary);
-    }
-
-    .exp-value {
-        color: var(--gs-slate-gray);
-        font-family: var(--gs-font-mono);
-    }
-
-    .certifications {
-        margin-top: var(--gs-space-2);
-        padding-top: var(--gs-space-2);
-        border-top: 1px solid var(--gs-border);
-    }
-
-    .cert-title {
-        font-size: var(--gs-text-xs);
-        font-weight: 800;
-        text-transform: uppercase;
-        color: var(--gs-institutional-green);
-        margin-bottom: var(--gs-space-1);
-        font-family: var(--gs-font-primary);
-    }
-
-    .cert-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .cert-list li {
-        font-size: var(--gs-text-xs);
-        line-height: 1.3;
-        color: var(--gs-text-primary);
-        position: relative;
-        padding-left: 14px;
-        font-weight: 500;
-    }
-
-    .cert-list li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: var(--gs-success-emerald);
-        font-weight: bold;
-    }
-</style>

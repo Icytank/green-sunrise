@@ -1,173 +1,72 @@
-/* Google Fonts Import */
-/* Google Fonts moved to BaseLayout.astro for performance */
+@import "tailwindcss";
 
-/* Modern CSS Reset */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
+@theme {
+    --color-gs-institutional-green: #064E3B;
+    --color-gs-slate-gray: #334155;
+    --color-gs-executive-white: #F8FAFC;
+    --color-gs-success-emerald: #10B981;
+    --color-gs-surface-secondary: #f1f5f9;
+    --color-gs-text-primary: #0F172A;
+    --color-gs-deep-navy-slate: #0F172A;
+    --color-gs-secondary: #475569;
+
+    --spacing-gs-1: 8px;
+    --spacing-gs-2: 16px;
+    --spacing-gs-3: 24px;
+    --spacing-gs-4: 32px;
+    --spacing-gs-5: 40px;
+    --spacing-gs-6: 48px;
+    --spacing-gs-8: 64px;
+    --spacing-gs-header-height: var(--gs-header-height);
+    --spacing-gs-section-padding-y: clamp(3.75rem, 7.82vw, 6.25rem);
+
+    --font-gs-primary: 'Inter', system-ui, sans-serif;
+    --font-gs-mono: 'Geist Mono', monospace;
+
+    --text-gs-h1: 3.052rem;
+    --text-gs-h2: 2.441rem;
+    --text-gs-h3: 1.953rem;
+    --text-gs-h4: 1.563rem;
+    --text-gs-h5: 1.25rem;
+    --text-gs-base: 1rem;
+    --text-gs-sm: 0.8rem;
+    --text-gs-xs: 0.64rem;
+
+    --leading-gs-leading-body: 1.6;
 }
 
-* {
-    margin: 0;
-}
-
-body {
-    line-height: var(--gs-leading-body);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-html {
-    scroll-padding-top: var(--gs-header-height);
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
-}
-
-#root,
-#__next {
-    isolation: isolate;
-}
-
-/* Main content stacking context - ensures page content stays below fixed header */
-main#main {
-    position: relative;
-    z-index: 1;
-    /* Below header z-index (10000) */
-    isolation: isolate;
-    /* Creates stacking context for all page content */
-    padding-top: var(--gs-header-height);
-}
-
-/* Sections that should extend behind the fixed header (Hero, Banners) */
-#hero,
-#int-hero {
-    margin-top: calc(-1 * var(--gs-header-height));
-}
-
-/* Reduced Motion */
-@media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
+/* Base Styles handled by Tailwind or standard resets */
+@layer base {
+    body {
+        @apply font-gs-primary bg-gs-executive-white text-gs-text-primary leading-[1.6];
     }
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-gs-primary font-bold;
     }
-}
 
-/* Base Styles using Design Tokens */
-body {
-    background-color: var(--gs-surface);
-    color: var(--gs-text-primary);
-    font-family: var(--gs-font-primary);
-    font-size: var(--gs-text-base);
-}
+    h1 {
+        @apply text-gs-h1;
+    }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--gs-font-primary);
-    /* color is inherited or set explicitly if needed, but text-primary covers it usually */
-}
+    h2 {
+        @apply text-gs-h2;
+    }
 
-h1 {
-    font-size: var(--gs-text-h1);
-    line-height: var(--gs-leading-heading);
-}
+    h3 {
+        @apply text-gs-h3;
+    }
 
-h2 {
-    font-size: var(--gs-text-h2);
-    line-height: var(--gs-leading-subheading);
-}
+    h4 {
+        @apply text-gs-h4;
+    }
 
-h3 {
-    font-size: var(--gs-text-h3);
-    line-height: var(--gs-leading-subheading);
-}
-
-h4 {
-    font-size: var(--gs-text-h4);
-    line-height: var(--gs-leading-subheading);
-}
-
-h5 {
-    font-size: var(--gs-text-h5);
-    line-height: var(--gs-leading-subheading);
-}
-
-h6 {
-    font-size: var(--gs-text-base);
-    line-height: var(--gs-leading-subheading);
-}
-
-code,
-kbd,
-samp,
-pre {
-    font-family: var(--gs-font-mono);
-}
-
-/* Accessibility Utilities */
-.skip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateY(-100%);
-    z-index: 10001;
-    /* Above header */
-    opacity: 0;
-    overflow: hidden;
-    transition: transform 0.3s, opacity 0.3s;
-}
-
-.skip:focus {
-    transform: translateY(0);
-    opacity: 1;
-    padding: 1rem 1.5rem;
-    background-color: var(--gs-success-emerald);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-    outline: 2px solid var(--gs-success-emerald);
-    outline-offset: 2px;
+    h5 {
+        @apply text-gs-h5;
+    }
 }

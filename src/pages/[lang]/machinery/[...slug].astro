@@ -86,29 +86,41 @@ console.log("DBUG: Machinery optimized sources:", [
   title={title || model}
   description={`Technical audit and specifications for ${model}`}
 >
-  <article class="audit-narrative">
-    <header class="audit-header" id="int-hero">
-      <div class="container">
-        <h1 class="font-display">{title}</h1>
-        <p class="model-badge font-mono">{model}</p>
+  <article class="pb-gs-10">
+    <header
+      class="bg-gs-executive-white py-gs-12 md:py-gs-10 pb-gs-8 md:pb-gs-6 mb-gs-6 border-b border-gs-slate-gray/20"
+    >
+      <div class="max-w-[1400px] mx-auto px-gs-2">
+        <h1
+          class="text-gs-h2 text-gs-institutional-green font-gs-primary m-0 font-bold"
+        >
+          {title}
+        </h1>
+        <p
+          class="text-gs-slate-gray text-gs-h4 mt-gs-1 font-medium font-gs-mono"
+        >
+          {model}
+        </p>
       </div>
     </header>
 
-    <div class="audit-grid container">
+    <div
+      class="max-w-[1400px] mx-auto px-gs-2 grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-gs-6 lg:gap-gs-8"
+    >
       <!-- Left: Gallery -->
       <div class="gallery-section">
-        <div class="hero-image-wrapper">
+        <div class="relative rounded-xl overflow-hidden mb-gs-4 shadow-lg">
           <Image
             src={heroImage}
             alt={title}
             width={1200}
-            class="hero-image clickable-image"
+            class="w-full h-auto block cursor-zoom-in"
             data-full-src={optimizedHero.src}
           />
           {
             isOwned && (
               <div
-                class="stamp-overlay"
+                class="absolute bottom-gs-4 right-gs-4 z-10"
                 title={ownedBadgeLabel}
                 aria-label={ownedBadgeLabel}
               >
@@ -120,13 +132,13 @@ console.log("DBUG: Machinery optimized sources:", [
 
         {
           optimizedGallery && optimizedGallery.length > 0 && (
-            <div class="gallery-grid">
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-gs-2">
               {optimizedGallery.map((img, i) => (
                 <Image
                   src={img.original}
                   alt={`${title} detail ${i + 1}`}
                   width={300}
-                  class="gallery-thumb clickable-image"
+                  class="w-full h-[100px] object-cover rounded-md cursor-zoom-in transition-opacity hover:opacity-80"
                   data-full-src={img.src}
                 />
               ))}
@@ -137,47 +149,67 @@ console.log("DBUG: Machinery optimized sources:", [
 
       <!-- Right: Specs / Narrative -->
       <div class="info-section">
-        <section class="the-machine margin-bottom-4">
-          <h2 class="section-title">
+        <section class="mb-gs-4">
+          <h2
+            class="text-gs-h3 text-gs-text-primary mb-gs-4 border-l-4 border-gs-institutional-green pl-gs-2 font-bold"
+          >
             {t("machinery.theMachine", lang as "bg" | "en")}
           </h2>
-          <div class="prose">
+          <div class="leading-gs-leading-body text-gs-slate-gray text-gs-base">
             <Content />
           </div>
         </section>
 
         <section class="technical-specifications">
-          <h2 class="section-title">
+          <h2
+            class="text-gs-h3 text-gs-text-primary mb-gs-4 border-l-4 border-gs-institutional-green pl-gs-2 font-bold"
+          >
             {t("machinery.technicalSpecifications", lang as "bg" | "en")}
           </h2>
           <div class="specs-wrapper">
-            <dl class="specs-list font-mono">
-              <div class="spec-row">
-                <dt>{t("machinery.model", lang as "bg" | "en")}</dt>
-                <dd>{model}</dd>
+            <dl
+              class="bg-gs-executive-white border border-gs-slate-gray/20 rounded-lg overflow-hidden font-mono"
+            >
+              <div
+                class="flex justify-between p-gs-3 border-b border-gs-slate-gray/20"
+              >
+                <dt class="text-gs-secondary font-medium">
+                  {t("machinery.model", lang as "bg" | "en")}
+                </dt>
+                <dd class="text-gs-text-primary font-bold">{model}</dd>
               </div>
-              <div class="spec-row">
-                <dt>{t("machinery.weight", lang as "bg" | "en")}</dt>
-                <dd>{weight}</dd>
+              <div
+                class="flex justify-between p-gs-3 border-b border-gs-slate-gray/20"
+              >
+                <dt class="text-gs-secondary font-medium">
+                  {t("machinery.weight", lang as "bg" | "en")}
+                </dt>
+                <dd class="text-gs-text-primary font-bold">{weight}</dd>
               </div>
               {
                 impactPower && (
-                  <div class="spec-row">
-                    <dt>{t("machinery.impactPower", lang as "bg" | "en")}</dt>
-                    <dd>{impactPower}</dd>
+                  <div class="flex justify-between p-gs-3 border-b border-gs-slate-gray/20 last:border-b-0">
+                    <dt class="text-gs-secondary font-medium">
+                      {t("machinery.impactPower", lang as "bg" | "en")}
+                    </dt>
+                    <dd class="text-gs-text-primary font-bold">
+                      {impactPower}
+                    </dd>
                   </div>
                 )
               }
             </dl>
             {
               isOwned && (
-                <div class="ownership-declaration">
-                  <span class="ownership-indicator" />
-                  <div class="declaration-content">
-                    <div class="declaration-icon">
+                <div class="mt-gs-4 flex items-center gap-gs-3 p-gs-4 bg-gs-success-emerald/10 border border-gs-success-emerald border-l-4 rounded-lg">
+                  <span class="w-3 h-3 bg-gs-success-emerald rounded-full shrink-0 shadow-[0_0_8px_var(--gs-success-emerald)]" />
+                  <div class="flex items-center gap-gs-3">
+                    <div class="shrink-0 opacity-90">
                       <GSStamp size={40} />
                     </div>
-                    <p>{ownershipDeclaration}</p>
+                    <p class="m-0 text-gs-sm text-gs-institutional-green font-bold uppercase tracking-wider">
+                      {ownershipDeclaration}
+                    </p>
                   </div>
                 </div>
               )
@@ -189,9 +221,18 @@ console.log("DBUG: Machinery optimized sources:", [
   </article>
 
   <!-- Lightbox Modal -->
-  <div id="lightbox" class="lightbox">
-    <span class="close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img" />
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[1000] bg-gs-text-primary/95 flex items-center justify-center backdrop-blur-md hidden opacity-0 transition-opacity duration-300"
+  >
+    <span
+      class="absolute top-[30px] right-[35px] text-white text-[60px] font-bold cursor-pointer hover:text-gs-success-emerald leading-none select-none close"
+      >&times;</span
+    >
+    <img
+      class="max-w-[90%] max-h-[90%] rounded-lg shadow-2xl scale-90 transition-transform duration-300 lightbox-content"
+      id="lightbox-img"
+    />
   </div>
 </BaseLayout>
 
@@ -202,37 +243,52 @@ console.log("DBUG: Machinery optimized sources:", [
       "lightbox-img",
     ) as HTMLImageElement;
     const closeBtn = document.querySelector(".close");
-    const clickableImages = document.querySelectorAll(".clickable-image");
+    const clickableImages = document.querySelectorAll(".cursor-zoom-in");
 
     clickableImages.forEach((img) => {
       img.addEventListener("click", (e) => {
         const target = e.currentTarget as HTMLImageElement;
         const fullSrc = target.getAttribute("data-full-src");
-        if (fullSrc) {
-          lightbox!.style.display = "flex";
-          lightboxImg!.src = fullSrc;
+        if (fullSrc && lightbox && lightboxImg) {
+          lightbox.classList.remove("hidden");
+          // Small timeout to allow transition to trigger
+          setTimeout(() => {
+            lightbox.classList.add("opacity-100");
+            lightboxImg.classList.add("scale-100");
+            lightboxImg.classList.remove("scale-90");
+          }, 10);
+          lightboxImg.src = fullSrc;
           document.body.style.overflow = "hidden"; // Prevent scroll
         }
       });
     });
 
-    closeBtn?.addEventListener("click", () => {
-      lightbox!.style.display = "none";
-      document.body.style.overflow = "auto";
-    });
+    const closeLightbox = () => {
+      if (lightbox && lightboxImg) {
+        lightbox.classList.remove("opacity-100");
+        lightboxImg.classList.remove("scale-100");
+        lightboxImg.classList.add("scale-90");
+        setTimeout(() => {
+          lightbox.classList.add("hidden");
+        }, 300);
+        document.body.style.overflow = "auto";
+      }
+    };
 
+    closeBtn?.addEventListener("click", closeLightbox);
     lightbox?.addEventListener("click", (e) => {
       if (e.target === lightbox) {
-        lightbox!.style.display = "none";
-        document.body.style.overflow = "auto";
+        closeLightbox();
       }
     });
 
-    // Handle escape key
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && lightbox!.style.display === "flex") {
-        lightbox!.style.display = "none";
-        document.body.style.overflow = "auto";
+      if (
+        e.key === "Escape" &&
+        lightbox &&
+        !lightbox.classList.contains("hidden")
+      ) {
+        closeLightbox();
       }
     });
   }
@@ -241,244 +297,3 @@ console.log("DBUG: Machinery optimized sources:", [
   setupLightbox();
   document.addEventListener("astro:after-swap", setupLightbox);
 </script>
-
-<style>
-  /* Local styles for Audit Narrative */
-  .audit-narrative {
-    padding-bottom: var(--gs-space-10);
-  }
-
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--gs-space-2);
-  }
-
-  .audit-header {
-    background: var(--gs-executive-white);
-    padding: var(--gs-space-12) 0 var(--gs-space-8);
-    margin-bottom: var(--gs-space-6);
-    border-bottom: 1px solid var(--gs-border);
-  }
-
-  @media (max-width: 768px) {
-    .audit-header {
-      padding: var(--gs-space-10) 0 var(--gs-space-6);
-    }
-  }
-
-  .font-display {
-    font-family: var(--gs-font-primary);
-    font-size: var(--gs-text-h2);
-    color: var(--gs-institutional-green);
-    margin: 0;
-  }
-
-  .font-mono {
-    font-family: var(--gs-font-mono);
-  }
-
-  .model-badge {
-    color: var(--gs-slate-gray);
-    font-size: var(--gs-text-h4);
-    margin-top: var(--gs-space-1);
-    font-weight: 500;
-  }
-
-  .audit-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--gs-space-6);
-  }
-
-  @media (min-width: 1024px) {
-    .audit-grid {
-      grid-template-columns: 3fr 2fr;
-      gap: var(--gs-space-8);
-    }
-  }
-
-  .hero-image-wrapper {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: var(--gs-space-4);
-    box-shadow:
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-
-  .hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .stamp-overlay {
-    position: absolute;
-    bottom: var(--gs-space-4);
-    right: var(--gs-space-4);
-    z-index: 10;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: var(--gs-space-2);
-  }
-
-  .gallery-thumb {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 6px;
-    cursor: pointer; /* Interaction hint */
-    transition: opacity 0.2s;
-  }
-
-  .gallery-thumb:hover {
-    opacity: 0.8;
-  }
-
-  .section-title {
-    font-size: var(--gs-text-h3);
-    color: var(--gs-text-primary);
-    margin-bottom: var(--gs-space-4);
-    border-left: 4px solid var(--gs-institutional-green);
-    padding-left: var(--gs-space-2);
-  }
-
-  .specs-list {
-    background: var(--gs-executive-white);
-    border: 1px solid var(--gs-border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .spec-row {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--gs-space-3);
-    border-bottom: 1px solid var(--gs-border);
-  }
-
-  .spec-row:last-child {
-    border-bottom: none;
-  }
-
-  .spec-row dt {
-    color: var(--gs-text-secondary);
-    font-weight: 500;
-  }
-
-  .spec-row dd {
-    color: var(--gs-text-primary);
-    font-weight: 700;
-  }
-
-  .margin-bottom-4 {
-    margin-bottom: var(--gs-space-4);
-  }
-
-  .prose {
-    line-height: 1.6;
-    color: var(--gs-slate-gray);
-    font-size: var(--gs-text-base);
-  }
-
-  /* Ownership Declaration (AC6: high-contrast, emerald indicator) */
-  .ownership-declaration {
-    margin-top: var(--gs-space-4);
-    display: flex;
-    align-items: center;
-    gap: var(--gs-space-3);
-    padding: var(--gs-space-4);
-    background: rgba(16, 185, 129, 0.08); /* Subtle emerald tint */
-    border: 1px solid var(--gs-success-emerald);
-    border-left: 4px solid var(--gs-success-emerald);
-    border-radius: 8px;
-  }
-
-  .ownership-indicator {
-    width: 12px;
-    height: 12px;
-    background: var(--gs-success-emerald);
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: 0 0 8px var(--gs-success-emerald);
-  }
-
-  .declaration-content {
-    display: flex;
-    align-items: center;
-    gap: var(--gs-space-3);
-  }
-
-  .declaration-icon {
-    flex-shrink: 0;
-    opacity: 0.9;
-  }
-
-  .ownership-declaration p {
-    margin: 0;
-    font-size: var(--gs-text-sm);
-    color: var(--gs-institutional-green);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  /* Lightbox Styles */
-  .lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.95);
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(8px);
-  }
-
-  .lightbox-content {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    animation: zoom 0.3s ease-out;
-  }
-
-  @keyframes zoom {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  .close {
-    position: absolute;
-    top: 30px;
-    right: 35px;
-    color: white;
-    font-size: 60px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s;
-    line-height: 1;
-  }
-
-  .close:hover {
-    color: var(--gs-success-emerald);
-  }
-
-  .clickable-image {
-    cursor: zoom-in;
-  }
-</style>

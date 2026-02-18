@@ -12,17 +12,33 @@ interface Props {
   slug: string;
   lang: "bg" | "en";
   isOwned?: boolean;
+  animationDelay?: number;
 }
 
-const { title, model, weight, image, slug, lang, isOwned = true } = Astro.props;
+const {
+  title,
+  model,
+  weight,
+  image,
+  slug,
+  lang,
+  isOwned = true,
+  animationDelay = 0,
+} = Astro.props;
 const url = getMachineryUrl(slug, lang);
 const formattedWeight = formatSpecValue(weight, "");
 const ownedBadgeLabel = t("machinery.ownedBadge", lang);
 const ownershipDeclaration = t("machinery.ownershipDeclaration", lang);
 ---
 
-<a href={url} class="machinery-card group" aria-label={`${title} - ${model}`}>
-  <div class="image-wrapper">
+<a
+  href={url}
+  class="group flex flex-col bg-gs-executive-white border border-gs-slate-gray/20 rounded-xl overflow-hidden no-underline text-gs-text-primary transition-all duration-400 ease-[cubic-bezier(0.165,0.84,0.44,1)] h-full relative hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,78,59,0.12)] hover:border-gs-institutional-green focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gs-institutional-green"
+  aria-label={`${title} - ${model}`}
+  data-aos="fade-up"
+  data-aos-delay={animationDelay}
+>
+  <div class="relative w-full aspect-[4/3] overflow-hidden bg-gs-slate-gray">
     <Image
       src={image}
       alt={title}
@@ -30,12 +46,12 @@ const ownershipDeclaration = t("machinery.ownershipDeclaration", lang);
       widths={[400, 600, 800]}
       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
       quality={50}
-      class="card-image"
+      class="w-full h-full object-cover transition-transform duration-600 ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:scale-110"
     />
     {
       isOwned && (
         <div
-          class="stamp-wrapper"
+          class="absolute top-gs-2 right-gs-2 z-10 transition-transform duration-300 group-hover:rotate-[15deg] group-hover:scale-110"
           title={ownedBadgeLabel}
           aria-label={ownedBadgeLabel}
         >
@@ -44,228 +60,60 @@ const ownershipDeclaration = t("machinery.ownershipDeclaration", lang);
       )
     }
     <!-- Audit-on-Hover Overlay -->
-    <div class="audit-overlay">
-      <div class="overlay-content">
-        <span class="overlay-label">{t("machinery.model", lang)}</span>
-        <span class="overlay-value">{model}</span>
-        <div class="overlay-divider"></div>
-        <span class="overlay-label">{t("machinery.weight", lang)}</span>
-        <span class="overlay-value">{formattedWeight}</span>
+    <div
+      class="absolute inset-0 bg-gs-institutional-green/85 flex items-center justify-center opacity-0 transition-opacity duration-400 p-gs-4 pointer-events-none group-hover:opacity-100"
+    >
+      <div
+        class="text-center text-white translate-y-[20px] transition-transform duration-400 ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:translate-y-0"
+      >
+        <span
+          class="block text-gs-xs uppercase tracking-[0.1em] opacity-80 mb-gs-1"
+          >{t("machinery.model", lang)}</span
+        >
+        <span class="block text-gs-h4 font-bold font-gs-mono mb-gs-3"
+          >{model}</span
+        >
+        <div class="h-[2px] w-[40px] bg-gs-success-emerald mx-auto mb-gs-3">
+        </div>
+        <span
+          class="block text-gs-xs uppercase tracking-[0.1em] opacity-80 mb-gs-1"
+          >{t("machinery.weight", lang)}</span
+        >
+        <span class="block text-gs-h4 font-bold font-gs-mono mb-gs-3"
+          >{formattedWeight}</span
+        >
       </div>
     </div>
   </div>
-  <div class="content">
-    <h3 class="title">{title}</h3>
+  <div class="p-gs-4 flex-grow flex flex-col">
+    <h3
+      class="text-gs-h5 font-bold m-0 mb-gs-4 text-gs-institutional-green font-gs-primary leading-tight"
+    >
+      {title}
+    </h3>
     {
       isOwned && (
-        <div class="ownership-declaration" aria-label={ownedBadgeLabel}>
-          <span class="ownership-indicator" />
-          <span class="ownership-text">{ownershipDeclaration}</span>
+        <div
+          class="flex items-center gap-gs-2 mb-gs-3 px-gs-3 py-gs-2 bg-gs-success-emerald/10 rounded-md border-l-[3px] border-gs-success-emerald"
+          aria-label={ownedBadgeLabel}
+        >
+          <span class="w-2 h-2 bg-gs-success-emerald rounded-full shrink-0 shadow-[0_0_6px_var(--gs-success-emerald)]" />
+          <span class="text-gs-xs font-semibold text-gs-institutional-green uppercase tracking-[0.02em] leading-tight">
+            {ownershipDeclaration}
+          </span>
         </div>
       )
     }
-    <div class="card-footer">
-      <p class="model-text">{model}</p>
-      <div class="specs">
-        <span class="label">{t("machinery.weight", lang)}</span>
-        <span class="value">{formattedWeight}</span>
+    <div class="mt-auto flex justify-between items-end">
+      <p class="text-gs-sm text-gs-slate-gray m-0 font-medium">{model}</p>
+      <div class="flex flex-col items-end font-gs-mono">
+        <span class="text-[0.7rem] uppercase tracking-widest text-gs-secondary"
+          >{t("machinery.weight", lang)}</span
+        >
+        <span class="text-gs-base font-bold text-gs-text-primary"
+          >{formattedWeight}</span
+        >
       </div>
     </div>
   </div>
 </a>
-
-<style>
-  .machinery-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--gs-executive-white);
-    border: 1px solid var(--gs-border);
-    border-radius: 12px;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--gs-text-primary);
-    transition:
-      transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-      box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
-      border-color 0.3s ease;
-    height: 100%;
-    position: relative;
-  }
-
-  /* Hover Effects (AC: subtle lift, clear focus ring) */
-  .machinery-card:hover,
-  .machinery-card:focus-visible {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 78, 59, 0.12);
-    border-color: var(--gs-institutional-green);
-    outline: none;
-  }
-
-  .machinery-card:focus-visible {
-    box-shadow: 0 0 0 4px var(--gs-institutional-green); /* Using token instead of hardcoded hex */
-  }
-
-  .image-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    background: var(--gs-slate-gray);
-  }
-
-  .card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .machinery-card:hover .card-image {
-    transform: scale(1.1);
-  }
-
-  .stamp-wrapper {
-    position: absolute;
-    top: var(--gs-space-2);
-    right: var(--gs-space-2);
-    z-index: 10;
-    transition: transform 0.3s ease;
-  }
-
-  .machinery-card:hover .stamp-wrapper {
-    transform: rotate(15deg) scale(1.1);
-  }
-
-  /* Audit-on-Hover Overlay */
-  .audit-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(6, 78, 59, 0.85); /* Institutional green with alpha */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    padding: var(--gs-space-4);
-    pointer-events: none;
-  }
-
-  .machinery-card:hover .audit-overlay {
-    opacity: 1;
-  }
-
-  .overlay-content {
-    text-align: center;
-    color: white;
-    transform: translateY(20px);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-
-  .machinery-card:hover .overlay-content {
-    transform: translateY(0);
-  }
-
-  .overlay-label {
-    display: block;
-    font-size: var(--gs-text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.8;
-    margin-bottom: var(--gs-space-1);
-  }
-
-  .overlay-value {
-    display: block;
-    font-size: var(--gs-text-h4);
-    font-weight: 700;
-    font-family: var(--gs-font-mono);
-    margin-bottom: var(--gs-space-3);
-  }
-
-  .overlay-divider {
-    height: 2px;
-    width: 40px;
-    background: var(--gs-success-emerald);
-    margin: 0 auto var(--gs-space-3);
-  }
-
-  .content {
-    padding: var(--gs-space-4);
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .title {
-    font-size: var(--gs-text-h5);
-    font-weight: 700;
-    margin: 0 0 var(--gs-space-4) 0;
-    color: var(--gs-institutional-green);
-    font-family: var(--gs-font-primary);
-    line-height: 1.2;
-  }
-
-  .card-footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .model-text {
-    font-size: var(--gs-text-sm);
-    color: var(--gs-slate-gray);
-    margin: 0;
-    font-weight: 500;
-  }
-
-  .specs {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-family: var(--gs-font-mono);
-  }
-
-  .label {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--gs-text-secondary);
-  }
-
-  .value {
-    font-size: var(--gs-text-base);
-    font-weight: 700;
-    color: var(--gs-text-primary);
-  }
-
-  /* Ownership Declaration (AC6: high-contrast, emerald indicator) */
-  .ownership-declaration {
-    display: flex;
-    align-items: center;
-    gap: var(--gs-space-2);
-    margin-bottom: var(--gs-space-3);
-    padding: var(--gs-space-2) var(--gs-space-3);
-    background: rgba(16, 185, 129, 0.08); /* Subtle emerald tint */
-    border-radius: 6px;
-    border-left: 3px solid var(--gs-success-emerald);
-  }
-
-  .ownership-indicator {
-    width: 8px;
-    height: 8px;
-    background: var(--gs-success-emerald);
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: 0 0 6px var(--gs-success-emerald);
-  }
-
-  .ownership-text {
-    font-size: var(--gs-text-xs);
-    font-weight: 600;
-    color: var(--gs-institutional-green);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    line-height: 1.3;
-  }
-</style>

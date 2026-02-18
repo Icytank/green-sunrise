@@ -3,7 +3,7 @@ import { t, type TranslationKey } from "src/utils/i18n-helpers";
 import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
-  lang: "bg" | "en";
+    lang: "bg" | "en";
 }
 
 const { lang } = Astro.props;
@@ -11,102 +11,55 @@ const { lang } = Astro.props;
 const tr = (key: string) => t(`services.whyUs.${key}` as TranslationKey, lang);
 
 const reasons = [
-  'specialized',
-  'machinery',
-  'agility',
-  'quality',
-  'partnership'
+    "specialized",
+    "machinery",
+    "agility",
+    "quality",
+    "partnership",
 ];
 ---
 
-<section id="why-us">
-    <div class="cs-container">
+<section
+    id="why-us"
+    class="py-gs-section-padding-y bg-gs-institutional-green text-white"
+>
+    <div class="w-full max-w-[1280px] mx-auto px-4">
         <div class="cs-content">
             <SectionHeader
                 label=""
                 title={tr("title")}
                 description=""
                 align="left"
+                titleColor="text-white"
+                data-aos="fade-up"
+                withStamp={false}
             />
-            
-            <ul class="cs-list">
-                {reasons.map((r) => (
-                    <li class="cs-item">
-                        <span class="cs-check">✓</span>
-                        <div class="cs-item-content">
-                            <strong class="cs-strong">{tr(`list.${r}.title`)}</strong>
-                            <p class="cs-text">{tr(`list.${r}.desc`)}</p>
-                        </div>
-                    </li>
-                ))}
+
+            <ul
+                class="m-0 mt-gs-6 p-0 list-none grid grid-cols-1 md:grid-cols-2 gap-gs-6"
+            >
+                {
+                    reasons.map((r, index) => (
+                        <li
+                            class="flex gap-gs-4 items-start"
+                            data-aos="fade-up"
+                            data-aos-delay={index * 100}
+                        >
+                            <span class="text-[1.5rem] font-bold text-gs-success-emerald bg-white/10 w-8 h-8 rounded-full flex items-center justify-center shrink-0">
+                                ✓
+                            </span>
+                            <div class="cs-item-content">
+                                <strong class="block text-gs-h5 font-bold mb-gs-1 text-white">
+                                    {tr(`list.${r}.title`)}
+                                </strong>
+                                <p class="text-gs-base text-white/80 leading-gs-leading-body m-0">
+                                    {tr(`list.${r}.desc`)}
+                                </p>
+                            </div>
+                        </li>
+                    ))
+                }
             </ul>
         </div>
-        <!-- Maybe an image here later -->
     </div>
 </section>
-
-<style lang="less">
-    #why-us {
-        padding: var(--gs-section-padding);
-        background-color: var(--gs-institutional-green);
-        color: #fff;
-    }
-
-    .cs-container {
-        width: 100%;
-        max-width: (1280/16rem);
-        margin: auto;
-    }
-
-    .cs-list {
-        margin: var(--gs-space-6) 0 0 0;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: var(--gs-space-6);
-
-        @media only screen and (min-width: 48rem) {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    .cs-item {
-        display: flex;
-        gap: var(--gs-space-4);
-        align-items: flex-start;
-    }
-
-    .cs-check {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--gs-success-emerald);
-        background: rgba(255,255,255,0.1);
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    .cs-strong {
-        display: block;
-        font-size: var(--gs-text-h5);
-        margin-bottom: var(--gs-space-1);
-        color: #fff;
-    }
-
-    .cs-text {
-        font-size: var(--gs-text-base);
-        color: rgba(255, 255, 255, 0.8);
-        line-height: var(--gs-leading-relaxed);
-        margin: 0;
-    }
-    
-    /* Override SectionHeader Title Color for Dark Background */
-    :global(#why-us .cs-title) {
-        color: #fff !important;
-    }
-</style>

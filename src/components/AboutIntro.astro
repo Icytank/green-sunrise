@@ -3,7 +3,7 @@ import { t, type TranslationKey } from "src/utils/i18n-helpers";
 import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
-  lang: "bg" | "en";
+    lang: "bg" | "en";
 }
 
 const { lang } = Astro.props;
@@ -12,28 +12,19 @@ const title = t("about.intro.title" as TranslationKey, lang);
 const text = t("about.intro.text" as TranslationKey, lang);
 ---
 
-<section id="about-intro">
-    <div class="cs-container">
-        <SectionHeader
-            label={t("about.intro.label" as TranslationKey, lang)}
-            title={title}
-            description={text}
-            align="center"
-            withStamp={false}
-        />
+<section id="about-intro" class="pb-[clamp(3rem,6vw,6rem)]">
+    <!-- Container with negative margin to pull card over hero -->
+    <div class="w-full max-w-[1280px] mx-auto px-0 md:px-gs-4">
+        <div
+            class="mt-[-40px] md:mt-[-80px] relative z-20 bg-gs-executive-white p-gs-6 md:p-16 rounded-none md:rounded-2xl shadow-xl border border-gs-slate-gray/10"
+        >
+            <SectionHeader
+                label={t("about.intro.label" as TranslationKey, lang)}
+                title={title}
+                description={text}
+                align="center"
+                withStamp={false}
+            />
+        </div>
     </div>
 </section>
-
-<style lang="less">
-    #about-intro {
-        padding: var(--gs-section-padding);
-        /* 100px - 200px bottom padding to separate from next section */
-        padding-bottom: clamp(3rem, 6vw, 6rem);
-    }
-
-    .cs-container {
-        width: 100%;
-        max-width: (1280/16rem);
-        margin: auto;
-    }
-</style>

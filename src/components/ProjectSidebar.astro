@@ -44,37 +44,69 @@ const { value: capacityValue, unit: capacityUnitLabel } =
   formatCapacity(capacityMW);
 ---
 
-<aside class="project-sidebar">
-  <h2 class="sidebar-title">{technicalSpecsTitle}</h2>
+<aside
+  class="bg-gs-executive-white border-y md:border border-gs-slate-gray/20 rounded-none md:rounded-xl p-gs-4 md:p-gs-6"
+>
+  <h2
+    class="text-gs-h5 font-bold text-gs-institutional-green m-0 mb-gs-5 pb-gs-3 border-b-2 border-gs-institutional-green font-gs-primary uppercase tracking-wider"
+  >
+    {technicalSpecsTitle}
+  </h2>
 
-  <dl class="specs-list">
+  <dl class="flex flex-col gap-gs-4 m-0 p-0">
     <!-- Capacity (Primary Data Point) -->
-    <div class="spec-item capacity-highlight">
-      <dt class="spec-label">{capacityLabel}</dt>
-      <dd class="spec-value capacity-value font-mono">
+    <div
+      class="bg-gs-institutional-green/5 p-gs-4 rounded-lg border-l-4 border-gs-institutional-green flex flex-col gap-gs-1"
+    >
+      <dt
+        class="text-gs-xs uppercase tracking-[0.08em] text-gs-slate-gray font-bold"
+      >
+        {capacityLabel}
+      </dt>
+      <dd
+        class="text-gs-h3 text-gs-institutional-green font-bold leading-tight font-gs-mono m-0"
+      >
         {capacityValue}
-        <span class="unit">{capacityUnitLabel}</span>
+        <span class="text-gs-h5 text-gs-slate-gray font-normal lowercase"
+          >{capacityUnitLabel}</span
+        >
       </dd>
     </div>
 
     <!-- Terrain -->
-    <div class="spec-item">
-      <dt class="spec-label">{terrainLabel}</dt>
-      <dd class="spec-value">{terrainValue}</dd>
+    <div class="flex flex-col gap-gs-1 px-gs-1">
+      <dt
+        class="text-gs-xs uppercase tracking-[0.08em] text-gs-slate-gray font-bold"
+      >
+        {terrainLabel}
+      </dt>
+      <dd class="text-gs-base text-gs-text-primary font-bold m-0">
+        {terrainValue}
+      </dd>
     </div>
 
     <!-- Location -->
-    <div class="spec-item">
-      <dt class="spec-label">{locationLabel}</dt>
-      <dd class="spec-value">{location}</dd>
+    <div class="flex flex-col gap-gs-1 px-gs-1">
+      <dt
+        class="text-gs-xs uppercase tracking-[0.08em] text-gs-slate-gray font-bold"
+      >
+        {locationLabel}
+      </dt>
+      <dd class="text-gs-base text-gs-text-primary font-bold m-0">
+        {location}
+      </dd>
     </div>
 
     <!-- Scope of Work -->
     {
       scope && (
-        <div class="spec-item">
-          <dt class="spec-label">{scopeLabel}</dt>
-          <dd class="spec-value">{scope}</dd>
+        <div class="flex flex-col gap-gs-1 px-gs-1">
+          <dt class="text-gs-xs uppercase tracking-[0.08em] text-gs-slate-gray font-bold">
+            {scopeLabel}
+          </dt>
+          <dd class="text-gs-base text-gs-text-primary font-bold m-0">
+            {scope}
+          </dd>
         </div>
       )
     }
@@ -83,122 +115,17 @@ const { value: capacityValue, unit: capacityUnitLabel } =
   <!-- Verification Status -->
   {
     isVerified && (
-      <div class="verification-badge">
+      <div class="mt-gs-6 pt-gs-5 border-t border-gs-slate-gray/20 flex items-center gap-gs-3">
         <GSStamp size={80} />
-        <div class="verification-text">
-          <span class="verification-title">{verifiedTitle}</span>
-          <span class="verification-desc">{verifiedDesc}</span>
+        <div class="flex flex-col gap-gs-1">
+          <span class="text-gs-sm font-bold text-gs-success-emerald uppercase tracking-wider">
+            {verifiedTitle}
+          </span>
+          <span class="text-gs-xs text-gs-slate-gray leading-relaxed">
+            {verifiedDesc}
+          </span>
         </div>
       </div>
     )
   }
 </aside>
-
-<style>
-  .project-sidebar {
-    background: var(--gs-executive-white);
-    border: 1px solid var(--gs-border);
-    border-radius: 12px;
-    padding: var(--gs-space-6);
-  }
-
-  @media (max-width: 768px) {
-    .project-sidebar {
-      padding: var(--gs-space-4);
-    }
-  }
-
-  .sidebar-title {
-    font-size: var(--gs-text-h5);
-    font-weight: 700;
-    color: var(--gs-institutional-green);
-    margin: 0 0 var(--gs-space-5) 0;
-    padding-bottom: var(--gs-space-3);
-    border-bottom: 2px solid var(--gs-institutional-green);
-    font-family: var(--gs-font-primary);
-  }
-
-  .specs-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gs-space-4);
-    margin: 0;
-  }
-
-  .spec-item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gs-space-1);
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .spec-label {
-    font-size: var(--gs-text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--gs-slate-gray);
-    font-weight: 600;
-    hyphens: auto;
-  }
-
-  .spec-value {
-    font-size: var(--gs-text-base);
-    color: var(--gs-text-primary);
-    font-weight: 600;
-  }
-
-  /* Capacity Highlight */
-  .capacity-highlight {
-    background: rgba(6, 78, 59, 0.05);
-    padding: var(--gs-space-4);
-    border-radius: 8px;
-    border-left: 4px solid var(--gs-institutional-green);
-  }
-
-  .capacity-value {
-    font-size: var(--gs-text-h3);
-    color: var(--gs-institutional-green);
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .font-mono {
-    font-family: var(--gs-font-mono);
-  }
-
-  .unit {
-    font-size: var(--gs-text-h5);
-    color: var(--gs-slate-gray);
-  }
-
-  /* Verification Badge */
-  .verification-badge {
-    margin-top: var(--gs-space-6);
-    padding-top: var(--gs-space-5);
-    border-top: 1px solid var(--gs-border);
-    display: flex;
-    align-items: center;
-    gap: var(--gs-space-3);
-  }
-
-  .verification-text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gs-space-1);
-  }
-
-  .verification-title {
-    font-size: var(--gs-text-sm);
-    font-weight: 700;
-    color: var(--gs-success-emerald);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .verification-desc {
-    font-size: var(--gs-text-xs);
-    color: var(--gs-slate-gray);
-    line-height: 1.4;
-  }
-</style>

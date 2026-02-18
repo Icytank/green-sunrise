@@ -6,7 +6,7 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-    output: "server",
+    output: "static",
     adapter: cloudflare({
         imageService: "compile",
     }),
@@ -20,11 +20,11 @@ export default defineConfig({
         }),
     ],
     vite: {
-      define: {
-          'import.meta.env.PUBLIC_TURNSTILE_SITE_KEY': JSON.stringify(process.env.PUBLIC_TURNSTILE_SITE_KEY),
-      },
+        define: {
+            'import.meta.env.PUBLIC_TURNSTILE_SITE_KEY': JSON.stringify(process.env.PUBLIC_TURNSTILE_SITE_KEY),
+        },
 
-      plugins: [tailwindcss()],
+        plugins: [tailwindcss()],
     },
     i18n: {
         defaultLocale: "bg",

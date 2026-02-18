@@ -1,11 +1,12 @@
 ---
+export const prerender = false;
 // Server Side Logic for Smart Geo-Redirect
 // This runs on Cloudflare Edge
 
 const runtime = Astro.locals.runtime;
 const country = runtime?.cf?.country;
 
-// Logic: 
+// Logic:
 // 1. If country is "BG", redirect to /bg
 // 2. For any other country (or if unknown/local dev), redirect to /en
 //    (English is the safer global default than Bulgarian)
@@ -15,9 +16,10 @@ let targetLang = "en";
 if (country === "BG") {
     targetLang = "bg";
 } else if (!country) {
-    targetLang = "en"; 
+    targetLang = "en";
 }
 
 return Astro.redirect(`/${targetLang}`);
 ---
+
 ```

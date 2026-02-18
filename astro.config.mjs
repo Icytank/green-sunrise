@@ -20,9 +20,7 @@ export default defineConfig({
         }),
     ],
     vite: {
-        define: {
-            'import.meta.env.PUBLIC_TURNSTILE_SITE_KEY': JSON.stringify(process.env.PUBLIC_TURNSTILE_SITE_KEY),
-        },
+
 
         plugins: [tailwindcss()],
     },
